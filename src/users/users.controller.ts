@@ -1,5 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { Controller, Post, Body } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -10,11 +9,5 @@ export class UsersController {
   @Post()
   create(@Body() user: User) {
     return this.usersService.create(user);
-  }
-
-  @UseGuards(LocalAuthGuard)
-  @Post('profile')
-  profile(@Request() req) {
-    return this.usersService.profile(req.user.username);
   }
 }
