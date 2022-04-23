@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -6,12 +8,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
-  create(@Body() user) {
+  create(@Body() user: User) {
     return this.usersService.create(user);
   }
 
-  @Get(':username')
-  findOne(@Param('username') username: string) {
-    return this.usersService.findOne(username);
+  @UseGuards(LocalAuthGuard)
+  @Post('profile')
+  profile(@Request() req) {
+    return this.usersService.profile(req.user.username);
   }
 }

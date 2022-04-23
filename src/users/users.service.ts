@@ -10,13 +10,17 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) { }
 
-  create(user) {
+  create(user: User) {
     const newUser = this.usersRepository.create(user);
     return this.usersRepository.save(newUser);
   }
 
   async findOne(username: string) {
-    const user = await this.usersRepository.findOne({ where: { username } });
+    return await this.usersRepository.findOne({ where: { username } });
+  }
+
+  async profile(username: string) {
+    const user = await this.findOne(username);
     if (user) {
       delete user.password;
       return user;
