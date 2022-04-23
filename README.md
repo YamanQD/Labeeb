@@ -48,8 +48,8 @@ $ yarn start:prod
 
 After following the installation instructions run:
 
-```
-yarn build
+```bash
+$ yarn build
 ```
 
 The build can be then accessed at `/dist`.
