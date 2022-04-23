@@ -1,10 +1,13 @@
 {
   "name": "labeeb-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "The back-end server for Labeeb, an arabic-first task management system",
+  "author": "Yaman Qassas <yaman102011@gmail.com>",
+  "contributors": [
+    "Rami Sabbagh <rami.sab07@gmail.com>"
+  ],
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
