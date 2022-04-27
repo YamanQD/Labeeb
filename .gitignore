@@ -18,6 +18,15 @@ lerna-debug.log*
 /coverage
 /.nyc_output
 
+# Package Managers
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # IDEs and editors
 /.idea
 .project
