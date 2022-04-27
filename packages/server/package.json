@@ -9,6 +9,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "postinstall": "node ./scripts/postinstall.js",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
