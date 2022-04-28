@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "labeeb (workspace)",
+			"path": ".",
+		},
+		{
+			"name": "frontend (client)",
+			"path": "packages\\client",
+		},
+		{
+			"name": "backend (server)",
+			"path": "packages\\server",
+		},
+	],
+	"settings": {}
+}
