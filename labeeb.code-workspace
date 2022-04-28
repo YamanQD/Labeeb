@@ -13,5 +13,8 @@
 			"path": "packages\\server",
 		},
 	],
-	"settings": {}
+	"settings": {
+		"typescript.tsdk": ".yarn/sdks/typescript/lib",
+		"typescript.enablePromptUseWorkspaceTsdk": true,
+	}
 }
