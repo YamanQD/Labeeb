@@ -12,7 +12,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn client:build & yarn server:build"
+    "build": "yarn client:build && yarn server:build"
   },
   "devDependencies": {
     "@types/eslint": "^8",
