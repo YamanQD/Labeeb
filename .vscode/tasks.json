@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "client:build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "frontend: build package for production",
+			"detail": "react-scripts build"
+		},
+		{
+			"type": "npm",
+			"script": "server:build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "backend: build package for production",
+			"detail": "nest build"
+		},
+		{
+			"group": "build",
+			"label": "labeeb: (concurrently) build workspace (frontend & backend)",
+			"detail": "run build tasks for frontend and backend in parallel",
+			"dependsOn": [
+				"frontend: build package for production",
+				"backend: build package for production"
+			]
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "labeeb: (sequentially) build workspace (frontend & backend)",
+			"detail": "yarn client:build && yarn server:build"
+		}
+	]
+}
