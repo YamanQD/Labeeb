@@ -1,6 +1,7 @@
 {
 	"name": "client",
 	"version": "0.1.0",
+	"description": "The front-end web application for Labeeb, an Arabic-first Tasks Management System.",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.9.0",
