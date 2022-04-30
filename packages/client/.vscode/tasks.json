@@ -3,9 +3,9 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "frontend: start development server and watch for changes",
+			"script": "start",
 			"problemMatcher": [],
-			"label": "npm: client:start",
+			"label": "frontend: start development server and watch for changes",
 			"detail": "react-scripts start",
 			"isBackground": true,
 			"presentation": {

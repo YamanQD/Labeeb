@@ -3,9 +3,9 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "backend: start development server and watch for changes",
+			"script": "start-dev",
 			"problemMatcher": [],
-			"label": "npm: server:start:dev",
+			"label": "backend: start development server and watch for changes",
 			"detail": "nest start --watch",
 			"isBackground": true,
 			"presentation": {
