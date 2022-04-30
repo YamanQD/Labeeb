@@ -11,13 +11,19 @@
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js",
     "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start-dev": "nest start --watch",
+    "start-debug": "nest start --debug --watch",
+    "start-prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "server:build": "nest build",
     "server:format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "server:start": "nest start",
-    "server:start:dev": "nest start --watch",
-    "server:start:debug": "nest start --debug --watch",
-    "server:start:prod": "node dist/main",
-    "server:lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+    "server:start-dev": "nest start --watch",
+    "server:start-debug": "nest start --debug --watch",
+    "server:start-prod": "node dist/main"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
