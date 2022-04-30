@@ -64,8 +64,8 @@ When starting a terminal, vs-code either opens it at the root of the **workspace
 Pay attention to the working directory:
 
 - It could be the project root `/labeeb/`.
-- It could be the root of the backend `/labeeb/packages/backend/`.
-- It could be the root of the frontend `/labeeb/packages/frontend/`.
+- It could be the root of the backend `/labeeb/packages/server/`.
+- It could be the root of the frontend `/labeeb/packages/client/`.
 - It could be the root of any other package `/labeeb/packages/<package>/`.
 
 Yarn commands work properly here:
