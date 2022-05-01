@@ -6,10 +6,6 @@ import { UsersService } from './users/users.service';
 export class AppService {
   constructor(private usersService: UsersService) { }
 
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   async getProfile(user: User) {
     const { password, ...profile } = await this.usersService.findOne(user.username);
     return profile;
