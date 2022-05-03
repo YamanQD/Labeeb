@@ -1,4 +1,3 @@
-
 # Labeeb
 
 An Arabic-first Tasks Management System.
@@ -11,22 +10,22 @@ And for now instructions will be only provided for development purposes.
 ### Installation for Development
 
 1. Download the source-code into your machine.
-    - Either by downloading it as a .zip and extracting it.
-    - Or by cloning the repository using git (SSH recommended).
+   - Either by downloading it as a .zip and extracting it.
+   - Or by cloning the repository using git (SSH recommended).
 2. Install Node.js 16.x or later versions on your machine.
 3. Enable `corepack`:
 
-    ```bash
-    # Use an elevated shell (Administrator shell on Windows, sudo on Unix).
-    corepack enable
-    ```
+   ```bash
+   # Use an elevated shell (Administrator shell on Windows, sudo on Unix).
+   corepack enable
+   ```
 
 4. Install all the workspace dependencies
 
-    ```bash
-    # Use a shell open at the root of the source-code.
-    yarn
-    ```
+   ```bash
+   # Use a shell open at the root of the source-code.
+   yarn
+   ```
 
 ## Starting the development servers
 
@@ -46,7 +45,7 @@ yarn server:start-dev
 Open the workspace using the `labeeb.code-workspace` file from the root of the repository.
 So vs-code can recognize the workspaces configuration properly.
 
-*Note: If you're on a linux machine, use the `labeeb-unix.code-workspace` file instead.*
+_Note: If you're on a linux machine, use the `labeeb-unix.code-workspace` file instead._
 
 ### Focusing on a workspace
 
@@ -81,3 +80,12 @@ You can also use the following format to run any command at workspace root:
 ```bash
 yarn workspace <package> <command>
 ```
+
+## Styleguide
+
+In order to preserve a clear and informative commit history, please prefix your commit messages with the following letters:
+
+- `FE:` for frontend related edits
+- `BE:` for backend related edits
+
+As for general edits, it's okay not to use a prefix.
