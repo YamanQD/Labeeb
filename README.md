@@ -43,8 +43,10 @@ yarn server:start-dev
 
 ## Developing with Visual Studio Code
 
-Open the workspace using the `labeeb.code-workspace` from the root of the repository.
+Open the workspace using the `labeeb.code-workspace` file from the root of the repository.
 So vs-code can recognize the workspaces configuration properly.
+
+*Note: If you're on a linux machine, use the `labeeb-unix.code-workspace` file instead.*
 
 ### Focusing on a workspace
 
@@ -53,9 +55,9 @@ and only expand the one you want.
 
 ### Tasks
 
-Some tasks has been setup for basic operations, they run commands properly at the right working directories.
+Some tasks have been setup for basic operations.
 
-So you can take advantage of them.
+They run commands properly at the right working directories so you can take advantage of them.
 
 ### Working with terminals
 
