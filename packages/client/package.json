@@ -29,7 +29,8 @@
 		"eject": "react-scripts eject",
 		"client:start": "react-scripts start",
 		"client:build": "react-scripts build",
-		"client:test": "react-scripts test"
+		"client:test": "react-scripts test",
+		"prettify": "prettier . --write"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -49,6 +50,8 @@
 		]
 	},
 	"devDependencies": {
-		"@types/prop-types": "^15"
+		"@types/prop-types": "^15",
+		"eslint": "^8.14.0",
+		"prettier": "^2.6.2"
 	}
 }
