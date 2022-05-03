@@ -1480,7 +1480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -4927,6 +4927,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "client@workspace:packages/client"
   dependencies:
+    "@emotion/cache": ^11.7.1
     "@emotion/react": ^11.9.0
     "@emotion/styled": ^11.8.1
     "@mui/icons-material": ^5.6.2
@@ -4937,13 +4938,19 @@ __metadata:
     "@types/react-dom": ^18.0.0
     date-fns: ^2.28.0
     eslint: ^8.14.0
+    eslint-config-react-app: ^7.0.1
+    i18next: ^21.6.16
+    i18next-http-backend: ^1.4.0
     nprogress: ^0.2.0
     prettier: ^2.6.2
     prop-types: ^15.8.1
     react: ^18.0.0
     react-dom: ^18.0.0
+    react-i18next: ^11.16.7
     react-router-dom: 6
     react-scripts: 5.0.1
+    stylis: ^4.1.1
+    stylis-plugin-rtl: ^2.1.1
     typescript: ^4.4.2
     web-vitals: ^2.1.0
   languageName: unknown
@@ -5310,6 +5317,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:3.1.5":
+  version: 3.1.5
+  resolution: "cross-fetch@npm:3.1.5"
+  dependencies:
+    node-fetch: 2.6.7
+  checksum: f6b8c6ee3ef993ace6277fd789c71b6acf1b504fd5f5c7128df4ef2f125a429e29cd62dc8c127523f04a5f2fa4771ed80e3f3d9695617f441425045f505cf3bb
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -5496,6 +5512,13 @@ __metadata:
   bin:
     cssesc: bin/cssesc
   checksum: f8c4ababffbc5e2ddf2fa9957dda1ee4af6048e22aeda1869d0d00843223c1b13ad3f5d88b51caa46c994225eacb636b764eb807a8883e2fb6f99b4f4e8c48b2
+  languageName: node
+  linkType: hard
+
+"cssjanus@npm:^2.0.1":
+  version: 2.1.0
+  resolution: "cssjanus@npm:2.1.0"
+  checksum: 87d02bb8a54aeb046fab0c63e32bc73a6f776d33f07b1ead29cbdd65bc6f5078f28bae85653b0fcae528817e54a91fcc8cd9f4fcb98a3c4e229628d8a10439c3
   languageName: node
   linkType: hard
 
@@ -7615,7 +7638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-escaper@npm:^2.0.0":
+"html-escaper@npm:^2.0.0, html-escaper@npm:^2.0.2":
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
@@ -7636,6 +7659,15 @@ __metadata:
   bin:
     html-minifier-terser: cli.js
   checksum: ac52c14006476f773204c198b64838477859dc2879490040efab8979c0207424da55d59df7348153f412efa45a0840a1ca3c757bf14767d23a15e3e389d37a93
+  languageName: node
+  linkType: hard
+
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: 3.1.0
+  checksum: 334fdebd4b5c355dba8e95284cead6f62bf865a2359da2759b039db58c805646350016d2017875718bc3c4b9bf81a0d11be5ee0cf4774a3a5a7b97cde21cfd67
   languageName: node
   linkType: hard
 
@@ -7806,6 +7838,24 @@ __metadata:
   dependencies:
     ms: ^2.0.0
   checksum: 9c7a74a2827f9294c009266c82031030eae811ca87b0da3dceb8d6071b9bde22c9f3daef0469c3c533cc67a97d8a167cd9fc0389350e5f415f61a79b171ded16
+  languageName: node
+  linkType: hard
+
+"i18next-http-backend@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "i18next-http-backend@npm:1.4.0"
+  dependencies:
+    cross-fetch: 3.1.5
+  checksum: bc10dca0fd1d566a5a4a4eab96ce76226f69c5b716951262e994bf069c0c5d18ea346dacd17d35aa6c5bee74221641f64839c84c1e01da9d75718ae34ce149a0
+  languageName: node
+  linkType: hard
+
+"i18next@npm:^21.6.16":
+  version: 21.6.16
+  resolution: "i18next@npm:21.6.16"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+  checksum: f210130fd835ebd90bfdc6a497d3c1d992261174e030e995a03d070b099acba680e495a376eb9255bb8eb68b4e518fe8ea96ec71507e194fd043aecb3397c9a2
   languageName: node
   linkType: hard
 
@@ -9908,7 +9958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.1":
+"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.1":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -11727,6 +11777,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^11.16.7":
+  version: 11.16.7
+  resolution: "react-i18next@npm:11.16.7"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-escaper: ^2.0.2
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 666594e20dcff000294e904b6ea36f4e5fa2d3b7cebf8c78f04ec3b96ff52d9ad2931adb0d6865ccbd870cc8a782f76a77dfc134653647c8fd73c4217a65e0e6
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -13091,10 +13160,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stylis-plugin-rtl@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "stylis-plugin-rtl@npm:2.1.1"
+  dependencies:
+    cssjanus: ^2.0.1
+  peerDependencies:
+    stylis: 4.x
+  checksum: 262d2c762216556ed3dc8218ea5929ae24b4b0fae020eb41c217911e6628374009d1e1b24256ed6a2f39cbbf302a877f2efe912b628c71dd15fde90866ca54ca
+  languageName: node
+  linkType: hard
+
 "stylis@npm:4.0.13":
   version: 4.0.13
   resolution: "stylis@npm:4.0.13"
   checksum: 8ea7a87028b6383c6a982231c4b5b6150031ce028e0fdaf7b2ace82253d28a8af50cc5a9da8a421d3c7c4441592f393086e332795add672aa4a825f0fe3713a3
+  languageName: node
+  linkType: hard
+
+"stylis@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "stylis@npm:4.1.1"
+  checksum: e9b0a086996a94c44d45933287731313f6ecdbf9334410231d882d31a1890fb36e34a7b163487e2d7f992c2044e4cb37179810fc6f758f359a431343c2374ed2
   languageName: node
   linkType: hard
 
@@ -13983,6 +14070,13 @@ __metadata:
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: ae0123222c6df65b437669d63dfa8c36cee20a504101b2fcd97b8bf76f91259c17f9f2b4d70a1e3c6bbcee7f51b28392833adb6b2770b23b01abec84e369660b
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: 0390f818107fa8fce55bb0a5c3f661056001c1d5a2a48c28d582d4d847347c2ab5b7f8272314cac58acf62345126b6b09bea623a185935f6b1c3bbce0dfd7f7f
   languageName: node
   linkType: hard
 

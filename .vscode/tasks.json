@@ -18,7 +18,6 @@
 			"detail": "nest build"
 		},
 		{
-			"group": "build",
 			"label": "labeeb: (concurrently) build workspace (frontend & backend)",
 			"detail": "run build tasks for frontend and backend in parallel",
 			"dependsOn": [

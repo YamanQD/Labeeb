@@ -10,9 +10,9 @@ const ThemeToggle = () => {
 		<Tooltip arrow title="Switch theme">
 			<IconButton
 				color="primary"
-				onClick={() =>
-					toggleTheme(theme === "light" ? "dark" : "light")
-				}
+				onClick={() => {
+					toggleTheme(theme === "light" ? "dark" : "light");
+				}}
 			>
 				{theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
 			</IconButton>

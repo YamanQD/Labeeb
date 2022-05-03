@@ -1,5 +1,5 @@
 import { Theme } from "@mui/material";
-import { DarkTheme, LightTheme, AvailableThemes } from "./schemes";
+import { AvailableThemes, DarkTheme, LightTheme } from "./schemes";
 
 export function themeCreator(theme: AvailableThemes): Theme {
 	return themeMap[theme];

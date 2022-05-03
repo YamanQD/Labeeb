@@ -1,5 +1,6 @@
-import "./index.css";
 import { CssBaseline } from "@mui/material";
+import "./i18";
+import "./index.css";
 import { ApplicationRoutes } from "./router";
 import ThemeProvider from "./theme/ThemeProvider";
 
