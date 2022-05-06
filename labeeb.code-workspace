@@ -6,11 +6,11 @@
     },
     {
       "name": "frontend (client)",
-      "path": "packages\\client"
+      "path": "packages/client"
     },
     {
       "name": "backend (server)",
-      "path": "packages\\server"
+      "path": "packages/server"
     }
   ],
   "settings": {
