@@ -2,9 +2,8 @@ import ExpandLessTwoToneIcon from "@mui/icons-material/ExpandLessTwoTone";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import { Badge, Button, Collapse, ListItem } from "@mui/material";
 import PropTypes from "prop-types";
-import { FC, ReactNode, useContext, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { NavLink as RouterLink } from "react-router-dom";
-import { SidebarContext } from "src/contexts/SidebarContext";
 
 interface SidebarMenuItemProps {
 	children?: ReactNode;

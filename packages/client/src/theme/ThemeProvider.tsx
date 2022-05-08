@@ -1,7 +1,12 @@
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import rtlPlugin from "stylis-plugin-rtl";
 import { themeCreator } from "./base";
 import { AvailableThemes } from "./schemes";
+
+type ThemeDirection = "ltr" | "rtl";
 
 interface WrapperProps {
 	children: React.ReactNode;
@@ -9,32 +14,64 @@ interface WrapperProps {
 
 interface ThemeContextValue {
 	toggleTheme: (themeName: AvailableThemes) => void;
+	toggleDirection: (direction: ThemeDirection) => void;
 	theme: AvailableThemes;
+	direction: ThemeDirection;
 }
+
+const getCurrentThemeName = () =>
+	(localStorage.getItem("appTheme") || "light") as AvailableThemes;
 
 export const ThemeContext = React.createContext({} as ThemeContextValue);
 
+const RTLCache = createCache({
+	key: "muirtl",
+	stylisPlugins: [rtlPlugin]
+});
+const LTRCache = createCache({
+	key: "css"
+})
+
 const ThemeProviderWrapper = ({ children }: WrapperProps) => {
-	const currentThemeName = (localStorage.getItem("appTheme") ||
-		"light") as AvailableThemes;
-	const [themeName, setThemeName] = useState(currentThemeName);
+	const [theme, setTheme] = useState(getCurrentThemeName());
+	const [direction, setDirection] = useState<ThemeDirection>("ltr");
+
+	const emotionCache = useMemo(() => {
+		return direction === "rtl" ? RTLCache: LTRCache
+	}, [direction]);
 
 	const toggleTheme = useCallback((name: AvailableThemes) => {
 		localStorage.setItem("appTheme", name);
-		setThemeName(name);
+		setTheme(name);
 	}, []);
 
-	const MUITheme = themeCreator(themeName);
+	const toggleDirection = useCallback((direction: ThemeDirection) => {
+		setDirection(direction);
+	}, []);
+
+	useEffect(() => {
+		document.documentElement.dir = direction;
+	}, [direction]);
+
+	const MUITheme = useMemo(() => {
+		return themeCreator(theme);
+	}, [theme]);
+
+	MUITheme.direction = direction;
 
 	return (
-		<ThemeContext.Provider
-			value={{
-				toggleTheme,
-				theme: themeName,
-			}}
-		>
-			<MUIThemeProvider theme={MUITheme}>{children}</MUIThemeProvider>
-		</ThemeContext.Provider>
+		<CacheProvider value={emotionCache}>
+			<ThemeContext.Provider
+				value={{
+					toggleTheme,
+					toggleDirection,
+					theme,
+					direction,
+				}}
+			>
+				<MUIThemeProvider theme={MUITheme}>{children}</MUIThemeProvider>
+			</ThemeContext.Provider>
+		</CacheProvider>
 	);
 };
 
