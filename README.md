@@ -45,8 +45,6 @@ yarn server:start-dev
 Open the workspace using the `labeeb.code-workspace` file from the root of the repository.
 So vs-code can recognize the workspaces configuration properly.
 
-_Note: If you're on a linux machine, use the `labeeb-unix.code-workspace` file instead._
-
 ### Focusing on a workspace
 
 Collapse all the other workspaces you don't care about in the files panel,
