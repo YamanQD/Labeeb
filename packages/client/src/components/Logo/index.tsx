@@ -69,7 +69,7 @@ const LogoSVG = () => (
 	</svg>
 );
 
-function Logo() {
+const Logo = () => {
 	return (
 		<LogoWrapper to="/">
 			<LogoSVG />

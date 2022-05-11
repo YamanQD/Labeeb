@@ -23,7 +23,7 @@ const HeaderWrapper = styled(Box)(
 `
 );
 
-function Header() {
+const Header = () => {
 	const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
 
 	return (
@@ -52,6 +52,6 @@ function Header() {
 			</Box>
 		</HeaderWrapper>
 	);
-}
+};
 
 export default Header;

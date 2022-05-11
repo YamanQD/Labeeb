@@ -38,7 +38,7 @@ const NotificationsBadge = styled(Badge)(
 `
 );
 
-function HeaderNotifications() {
+const HeaderNotifications = () => {
 	const ref = useRef<any>(null);
 	const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -121,6 +121,6 @@ function HeaderNotifications() {
 			</Popover>
 		</>
 	);
-}
+};
 
 export default HeaderNotifications;

@@ -200,7 +200,7 @@ const reduceChildRoutes = ({
 	return ev;
 };
 
-function SidebarMenu() {
+const SidebarMenu = () => {
 	const location = useLocation();
 
 	return (

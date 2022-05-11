@@ -36,7 +36,7 @@ const ButtonSearch = styled(Button)(
 `
 );
 
-function Status404() {
+const Status404 = () => {
 	return (
 		<>
 			<MainContent>
@@ -93,6 +93,6 @@ function Status404() {
 			</MainContent>
 		</>
 	);
-}
+};
 
 export default Status404;
