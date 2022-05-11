@@ -8,6 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './auth/roles.guard';
+import { TasksModule } from './tasks/tasks.module';
+import { Task } from './tasks/task.entity';
 
 @Module({
   imports: [
@@ -24,12 +27,13 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
           username: configService.get<string>('DATABASE_USERNAME'),
           password: configService.get<string>('DATABASE_PASSWORD'),
           database: configService.get<string>('DATABASE_NAME'),
-          entities: [User],
+          entities: [User, Task],
           synchronize: true, //! DO NOT USE IN PRODUCTION
         };
       },
       inject: [ConfigService]
     }),
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [
@@ -37,6 +41,10 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
