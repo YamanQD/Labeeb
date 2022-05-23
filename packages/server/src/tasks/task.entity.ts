@@ -13,9 +13,6 @@ export class Task {
 	@Column({ nullable: true })
 	description: string;
 
-	@Column('enum', { enum: TaskStatus, default: TaskStatus.TODO })
-	status: TaskStatus;
-
 	@Column('enum', { enum: Priority, default: Priority.NONE })
 	priority: Priority;
 
