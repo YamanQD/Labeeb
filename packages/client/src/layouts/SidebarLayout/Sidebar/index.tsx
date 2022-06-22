@@ -30,7 +30,7 @@ const TopSection = styled(Box)(
 `
 );
 
-function Sidebar() {
+const Sidebar = () => {
 	const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
 
 	return (
@@ -76,6 +76,6 @@ function Sidebar() {
 			</Box>
 		</>
 	);
-}
+};
 
 export default Sidebar;

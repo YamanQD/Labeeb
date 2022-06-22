@@ -61,7 +61,7 @@ const DialogTitleWrapper = styled(DialogTitle)(
 `
 );
 
-function HeaderSearch() {
+const HeaderSearch = () => {
 	const [openSearchResults, setOpenSearchResults] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
 

@@ -78,12 +78,3 @@ You can also use the following format to run any command at workspace root:
 ```bash
 yarn workspace <package> <command>
 ```
-
-## Styleguide
-
-In order to preserve a clear and informative commit history, please prefix your commit messages with the following letters:
-
-- `FE:` for frontend related edits
-- `BE:` for backend related edits
-
-As for general edits, it's okay not to use a prefix.

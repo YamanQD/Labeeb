@@ -1,5 +1,6 @@
 {
 	"tasks": {
+		"name": "Tasks",
 		"remaining": "You have 99 remaining tasks"
 	}
 }

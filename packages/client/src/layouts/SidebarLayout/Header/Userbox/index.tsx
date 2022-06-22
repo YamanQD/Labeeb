@@ -53,7 +53,7 @@ const UserBoxDescription = styled(Typography)(
 `
 );
 
-function HeaderUserbox() {
+const HeaderUserbox = () => {
 	const user = {
 		name: "Hisham",
 		avatar: "/static/images/avatars/hisham.png",

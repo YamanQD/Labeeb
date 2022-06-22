@@ -4,7 +4,7 @@ import HeaderNotifications from "./Notifications";
 import HeaderSearch from "./Search";
 import ThemeToggle from "./ThemeToggle";
 
-function HeaderButtons() {
+const HeaderButtons = () => {
 	return (
 		<Box sx={{ mr: 1 }}>
 			<LanguageToggle />
