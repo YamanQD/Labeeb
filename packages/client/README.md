@@ -16,10 +16,12 @@ Please refer to the `contributing.md` file before contributing code to this pack
 
 -   Develop components in isolation using storybook
 -   Enhance dark mode switching performance
+## Credits
 
-## Design Tips
+### Icons
 
--   Keep margins consistent
--   Use a grid in figma (12 column)
--   Typography: Line-height between 1.2 and 1.4em
--   Gradients are smoother and more pleasant to look at than solid colors.
+You can borrow SVG icons from here: https://www.svgrepo.com
+
+### Design files
+
+https://www.figma.com/community/file/1009844794585513376
