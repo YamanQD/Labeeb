@@ -1,0 +1,21 @@
+.taskContainer {
+    border-radius: 2px !important;
+    padding: 8px !important;
+}
+
+.taskName {
+    display: flex;
+    align-items: center;
+}
+
+.taskContainer:hover {
+    background-color: hsl(0, 0%, 98%);
+}
+
+.taskStatus {
+    background-color: violet;
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    margin-right: 20px;
+}
