@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { TaskStatus } from 'src/enums/task-status.enum';
 import { Priority } from 'src/enums/priority.enum';
 
 @Entity()
@@ -12,9 +11,6 @@ export class Task {
 
 	@Column({ nullable: true })
 	description: string;
-
-	@Column('enum', { enum: TaskStatus, default: TaskStatus.TODO })
-	status: TaskStatus;
 
 	@Column('enum', { enum: Priority, default: Priority.NONE })
 	priority: Priority;
