@@ -5,17 +5,16 @@ import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import { SidebarContext } from "src/contexts/SidebarContext";
 import HeaderButtons from "./Buttons";
-import HeaderUserbox from "./Userbox";
 
 const HeaderWrapper = styled(Box)(
-	({ theme }) => `
+    ({ theme }) => `
 		display: flex;
 		align-items: center;
         height: ${theme.header.height};
         color: ${theme.header.textColor};
         padding: ${theme.spacing(0, 2)};
         right: 0;
-        z-index: 5;
+        z-index: -10;
         background-color: ${theme.header.background};
         box-shadow: ${theme.header.boxShadow};
         position: sticky;
@@ -24,33 +23,29 @@ const HeaderWrapper = styled(Box)(
 );
 
 const Header = () => {
-	const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
+    const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
 
-	return (
-		<HeaderWrapper>
-			<Box display="flex" alignItems="center" ml="auto">
-				<HeaderButtons />
-				<Box
-					sx={{
-						display: {
-							lg: "none",
-							xs: "block",
-						},
-					}}
-				>
-					<Tooltip arrow title="Toggle Menu">
-						<IconButton color="primary" onClick={toggleSidebar}>
-							{!isSidebarVisible ? (
-								<MenuTwoToneIcon />
-							) : (
-								<CloseTwoToneIcon />
-							)}
-						</IconButton>
-					</Tooltip>
-				</Box>
-			</Box>
-		</HeaderWrapper>
-	);
+    return (
+        <HeaderWrapper>
+            <Box display="flex" alignItems="center" ml="auto">
+                <HeaderButtons />
+                <Box
+                    sx={{
+                        display: {
+                            lg: "none",
+                            xs: "block",
+                        },
+                    }}
+                >
+                    <Tooltip arrow title="Toggle Menu">
+                        <IconButton color="primary" onClick={toggleSidebar}>
+                            {!isSidebarVisible ? <MenuTwoToneIcon /> : <CloseTwoToneIcon />}
+                        </IconButton>
+                    </Tooltip>
+                </Box>
+            </Box>
+        </HeaderWrapper>
+    );
 };
 
 export default Header;
