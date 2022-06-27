@@ -30,7 +30,6 @@ const Header = () => {
 		<HeaderWrapper>
 			<Box display="flex" alignItems="center" ml="auto">
 				<HeaderButtons />
-				<HeaderUserbox />
 				<Box
 					sx={{
 						display: {
