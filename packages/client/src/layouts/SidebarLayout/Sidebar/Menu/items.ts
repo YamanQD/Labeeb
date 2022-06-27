@@ -1,30 +1,30 @@
 import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 import { SvgIcon } from "@mui/material";
 
-export interface MenuItem {
-	link?: string;
-	icon?: typeof SvgIcon;
-	badge?: string;
-	items?: MenuItem[];
-	name: string;
+export interface IMenuItem {
+    link?: string;
+    icon?: typeof SvgIcon;
+    badge?: string;
+    children?: IMenuItem[];
+    name: string;
 }
 
-export interface MenuItems {
-	items: MenuItem[];
-	heading: string;
-}
+export const menuItems: IMenuItem[] = [
+    {
+        name: "Satellite Simulator",
+        link: "/tasks",
+        icon: TableChartTwoToneIcon,
+        children: [
+            {
+                name: "Frontend",
+                link: "/tasks",
+            },
 
-const menuItems: MenuItems[] = [
-	{
-		heading: "",
-		items: [
-			{
-				name: "Tasks",
-				link: "/tasks",
-				icon: TableChartTwoToneIcon,
-			},
-		],
-	},
+            {
+                name: "Backend",
+                link: "/tasks",
+            },
+        ],
+    },
 ];
 
-export default menuItems;

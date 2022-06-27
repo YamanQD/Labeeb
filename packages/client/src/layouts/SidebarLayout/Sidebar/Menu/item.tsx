@@ -28,7 +28,6 @@ const SidebarMenuItem: FC<SidebarMenuItemProps> = ({
 	const [menuToggle, setMenuToggle] = useState(openParent);
 
 	const toggleMenu = (): void => {
-		console.log("here");
 		setMenuToggle((Open) => !Open);
 	};
 
