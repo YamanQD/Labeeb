@@ -908,54 +908,6 @@ export const DarkTheme = createTheme({
 				},
 			},
 		},
-		// MuiTimelineDot: {
-		//   styleOverrides: {
-		//     root: {
-		//       margin: 0,
-		//       zIndex: 5,
-		//       position: 'absolute',
-		//       top: '50%',
-		//       marginTop: -6,
-		//       left: -6
-		//     },
-		//     outlined: {
-		//       backgroundColor: colors.alpha.white[100],
-		//       boxShadow: '0 0 0 6px ' + colors.alpha.white[100]
-		//     },
-		//     outlinedPrimary: {
-		//       backgroundColor: colors.alpha.white[100],
-		//       boxShadow: '0 0 0 6px ' + colors.alpha.white[100]
-		//     }
-		//   }
-		// },
-		// MuiTimelineConnector: {
-		//   styleOverrides: {
-		//     root: {
-		//       position: 'absolute',
-		//       height: '100%',
-		//       top: 0,
-		//       borderRadius: 50,
-		//       backgroundColor: colors.alpha.black[10]
-		//     }
-		//   }
-		// },
-		// MuiTimelineItem: {
-		//   styleOverrides: {
-		//     root: {
-		//       minHeight: 0,
-		//       padding: '8px 0',
-
-		//       '&:before': {
-		//         display: 'none'
-		//       }
-		//     },
-		//     missingOppositeContent: {
-		//       '&:before': {
-		//         display: 'none'
-		//       }
-		//     }
-		//   }
-		// },
 		MuiTooltip: {
 			styleOverrides: {
 				tooltip: {
@@ -1030,32 +982,7 @@ export const DarkTheme = createTheme({
 					},
 				},
 			},
-		},
-		MuiTypography: {
-			defaultProps: {
-				variantMapping: {
-					h1: "h1",
-					h2: "h2",
-					h3: "div",
-					h4: "div",
-					h5: "div",
-					h6: "div",
-					subtitle1: "div",
-					subtitle2: "div",
-					body1: "div",
-					body2: "div",
-				},
-			},
-			styleOverrides: {
-				gutterBottom: {
-					marginBottom: 4,
-				},
-				paragraph: {
-					fontSize: 17,
-					lineHeight: 1.7,
-				},
-			},
-		},
+		}
 	},
 	shape: {
 		borderRadius: 6,
@@ -1065,8 +992,7 @@ export const DarkTheme = createTheme({
 			'"Inter"',
 			'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
 		].join(","),
-		fontSize: 14,
-		htmlFontSize: 15,
+		fontSize: 16,
 		h1: {
 			fontWeight: 700,
 			fontSize: 30,
@@ -1093,7 +1019,7 @@ export const DarkTheme = createTheme({
 			fontSize: 15,
 		},
 		body1: {
-			fontSize: 14,
+			fontSize: 16,
 		},
 		body2: {
 			fontSize: 14,
@@ -1121,32 +1047,5 @@ export const DarkTheme = createTheme({
 			fontWeight: 700,
 			textTransform: "uppercase",
 		},
-	},
-	shadows: [
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-		"none",
-	],
+	}
 });
