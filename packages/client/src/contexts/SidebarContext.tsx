@@ -8,10 +8,10 @@ interface WrapperProps {
 	children: React.ReactNode;
 }
 
-const config = { isSidebarVisible: false, toggleSidebar: () => {} };
-export const SidebarContext = createContext<SidebarContextType>(config);
+const defaultConfig = { isSidebarVisible: false, toggleSidebar: () => {} };
+export const SidebarContext = createContext<SidebarContextType>(defaultConfig);
 
-export const SidebarProvider = ({ children }: WrapperProps) => {
+const SidebarProvider = ({ children }: WrapperProps) => {
 	const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 	const toggleSidebar = () => {
 		setIsSidebarVisible(!isSidebarVisible);
@@ -23,3 +23,5 @@ export const SidebarProvider = ({ children }: WrapperProps) => {
 		</SidebarContext.Provider>
 	);
 };
+
+export default SidebarProvider;
