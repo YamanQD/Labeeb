@@ -29,7 +29,7 @@ const SubMenuWrapper = styled(List)(
             right: ${theme.spacing(4)};
 
             .MuiBadge-standard {
-              background: ${theme.colors.primary.main};
+              background: ${theme.palette.primary.main};
               font-size: ${theme.typography.pxToRem(9)};
               font-weight: bold;
               text-transform: uppercase;
