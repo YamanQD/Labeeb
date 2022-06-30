@@ -5,7 +5,7 @@ import TasksListHeader from "./TasksListHeader";
 
 const TasksList = ({ title = "", tasks = [], color }: ITasksList) => {
     return (
-        <div className={styles.tasksListContainer}>
+        <div className={styles.listContainer}>
             <TasksListHeader title={title} color={color} tasksCount={tasks.length} />
 
             {tasks.map((task) => (
