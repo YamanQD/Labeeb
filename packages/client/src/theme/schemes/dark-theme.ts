@@ -1,4 +1,5 @@
 import { alpha, createTheme, darken } from "@mui/material";
+import { commonOptions } from "./common";
 
 const themeColors = {
 	primary: "#8C7CF0",
@@ -122,6 +123,7 @@ const colors = {
 
 export const DarkTheme = createTheme({
 	// direction: i18n.dir(),
+	...commonOptions,
 	general: {
 		borderRadiusSm: "4px",
 		borderRadius: "6px",
