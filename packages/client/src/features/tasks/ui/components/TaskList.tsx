@@ -3,7 +3,7 @@ import { useState } from "react";
 import Task from "./Task";
 import styles from "./task-list.module.css";
 import TaskListTitle from "./TaskListTitle";
-import { ITaskList } from "../types";
+import { ITaskList } from "../../domain/task";
 
 const TaskListColumns = () => {
     return (
@@ -21,7 +21,7 @@ const TaskListColumns = () => {
     );
 };
 
-const TaskList = ({ title = "", tasks = [] }: ITaskList) => {
+const TaskList = ({ status = "", tasks = [] }: ITaskList) => {
     const [isListExpanded, setIsListExpanded] = useState(true);
     const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
 
@@ -30,7 +30,7 @@ const TaskList = ({ title = "", tasks = [] }: ITaskList) => {
             <Grid container sx={{ alignItems: "center" }}>
                 <Grid item xs={6}>
                     <TaskListTitle
-                        title={title}
+                        title={status}
                         tasksCount={tasks.length}
                         toggleListExpansion={toggleListExpansion}
                         isListExpanded={isListExpanded}

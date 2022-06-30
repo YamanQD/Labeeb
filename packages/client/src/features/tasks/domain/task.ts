@@ -5,6 +5,12 @@ export interface ITask {
 
 export interface ITaskList {
     id: number;
-    title: string;
+    status: string;
     tasks: ITask[];
+}
+
+export interface ITaskGroup {
+    id: number;
+    title: string;
+    lists: ITaskList[];
 }

@@ -11,7 +11,7 @@ const Loader = (Component: React.FC) => (props: any) =>
 	);
 
 // Pages
-const Tasks = Loader(lazy(() => import("src/features/tasks/views/Tasks")));
+const Tasks = Loader(lazy(() => import("src/features/tasks/ui/views/Tasks")));
 const Status404 = Loader(lazy(() => import("src/pages/404")));
 
 export const ApplicationRoutes = () => {
