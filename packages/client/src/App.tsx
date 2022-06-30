@@ -9,14 +9,19 @@ import "./i18";
 import SidebarProvider from "./contexts/SidebarContext";
 import ThemeProvider from "./theme/ThemeProvider";
 
+import { QueryClientProvider } from "react-query";
+import { queryClient } from "src/lib/react-query";
+
 const App = () => {
     return (
         <BrowserRouter>
             <SidebarProvider>
-                <ThemeProvider>
-                    <CssBaseline />
-                    <ApplicationRoutes />
-                </ThemeProvider>
+                <QueryClientProvider client={queryClient}>
+                    <ThemeProvider>
+                        <CssBaseline />
+                        <ApplicationRoutes />
+                    </ThemeProvider>
+                </QueryClientProvider>
             </SidebarProvider>
         </BrowserRouter>
     );
