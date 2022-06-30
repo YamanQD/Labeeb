@@ -3,9 +3,8 @@ export interface ITask {
     title: string;
 }
 
-export interface ITasksList {
+export interface ITaskList {
     id: number;
     title: string;
-    color: string;
     tasks: ITask[];
 }

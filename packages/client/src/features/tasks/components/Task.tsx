@@ -8,7 +8,7 @@ const Task = ({ title = "default" }) => {
         <Paper className={styles.taskContainer}>
             <Grid container>
                 <Grid item xs={6} className={styles.taskName}>
-                    <Box sx={{ mr: 2 }} className={styles.taskStatus}></Box>
+                    <Box sx={{ mr: 2, backgroundColor: "primary.light" }} className={styles.taskStatus}></Box>
                     <span>{title}</span>
                 </Grid>
 

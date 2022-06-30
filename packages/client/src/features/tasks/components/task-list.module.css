@@ -11,12 +11,12 @@
 .listTitleContainer {
     display: inline-flex;
     align-items: center;
+
+    cursor: pointer;
 }
 
-.listTitle {
-    padding: 8px;
-    border-radius: 5px;
-    font-weight: normal;
+.listTitleContainer:hover {
+    filter: brightness(90%);
 }
 
 .listTitleIcon {
