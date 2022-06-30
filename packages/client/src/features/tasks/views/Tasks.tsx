@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import TasksList from "src/components/Tasks/TasksList";
+import TasksList from "../components/TasksList";
 import { ITasksList } from "src/models/task.model";
 import { useReducer } from "react";
 

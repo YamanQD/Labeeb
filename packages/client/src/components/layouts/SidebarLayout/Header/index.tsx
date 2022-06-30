@@ -14,7 +14,7 @@ const HeaderWrapper = styled(Box)(
         color: ${theme.header.textColor};
         padding: ${theme.spacing(0, 2)};
         right: 0;
-        z-index: -10;
+        z-index: 5;
         background-color: ${theme.header.background};
         box-shadow: ${theme.header.boxShadow};
         position: sticky;

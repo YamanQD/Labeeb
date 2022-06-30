@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import SuspenseLoader from "src/components/SuspenseLoader";
-import SidebarLayout from "src/layouts/SidebarLayout";
+import SidebarLayout from "src/components/layouts/SidebarLayout";
 
 const Loader = (Component: React.FC) => (props: any) =>
 	(
@@ -11,7 +11,7 @@ const Loader = (Component: React.FC) => (props: any) =>
 	);
 
 // Pages
-const Tasks = Loader(lazy(() => import("src/pages/tasks")));
+const Tasks = Loader(lazy(() => import("src/features/tasks/views/Tasks")));
 const Status404 = Loader(lazy(() => import("src/pages/404")));
 
 export const ApplicationRoutes = () => {

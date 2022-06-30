@@ -1,5 +1,5 @@
 import { ITasksList } from "src/models/task.model";
-import Task from "../Task";
+import Task from "./Task";
 import styles from "./tasks-list.module.css";
 import TasksListHeader from "./TasksListHeader";
 
