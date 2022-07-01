@@ -1,6 +1,37 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/httpClient";
+import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { ITask, ITaskGroup, ITaskList } from "../domain/task";
-import { ITasksRepository } from "../domain/taskRepository";
+import { ITasksRepository } from "../domain/ItaskRepository";
+
+interface TaskDTO {
+    id: number;
+    title: string;
+}
+
+interface TaskListDTO {
+    id: number;
+    status: string;
+    tasks: TaskDTO[];
+}
+
+interface TaskGroupDTO {
+    id: number;
+    title: string;
+    taskLists: TaskListDTO[]
+}
+
+
+const dtoToTask = (dto: TaskDTO): ITask => {
+    return dto;
+}
+
+
+const dtoToTaskList = (dto: TaskListDTO): ITaskList => {
+    return dto;
+}
+
+const dtoToTaskGroup = (dto: TaskGroupDTO): ITaskGroup => {
+    return dto;
+}
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -10,60 +41,12 @@ export class TasksRepository implements ITasksRepository {
     }
 
     public async getAllTaskGroups(): Promise<ITaskGroup[]> {
-        const mockTasksLists: ITaskList[] = [
-            {
-                id: 1,
-                status: "Frontend",
-                tasks: [
-                    {
-                        id: 1,
-                        title: "Create application",
-                    },
+        const response = await this.httpClient.request<TaskGroupDTO[]>({
+            path: "/taskGroups",
+        });
 
-                    {
-                        id: 2,
-
-                        title: "Work",
-                    },
-
-                    {
-                        id: 13,
-                        title: "Go to lobby",
-                    },
-                ],
-            },
-
-            {
-                id: 2,
-                status: "Backend",
-                tasks: [
-                    {
-                        id: 1,
-                        title: "Snow",
-                    },
-
-                    {
-                        id: 2,
-                        title: "Yaman",
-                    },
-
-                    {
-                        id: 13,
-                        title: "Malki",
-                    },
-                ],
-            },
-        ];
-
-        const mockTaskGroups = [
-            {
-                id: 1,
-                title: "Hasan",
-                lists: mockTasksLists,
-            },
-        ];
-
-        return mockTaskGroups;
+        const taskGroups = response.map(dtoToTaskGroup);
+        return taskGroups;
     }
 
     public getTaskGroupByProjectID(projectID: number): Promise<ITaskGroup> {

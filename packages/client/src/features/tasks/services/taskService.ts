@@ -1,4 +1,4 @@
-import { ITasksRepository } from "../domain/taskRepository";
+import { ITasksRepository } from "../domain/ItaskRepository";
 
 export class TasksService {
     constructor(private tasksRepository: ITasksRepository) { }
