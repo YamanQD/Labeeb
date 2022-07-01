@@ -6,8 +6,14 @@ type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
 export interface IRequestOptions {
     path: string;
     method?: HTTPMethod;
+
+    /**
+     * An optional method that parses the response provided by the client.
+     * @param data 
+     */
+    parser?<ResponseType>(data: any): Promise<ResponseType>;
 }
 
 export interface IHTTPClient {
-    request(options: IRequestOptions): Promise<any>;
+    request<ResponseType>(options: IRequestOptions): Promise<ResponseType>;
 }
