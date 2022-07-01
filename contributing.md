@@ -16,7 +16,7 @@ Pull requests are preferred for any non-trivial change.
 
 In order to preserve a clear and informative commit history, please prefix your commit messages with the following letters:
 
-- `front:` for frontend 
-- `back:` for backend
+- `FE:` for frontend 
+- `BE:` for backend
 
 And make sure to capitalize the first letter after the prefix. As for general edits, it's okay not to use a prefix.
