@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { useGetAllTaskGroups } from "../../application/getAllTaskGroups";
-import TaskList from "../components/TaskList";
+import TaskGroup from "../components/TaskGroup";
 
 const Tasks = () => {
-    const { data: groups, isLoading } = useGetAllTaskGroups();
+    const { data: taskGroups, isLoading } = useGetAllTaskGroups();
 
     return (
         <Box sx={{ p: 4 }}>
@@ -11,13 +11,10 @@ const Tasks = () => {
                 "LOADING MAN PLEASE WAIT"
             ) : (
                 <>
-                    {groups.map((group) => (
-                        <>
-                            <h2>{group.title}</h2>
-                            {group.lists.map((list) => (
-                                <TaskList key={list.id} {...list} />
-                            ))}
-                        </>
+                    {taskGroups.map((group) => (
+                        // Task groups contain task lists (open tasks, WIP tasks, .etc)
+                        // And task lists are composed of individual tasks
+                        <TaskGroup key={group.id} {...group} />
                     ))}
                 </>
             )}

@@ -12,5 +12,5 @@ export interface ITaskList {
 export interface ITaskGroup {
     id: number;
     title: string;
-    lists: ITaskList[];
+    taskLists: ITaskList[];
 }

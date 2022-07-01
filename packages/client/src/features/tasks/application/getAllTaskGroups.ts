@@ -12,5 +12,5 @@ export const useGetAllTaskGroups = () => {
         return tasksService.getAllTaskGroups();
     };
 
-    return useQuery("taskLists", fetchAllTaskGroups);
+    return useQuery("taskGroups", fetchAllTaskGroups);
 };
