@@ -17,14 +17,16 @@ Please be aware of commiting static (untraslated) text into the package, unless 
 
 ## Naming conventions
 
+-   Domain and API related files: camelCase
+
 -   React component folders: PascalCase
 -   React components: PascalCase
--   React pages: kebab-case
--   Non-React component folders: kebab-case
+-   React pages: PascalCase
+-   CSS files for React components: kebab-case
 
 It's preferred to create a folder for each component that you create, with an `index.tsx` file in its root to prevent name duplication:
 
-```js
+```tsx
 // Bad
 import Footer from "src/components/Footer/Footer.tsx";
 
@@ -36,7 +38,7 @@ import Footer from "src/components/Footer";
 
 Use the following style when creating and exporting components:
 
-```js
+```tsx
 const SomeComponent = () => {
 	return <div>Hello</div>;
 };
@@ -54,11 +56,11 @@ This project heavily utilizes JSS solutions (mainly, [emotion](https://emotion.s
 
 I believe that (artificially) separating styled components as in the example below will only create more concerns and not save the developer any precious time.
 
-You will spend half of your life switching context between the return statement and 100 lines above it. Moreover, you can't style these components based on the parent component's state unless you pass props to these components, as a result of which things will get ugly pretty fast.
+You will spend half of your life switching context between the return statement and 100 lines above it.
 
 **Example usage:**
 
-```js
+```tsx
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
@@ -112,7 +114,7 @@ When there are many similar styled components that don't rely on the `theme` obj
 
 **Example usage:**
 
-```js
+```tsx
 const List = () => {
     const items = []; // 1000 items.
 
