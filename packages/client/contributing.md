@@ -40,7 +40,7 @@ Use the following style when creating and exporting components:
 
 ```tsx
 const SomeComponent = () => {
-	return <div>Hello</div>;
+    return <div>Hello</div>;
 };
 
 export default SomeComponent;
@@ -50,67 +50,57 @@ Using class components is discouraged and frowned upon in this project! Use hook
 
 ## Styling components
 
-This project heavily utilizes JSS solutions (mainly, [emotion](https://emotion.sh/docs/introduction)). I recommend avoiding writing CSS or SASS stylsheets in favor of using JS components (unless for a [specific reason](#performance-note)).
+This project heavily utilizes JSS solutions (mainly, [emotion](https://emotion.sh/docs/introduction)).
 
-## Separation of concerns
+**So what should I use?**
 
-I believe that (artificially) separating styled components as in the example below will only create more concerns and not save the developer any precious time.
-
-You will spend half of your life switching context between the return statement and 100 lines above it.
-
-**Example usage:**
+Should I use styled components like this:
 
 ```tsx
-import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 
-// Bad example
-const LogoWrapper = styled(Link)(
-	({ theme }) => `
-        color: ${theme.palette.text.primary};
-        padding: ${theme.spacing(0, 1, 0, 0)};
-        display: flex;
-        text-decoration: none;
-        font-weight: ${theme.typography.fontWeightBold};
-`
-);
-
-const LogoText = styled("div")(
-	({ theme }) => `
-        color: green;
-        background-color: yellow;
-    `
-);
-
-const BadLogo = () => {
-	return (
-		<LogoWrapper>
-			<LogoText>Text here</LogoText>
-		</LogoWrapper>
-	);
-};
-
-// Good example
-const GoodLogo = () => {
-	return (
-		<Box
-			sx={{
-				display: "block",
-				p: 2,
-			}}
-		>
-			<Typography variant="h2">Text</Typography>
-		</Box>
-	);
-};
+const Root = styled("div")(({ theme }) => ({
+    padding: theme.spacing(1),
+}));
 ```
 
-_Note: There are some components that follow the bad style in this codebase. Refactoring them would take a big amount of time, so ignore them for now._
+Or use the `sx` prop like this:
+
+```tsx
+import { Box } from "@mui/material";
+
+const Wrapper = () => (
+    <Box
+        sx={{
+            color: "primary.main",
+            m: 2,
+        }}
+    ></Box>
+);
+```
+
+Or use plain old CSS?
+
+```tsx
+import styles from "./style.module.css";
+
+const Wrapper = () => (
+    <div className={styles.wrapper}></div>;
+);
+```
+
+I know MUI's docs are confusing a little bit, but this table might help you make your decision:
+
+| Use case \ Technique                             | CSS Classes/style attribute | `sx` | styled components |
+| ------------------------------------------------ | --------------------------- | ---- | ----------------- |
+| No interactivity                                 | ✅                          | ❌   | ✅                |
+| Styling based on props                           | ✅                          | ✅   | ❌                |
+| You need the `theme` variable                    | ❌                          | ✅   | ✅                |
+| There are [too many elements](#performance-note) | ✅                          | ❌   | ❌                |
 
 ### Performance note
 
-When there are many similar styled components that don't rely on the `theme` object, I recommened using plain HTML elements and writing a CSS stylesheet instead of JS components. This is much better for [performance reasons](https://mui.com/system/basics/#performance-tradeoff).
+For [performance reasons](https://mui.com/system/basics/#performance-tradeoff), prefer using CSS classes to render big amounts of elements.
 
 **Example usage:**
 
