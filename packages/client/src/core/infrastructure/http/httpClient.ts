@@ -2,8 +2,12 @@ import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
 
 export class HTTPClient implements IHTTPClient {
     async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
-        const { path, method = "GET" } = options;
-        const response = await fetch(path, {
+        const { path, method = "GET", params = {} } = options;
+
+        const urlParameters = new URLSearchParams(params);
+        const requestPath = `${path}?${urlParameters}`;
+
+        const response = await fetch(requestPath, {
             method,
         });
 

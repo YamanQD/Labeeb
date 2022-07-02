@@ -6,6 +6,7 @@ type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
 export interface IRequestOptions {
     path: string;
     method?: HTTPMethod;
+    params?: any,
 
     /**
      * An optional method that parses the response provided by the client.
