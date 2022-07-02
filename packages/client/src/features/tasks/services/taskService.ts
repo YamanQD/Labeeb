@@ -1,13 +1,13 @@
 import { ITasksRepository } from "../domain/ItaskRepository";
 
 export class TasksService {
-    constructor(private tasksRepository: ITasksRepository) { }
+    constructor(private tasksRepository: ITasksRepository) {}
 
-    public async getTaskGroupsByProjectId(projectId: number) {
-        return this.tasksRepository.getTaskGroupByProjectID(projectId);
+    public async getAllTaskGroupsForProject(projectId: number) {
+        return this.tasksRepository.getAllTaskGroupsForProject(projectId);
     }
 
-    public async getAllTaskGroups() {
-        return this.tasksRepository.getAllTaskGroups();
+    public async getTaskGroup(groupId: number) {
+        return this.tasksRepository.getTaskGroup(groupId);
     }
 }

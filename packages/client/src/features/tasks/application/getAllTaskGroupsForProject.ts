@@ -7,9 +7,9 @@ const httpClient = new HTTPClient();
 const tasksRepository = new TasksRepository(httpClient);
 const tasksService = new TasksService(tasksRepository);
 
-export const useGetAllTaskGroups = () => {
+export const useGetAllTaskGroupsForProject = (projectId: number) => {
     const fetchAllTaskGroups = async () => {
-        return tasksService.getAllTaskGroups();
+        return tasksService.getAllTaskGroupsForProject(projectId);
     };
 
     return useQuery("taskGroups", fetchAllTaskGroups);

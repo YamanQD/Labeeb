@@ -1,37 +1,8 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
-import { ITask, ITaskGroup, ITaskList } from "../domain/task";
 import { ITasksRepository } from "../domain/ItaskRepository";
-
-interface TaskDTO {
-    id: number;
-    title: string;
-}
-
-interface TaskListDTO {
-    id: number;
-    status: string;
-    tasks: TaskDTO[];
-}
-
-interface TaskGroupDTO {
-    id: number;
-    title: string;
-    taskLists: TaskListDTO[]
-}
-
-
-const dtoToTask = (dto: TaskDTO): ITask => {
-    return dto;
-}
-
-
-const dtoToTaskList = (dto: TaskListDTO): ITaskList => {
-    return dto;
-}
-
-const dtoToTaskGroup = (dto: TaskGroupDTO): ITaskGroup => {
-    return dto;
-}
+import { ITask, ITaskGroup } from "../domain/task";
+import { TaskGroupDTO } from "./dto";
+import { TaskMapper } from "./mappers";
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -40,16 +11,19 @@ export class TasksRepository implements ITasksRepository {
         throw new Error("Method not implemented.");
     }
 
-    public async getAllTaskGroups(): Promise<ITaskGroup[]> {
+    public async getAllTaskGroupsForProject(projectId: number): Promise<ITaskGroup[]> {
         const response = await this.httpClient.request<TaskGroupDTO[]>({
             path: "/taskGroups",
+            params: {
+                project_id: projectId
+            }
         });
 
-        const taskGroups = response.map(dtoToTaskGroup);
+        const taskGroups = response.map(TaskMapper.dtoToTaskGroup);
         return taskGroups;
     }
 
-    public getTaskGroupByProjectID(projectID: number): Promise<ITaskGroup> {
+    public getTaskGroup(groupId: number): Promise<ITaskGroup> {
         throw new Error("Method not implemented.");
     }
 }

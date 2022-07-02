@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
-import { useGetAllTaskGroups } from "../../application/getAllTaskGroups";
+import { useGetAllTaskGroupsForProject } from "../../application/getAllTaskGroupsForProject";
 import TaskGroup from "../components/TaskGroup";
 
 const Tasks = () => {
-    const { data: taskGroups, isLoading } = useGetAllTaskGroups();
+    const { data: taskGroups, isLoading } = useGetAllTaskGroupsForProject(1);
 
     return (
         <Box sx={{ p: 4 }}>
