@@ -18,7 +18,7 @@ export const ApplicationRoutes = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<SidebarLayout />}>
-				<Route path="tasks" element={<Tasks />} />
+				<Route path="" element={<Tasks />} />
 			</Route>
 			<Route path="*" element={<Status404 />} />
 		</Routes>
