@@ -1,40 +1,50 @@
+import { useStore } from "src/core/infrastructure/store";
 import SidebarMenuItem from "./item";
+import { projects } from "./items";
 import ItemsList from "./ItemsList";
 import SubMenuWrapper from "./SubMenuWrapper";
-import { menuItems } from "./items";
 
 const SidebarMenu = () => {
+    const setTaskGroupToView = useStore((state) => state.setTaskGroupToView);
     return (
         <>
-            {menuItems.map((section) => {
-                const hasChildren = section.children?.length > 0;
+            {projects.map((project) => {
+                const hasChildren = (project.children?.length ?? 0) > 0;
                 return (
                     /**
-                     * Each section is structured like this:
+                     * Each project is structured like this:
                      *
-                     * Heading
-                     *  - Child
-                     *  - Child
-                     *  - Child
+                     * Project
+                     *  - Group
+                     *  - Group
+                     *  - Group
                      */
-                    <ItemsList key={section.name}>
+                    <ItemsList key={project.title}>
                         <SubMenuWrapper>
                             <SidebarMenuItem
-                                name={section.name}
-                                icon={section.icon}
-                                link={section.link}
-                                badge={section.badge}
+                                title={project.title}
+                                icon={project.icon}
+                                badge={project.badge}
+                                onClick={() =>
+                                    setTaskGroupToView({
+                                        projectId: project.id,
+                                        groupId: undefined,
+                                    })
+                                }
                             >
                                 {hasChildren && (
                                     <SubMenuWrapper>
-                                        {section.children.map((item) => {
+                                        {project.children?.map((group) => {
                                             return (
                                                 <SidebarMenuItem
-                                                    key={item.name}
-                                                    name={item.name}
-                                                    icon={item.icon}
-                                                    link={item.link}
-                                                    badge={item.badge}
+                                                    key={group.title}
+                                                    title={group.title}
+                                                    onClick={() =>
+                                                        setTaskGroupToView({
+                                                            projectId: project.id,
+                                                            groupId: group.id,
+                                                        })
+                                                    }
                                                 />
                                             );
                                         })}

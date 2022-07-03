@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ITaskGroup } from "../../domain/task";
 import TaskList from "./TaskList";
 
-const TaskGroupHeader = ({ onClick, title = "" }) => {
+const TaskGroupHeader = ({ onClick = () => {}, title = "" }) => {
     return (
         <Typography onClick={onClick} variant="h2" sx={{ mb: 2 }}>
             {title}

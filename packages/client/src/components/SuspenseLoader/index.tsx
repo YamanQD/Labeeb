@@ -1,15 +1,15 @@
 import { Box, CircularProgress } from "@mui/material";
-import NProgress from "nprogress";
+// import NProgress from "nprogress";
 import { useEffect } from "react";
 
 const SuspenseLoader = () => {
-	useEffect(() => {
-		NProgress.start();
+	// useEffect(() => {
+	// 	NProgress.start();
 
-		return () => {
-			NProgress.done();
-		};
-	}, []);
+	// 	return () => {
+	// 		NProgress.done();
+	// 	};
+	// }, []);
 
 	return (
 		<Box

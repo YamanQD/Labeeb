@@ -1,11 +1,11 @@
 interface TaskGroupInfo {
-    projectId: number | null;
-    groupId: number | null;
+    projectId: number | undefined;
+    groupId: number | undefined;
 }
 
 export interface IStore {
-    currentProjectId: number | null;
-    currentGroupId: number | null;
+    currentProjectId: number | undefined;
+    currentGroupId: number | undefined;
 
     /**
      * Sets which task group the user should be seeing in the tasks view.
