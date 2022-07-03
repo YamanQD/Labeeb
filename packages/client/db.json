@@ -3,6 +3,7 @@
         {
             "id": 1,
             "title": "Frontend",
+            "project_id": "1",
             "taskLists": [
                 {
                     "id": 1,
@@ -51,6 +52,7 @@
         {
             "id": 2,
             "title": "Backend",
+            "project_id": "1",
             "taskLists": [
                 {
                     "id": 1,
@@ -93,6 +95,23 @@
                             "title": "Malki"
                         }
                     ]
+                }
+            ]
+        }
+    ],
+    
+    "projects": [
+        {
+            "id": 1,
+            "title": "Satellite Simulator",
+            "groups": [
+                {
+                    "id": 1,
+                    "title": "Frontend"
+                },
+                {
+                    "id": 2,
+                    "title": "Backend"
                 }
             ]
         }
