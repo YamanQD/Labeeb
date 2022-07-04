@@ -19,6 +19,7 @@ These are the resources that I learned from:
 -   https://github.com/nanosoftonline/clean-architecture-express-contacts
 -   https://github.com/devbootstrap/SOLID-Principles-Examples-using-Typescript
 -   https://github.com/Zenika/grenoble-hands-on-front-clean-architecture
+-   https://github.com/alan2207/bulletproof-react
 
 In short, there are two main concepts I applied in this project:
 
