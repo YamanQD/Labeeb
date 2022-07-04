@@ -7,7 +7,7 @@ const httpClient = new HTTPClient();
 const tasksRepository = new TasksRepository(httpClient);
 const tasksService = new TasksService(tasksRepository);
 
-interface useGetTaskGroups {
+interface UseGetTaskGroups {
     projectId: number | undefined;
     groupId: number | undefined;
 
@@ -15,7 +15,7 @@ interface useGetTaskGroups {
     queryOptions?: Object;
 }
 
-export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: useGetTaskGroups) => {
+export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroups) => {
     const fetchAllTaskGroups = async () => {
         return tasksService.getTaskGroupsForProject({
             projectId,
