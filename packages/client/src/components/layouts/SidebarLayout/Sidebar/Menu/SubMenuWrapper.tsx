@@ -10,9 +10,7 @@ const SubMenuWrapper = styled(List)(
         font-weight: normal !important;
       }
 
-      .MuiListItem-root {
-        padding: 2px ${theme.spacing(2)};
-    
+      .MuiListItem-root {    
         .MuiButton-root {
           display: flex;
           color: ${theme.sidebar.menuItemColor};

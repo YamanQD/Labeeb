@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { useStore } from "src/core/infrastructure/store";
 import SidebarMenuItem from "./item";
 import { projects } from "./items";
@@ -7,7 +9,10 @@ import SubMenuWrapper from "./SubMenuWrapper";
 const SidebarMenu = () => {
     const setTaskGroupToView = useStore((state) => state.setTaskGroupToView);
     return (
-        <>
+        <Box sx={{
+            px: 2
+        }}>
+            <Typography variant="h4" sx={{textTransform: "uppercase", mb: 2}}>My Projects</Typography>
             {projects.map((project) => {
                 const hasChildren = (project.children?.length ?? 0) > 0;
                 return (
@@ -55,7 +60,7 @@ const SidebarMenu = () => {
                     </ItemsList>
                 );
             })}
-        </>
+        </Box>
     );
 };
 

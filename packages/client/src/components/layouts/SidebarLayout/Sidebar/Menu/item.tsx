@@ -32,7 +32,7 @@ const SidebarMenuItem = ({
 
     if (children) {
         return (
-            <ListItem component="div" className="Mui-children" key={title}>
+            <ListItem component="div" className="Mui-children" key={title} sx={{ p: 0}}>
                 <Button
                     className={`${menuToggle ? "Mui-active" : ""}`}
                     startIcon={Icon && <Icon />}

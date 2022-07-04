@@ -1,5 +1,4 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styles from "./task-list.module.css";
@@ -12,14 +11,14 @@ const TaskListTitle = ({
 }) => {
     return (
         <div className={styles.listTitleContainer} onClick={toggleListExpansion}>
-            <Box
-                className={styles.listTitleIcon}
+            <div
+                className={styles.arrowIcon}
                 style={{
                     transform: isListExpanded ? "" : "rotate(-90deg)",
                 }}
             >
                 <KeyboardArrowDownSharpIcon color="primary" />
-            </Box>
+            </div>
             <Button
                 variant="contained"
                 color="primary"
@@ -27,15 +26,14 @@ const TaskListTitle = ({
                 sx={{
                     ml: "5px",
                     px: 1,
-                    textTransform: "none"
+                    textTransform: "uppercase",
                 }}
             >
-                <Typography variant="h4">
-                    {title}
-                </Typography>
-                <span style={{margin: "0 5px"}}>-</span>
+                
+                <Typography variant="h4">{title}</Typography>
+                <span style={{ margin: "0 5px" }}>-</span>
                 <Typography variant="h4" component="span">
-                   {tasksCount} Tasks
+                    {tasksCount} Tasks
                 </Typography>
             </Button>
         </div>

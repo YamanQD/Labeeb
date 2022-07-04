@@ -1,23 +1,25 @@
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
+import { ITaskList } from "../../domain/task";
 import Task from "./Task";
 import styles from "./task-list.module.css";
 import TaskListTitle from "./TaskListTitle";
-import { ITaskList } from "../../domain/task";
 
 const TaskListColumns = () => {
     return (
-        <>
-            <Grid item xs={2} className={styles.taskColumn}>
-                Assignee
+        <Grid item xs={6} className={styles.columnContainer}>
+            <Grid container>
+                <Grid item xs={4} className={styles.column}>
+                    Assignee
+                </Grid>
+                <Grid item xs={4} className={styles.column}>
+                    Priority
+                </Grid>
+                <Grid item xs={4} className={styles.column}>
+                    Deadline
+                </Grid>
             </Grid>
-            <Grid item xs={2} className={styles.taskColumn}>
-                Priority
-            </Grid>
-            <Grid item xs={2} className={styles.taskColumn}>
-                Deadline
-            </Grid>
-        </>
+        </Grid>
     );
 };
 
@@ -41,11 +43,11 @@ const TaskList = ({ status = "", tasks = [] }: ITaskList) => {
             </Grid>
 
             {isListExpanded && (
-                <>
+                <div className={styles.tasksContainer}>
                     {tasks.map((task) => (
                         <Task key={task.id} {...task} />
                     ))}
-                </>
+                </div>
             )}
         </div>
     );
