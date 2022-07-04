@@ -9,8 +9,7 @@ import { ReactNode, useState } from "react";
 
 interface SidebarMenuItemProps {
     children?: ReactNode;
-    icon?: any;
-    badge?: string;
+    badge?: string | number;
     open?: boolean;
     title: string;
     onClick: () => void;
@@ -18,7 +17,6 @@ interface SidebarMenuItemProps {
 
 const SidebarMenuItem = ({
     children,
-    icon: Icon,
     open = false,
     badge,
     title,
@@ -35,7 +33,6 @@ const SidebarMenuItem = ({
             <ListItem component="div" className="Mui-children" key={title} sx={{ p: 0}}>
                 <Button
                     className={`${menuToggle ? "Mui-active" : ""}`}
-                    startIcon={Icon && <Icon />}
                     endIcon={menuToggle ? <ExpandLessTwoToneIcon /> : <ExpandMoreTwoToneIcon />}
                     onClick={toggleMenu}
                 >
@@ -59,7 +56,7 @@ const SidebarMenuItem = ({
 
     return (
         <ListItem component="div" key={title}>
-            <Button startIcon={Icon && <Icon />} onClick={onClick}>
+            <Button onClick={onClick}>
                 {title}
                 {badge && <Badge badgeContent={badge} />}
             </Button>

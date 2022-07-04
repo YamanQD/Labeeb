@@ -1,7 +1,7 @@
 import { List } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const ItemsList = styled(List)(
+const SidebarMenuItemsList = styled(List)(
     ({ theme }) => `
     margin-bottom: ${theme.spacing(1)};
     padding: 0;
@@ -21,4 +21,4 @@ const ItemsList = styled(List)(
 `
 );
 
-export default ItemsList;
+export default SidebarMenuItemsList;

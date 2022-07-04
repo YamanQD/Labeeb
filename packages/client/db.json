@@ -97,7 +97,57 @@
                     ]
                 }
             ]
-        }
+        },
+
+        {
+          "id": 3,
+          "title": "Query",
+          "project_id": "2",
+          "taskLists": [
+              {
+                  "id": 1,
+                  "status": "In progress",
+                  "tasks": [
+                      {
+                          "id": 1,
+                          "title": "Create application"
+                      },
+
+                      {
+                          "id": 2,
+
+                          "title": "Work"
+                      },
+
+                      {
+                          "id": 13,
+                          "title": "Go to lobby"
+                      }
+                  ]
+              },
+
+              {
+                  "id": 2,
+                  "status": "Done",
+                  "tasks": [
+                      {
+                          "id": 1,
+                          "title": "Snow"
+                      },
+
+                      {
+                          "id": 2,
+                          "title": "Yaman"
+                      },
+
+                      {
+                          "id": 13,
+                          "title": "Malki"
+                      }
+                  ]
+              }
+          ]
+      }
     ],
     
     "projects": [
@@ -107,13 +157,32 @@
             "groups": [
                 {
                     "id": 1,
-                    "title": "Frontend"
+                    "title": "Frontend",
+                    "tasksCount": 3
                 },
                 {
                     "id": 2,
-                    "title": "Backend"
+                    "title": "Backend",
+                    "tasksCount": 2
                 }
             ]
-        }
+        },
+
+        {
+          "id": 2,
+          "title": "Database research",
+          "groups": [
+              {
+                  "id": 3,
+                  "title": "Query",
+                  "tasksCount": 4
+              },
+              {
+                  "id": 4,
+                  "title": "Cache",
+                  "tasksCount": 4
+              }
+          ]
+      }
     ]
 }
