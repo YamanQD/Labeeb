@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
-import { ITaskList } from "../../domain/task";
+import { TaskListDTO } from "../../services";
 import Task from "./Task";
 import styles from "./task-list.module.css";
 import TaskListTitle from "./TaskListTitle";
@@ -23,7 +23,7 @@ const TaskListColumns = () => {
     );
 };
 
-const TaskList = ({ status = "", tasks = [] }: ITaskList) => {
+const TaskList = ({ status = "", tasks = [] }: TaskListDTO) => {
     const [isListExpanded, setIsListExpanded] = useState(true);
     const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
 
