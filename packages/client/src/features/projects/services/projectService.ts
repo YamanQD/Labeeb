@@ -1,10 +1,10 @@
 import { IProjectRepository } from "../domain/IprojectRepository";
 import { Project } from "../domain/project";
 
-export class ProjectsService {
-    constructor(private projectsRepository: IProjectRepository) { }
+export class ProjectService {
+    constructor(private projectRepository: IProjectRepository) {}
 
     public async getProjects(): Promise<Project[]> {
-        return await this.projectsRepository.getProjects();
+        return await this.projectRepository.getProjects();
     }
 }
