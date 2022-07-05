@@ -35,7 +35,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "mock:server": "json-server --watch db.json --port 5000",
+        "mock:server": "json-server --watch ./mock-server/index.js --port 5000",
         "client:start": "react-scripts start",
         "client:build": "react-scripts build",
         "client:test": "react-scripts test",
