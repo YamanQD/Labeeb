@@ -1,10 +1,10 @@
 import { IUserRepository } from "../domain/IuserRepository";
-import { UserCredentials } from "../domain/user";
+import { IUserCredentials } from "../domain/user";
 
 export class UserService {
-    constructor(private userRepository: IUserRepository) { }
-    
-    async login(credentials: UserCredentials) {
+    constructor(private userRepository: IUserRepository) {}
+
+    async login(credentials: IUserCredentials) {
         return await this.userRepository.login(credentials);
     }
 
