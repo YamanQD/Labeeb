@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpCode, Param, Post, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Request } from '@nestjs/common';
 import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 
@@ -23,7 +23,7 @@ export class TasksController {
 	}
 
 	@Delete(':id')
-	@HttpCode(204)
+	@HttpCode(HttpStatus.NO_CONTENT)
 	async delete(@Param('id') id): Promise<void> {
 		return await this.tasksService.delete(id);
 	}
