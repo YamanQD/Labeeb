@@ -1,16 +1,14 @@
 import { HTTPClient } from "src/core/infrastructure/http/httpClient";
-import { Project } from "../domain/project";
-import { ProjectsMapper } from "./mappers";
+import { IProject } from "../domain/project";
 
 export class ProjectRepository {
-    constructor(private httpClient: HTTPClient) { }
+    constructor(private httpClient: HTTPClient) {}
 
-    public async getProjects(): Promise<Project[]> {
-        const response = await this.httpClient.request<Project[]>({
+    public async getProjects(): Promise<IProject[]> {
+        const response = await this.httpClient.request<IProject[]>({
             path: "/projects",
         });
 
-        const mappedResponse = response.map(ProjectsMapper.dtoToProject);
-        return mappedResponse;
+        return response;
     }
 }

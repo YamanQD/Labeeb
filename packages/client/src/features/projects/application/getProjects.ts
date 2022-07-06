@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { HTTPClient } from "src/core/infrastructure/http/httpClient";
-import { Project } from "../domain/project";
+import { IProject } from "../domain/project";
 import { ProjectRepository } from "../infrastructure/projectRepository";
 import { ProjectService } from "../services/projectService";
 
@@ -17,5 +17,5 @@ export const useGetProjects = ({ queryOptions = {} }: UseGetProjects = {}) => {
         return await projectsService.getProjects();
     };
 
-    return useQuery<Project[], Error>("projects", fetchProjects, queryOptions);
+    return useQuery<IProject[], Error>("projects", fetchProjects, queryOptions);
 };
