@@ -47,7 +47,7 @@ export class TasksService {
 		if (!task) {
 			throw new NotFoundException('Task not found');
 		}
-		await this.taskRepository.remove(task,);
+		await this.taskRepository.remove(task);
 		return;
 	}
 }
