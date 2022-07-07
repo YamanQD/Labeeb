@@ -10,7 +10,7 @@ export class CreateTaskDto {
 	description?: string;
 
 	@IsOptional()
-	@IsEnum(Priority)
+	@IsEnum(Priority, { message: 'priority should be one of (none, low, medium, high)' })
 	priority?: Priority;
 
 	@IsOptional()
