@@ -11,10 +11,4 @@ export class Project {
 
 	@OneToMany(() => Task, task => task.project)
 	tasks: Task[];
-
-	@Column()
-	created_by: number;
-
-	@Column()
-	createdAt: Date;
 }
