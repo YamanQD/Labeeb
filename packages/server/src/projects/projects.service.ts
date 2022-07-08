@@ -11,6 +11,17 @@ export class ProjectsService {
 		private readonly projectRepository: Repository<Project>
 	) { }
 
+	async findProjectTasks(id: number): Promise<Task[]> {
+		const project = await this.projectRepository.findOne({
+			where: { id },
+			relations: { tasks: true }
+		});
+		if (!project) {
+			throw new NotFoundException('Project not found');
+		}
+
+		return project.tasks;
+	}
 
 	async create(project: Project): Promise<Project> {
 		return await this.projectRepository.save(project);
