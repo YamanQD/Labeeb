@@ -11,6 +11,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RolesGuard } from './auth/roles.guard';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/task.entity';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Task } from './tasks/task.entity';
       inject: [ConfigService]
     }),
     TasksModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [
