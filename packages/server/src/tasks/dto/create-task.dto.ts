@@ -7,6 +7,9 @@ export class CreateTaskDto {
 	@Type(() => String)
 	title: string;
 
+	@IsNotEmpty()
+	projectId: number;
+
 	@IsOptional()
 	description?: string;
 
