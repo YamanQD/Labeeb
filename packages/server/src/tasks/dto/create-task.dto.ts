@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsDate, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import { Priority } from "src/enums/priority.enum";
+
 export class CreateTaskDto {
 	@IsNotEmpty()
 	@Type(() => String)
