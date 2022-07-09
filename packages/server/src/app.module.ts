@@ -11,6 +11,8 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RolesGuard } from './auth/roles.guard';
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/task.entity';
+import { ProjectsModule } from './projects/projects.module';
+import { Project } from './projects/project.entity';
 
 @Module({
   imports: [
@@ -27,13 +29,14 @@ import { Task } from './tasks/task.entity';
           username: configService.get<string>('DATABASE_USERNAME'),
           password: configService.get<string>('DATABASE_PASSWORD'),
           database: configService.get<string>('DATABASE_NAME'),
-          entities: [User, Task],
+          entities: [User, Task, Project],
           synchronize: true, //! DO NOT USE IN PRODUCTION
         };
       },
       inject: [ConfigService]
     }),
     TasksModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [

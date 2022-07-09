@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Priority } from 'src/enums/priority.enum';
+import { Project } from 'src/projects/project.entity';
 
 @Entity()
 export class Task {
@@ -17,6 +18,9 @@ export class Task {
 
 	@Column({ nullable: true })
 	deadline: Date;
+
+	@ManyToOne(() => Project, project => project.tasks)
+	project: Project;
 
 	@Column()
 	created_by: number;
