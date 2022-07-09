@@ -1,6 +1,7 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { ITasksRepository, TaskGroupFilters } from "../domain/ItaskRepository";
 import { ITask, ITaskGroup } from "../domain/task";
+import { CreateTaskDTO } from "../services";
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -20,6 +21,15 @@ export class TasksRepository implements ITasksRepository {
                 project_id: projectId,
                 id: groupId,
             },
+        });
+
+        return response;
+    }
+
+    public async createTask(task: CreateTaskDTO): Promise<ITask> {
+        const response = await this.httpClient.request<ITask>({
+            path: "/taskGroups",
+            body: task,
         });
 
         return response;

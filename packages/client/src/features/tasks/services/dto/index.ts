@@ -14,3 +14,12 @@ export interface TaskGroupDTO {
     title: string;
     taskLists: TaskListDTO[];
 }
+
+export interface CreateTaskDTO {
+    projectId: number;
+    groupId: number;
+    
+    title: string;
+    description?: string;
+    status: string;
+}
