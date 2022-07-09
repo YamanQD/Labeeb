@@ -32,7 +32,6 @@ interface baseTheme {
 		menuItemHeadingColor: React.CSSProperties["color"];
 	};
 	header: {
-		height: string;
 		background: React.CSSProperties["color"];
 		boxShadow: React.CSSProperties["color"];
 		textColor: React.CSSProperties["color"];
