@@ -2,15 +2,15 @@ import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
 
 export class HTTPClient implements IHTTPClient {
     async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
-        const { path, method = "GET", params = {} } = options;
+        const { path, method = "GET", params = {}, body = undefined, headers = {} } = options;
 
-        const nonEmptyParameters = this.filterQueryParameters(params);
-        const urlParameters = new URLSearchParams(nonEmptyParameters);
-
+        const urlParameters = this.getQueryParameters(params);
         const requestPath = `${path}?${urlParameters}`;
 
         const response = await fetch(requestPath, {
             method,
+            body,
+            headers,
         });
 
         const parsedResponse = options.parser
@@ -26,18 +26,16 @@ export class HTTPClient implements IHTTPClient {
     }
 
     /**
-     * Filters query parameters for values that are either null or undefined.
-     * @param params 
-     * @returns 
+     * Return a URLSearchParams object after cleaning null and undefined values.
      */
-    private filterQueryParameters(params: Object): Record<string, string> {
+    private getQueryParameters(params: Object): URLSearchParams {
         const parameters: Record<string, string> = {};
-        
+
         for (const [key, value] of Object.entries(params)) {
             if (value == undefined || value == null) continue;
             parameters[key] = value;
         }
 
-        return parameters;
+        return new URLSearchParams(parameters);
     }
 }
