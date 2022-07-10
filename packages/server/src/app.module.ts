@@ -13,6 +13,8 @@ import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/task.entity';
 import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/project.entity';
+import { List } from './lists/list.entity';
+import { ListsModule } from './lists/lists.module';
 
 @Module({
   imports: [
@@ -29,7 +31,7 @@ import { Project } from './projects/project.entity';
           username: configService.get<string>('DATABASE_USERNAME'),
           password: configService.get<string>('DATABASE_PASSWORD'),
           database: configService.get<string>('DATABASE_NAME'),
-          entities: [User, Task, Project],
+          entities: [User, Task, Project, List],
           synchronize: true, //! DO NOT USE IN PRODUCTION
         };
       },
@@ -37,6 +39,7 @@ import { Project } from './projects/project.entity';
     }),
     TasksModule,
     ProjectsModule,
+    ListsModule
   ],
   controllers: [AppController],
   providers: [
