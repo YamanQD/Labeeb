@@ -18,6 +18,7 @@ const TaskListTitle = ({
     isListExpanded = true,
     toggleListExpansion = () => {},
 }) => {
+    const tasksCountText = `${tasksCount} ${tasksCount > 1 ? "tasks": "task"}`;
     return (
         <div className={styles.listTitleContainer} onClick={toggleListExpansion}>
             <div
@@ -33,7 +34,7 @@ const TaskListTitle = ({
                 <Typography variant="h4">{title}</Typography>
                 <span style={{ margin: "0 5px" }}>-</span>
                 <Typography variant="h4" component="span">
-                    {tasksCount} Tasks
+                    {tasksCountText}
                 </Typography>
             </TitleButton>
         </div>
