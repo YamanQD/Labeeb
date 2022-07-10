@@ -51,11 +51,11 @@ const Tasks = () => {
             <AddTaskButton
                 onClick={() =>
                     addTaskQuery.mutate({
-                        status: "no",
-                        title: "New task",
+                        status: "ANGRY",
+                        title: "No more tasks please",
                         description: "Plz no more tasks",
-                        projectId: 1,
-                        groupId: 1,
+                        projectId: (currentProjectId as number),
+                        groupId: (currentGroupId as number),
                     })
                 }
             >
