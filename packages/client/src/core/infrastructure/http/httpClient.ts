@@ -4,8 +4,7 @@ export class HTTPClient implements IHTTPClient {
     async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
         const { path, method = "GET", params = {}, body = undefined, headers = {} } = options;
 
-        const urlParameters = this.getQueryParameters(params);
-        const requestPath = `${path}?${urlParameters}`;
+        const requestPath = this.constructRequestPath(path, params);
 
         const response = await fetch(requestPath, {
             method,
@@ -25,10 +24,12 @@ export class HTTPClient implements IHTTPClient {
         return await data.json();
     }
 
-    /**
-     * Return a URLSearchParams object after cleaning null and undefined values.
-     */
-    private getQueryParameters(params: Object): URLSearchParams {
+    private constructRequestPath(originalPath: string, params: Object): string {
+        const queryParameters = this.constructQueryParameters(params);
+        return `${originalPath}?${queryParameters}`;
+    }
+
+    private constructQueryParameters(params: Object): URLSearchParams {
         const parameters: Record<string, string> = {};
 
         for (const [key, value] of Object.entries(params)) {
