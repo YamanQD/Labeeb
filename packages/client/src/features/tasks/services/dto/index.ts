@@ -1,6 +1,7 @@
 export interface TaskDTO {
     id: number;
     title: string;
+    status: string;
 }
 
 export interface TaskListDTO {

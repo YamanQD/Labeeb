@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { tasksService } from "../services";
 
-interface UseGetTaskGroups {
+interface UseGetTaskGroupsProps {
     projectId: number | undefined;
     groupId: number | undefined;
 
@@ -9,7 +9,7 @@ interface UseGetTaskGroups {
     queryOptions?: Object;
 }
 
-export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroups) => {
+export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroupsProps) => {
     const fetchAllTaskGroups = async () => {
         return tasksService.getTaskGroupsForProject({
             projectId,

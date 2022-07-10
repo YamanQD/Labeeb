@@ -10,17 +10,14 @@ export class TasksRepository implements ITasksRepository {
         throw new Error("Method not implemented.");
     }
 
-    /**
-     * Fetches all task groups and applies filters on them.
-     */
     public async getTaskGroups(filters: TaskGroupFilters): Promise<ITaskGroup[]> {
         const { projectId, groupId } = filters;
+        const path = groupId
+            ? `/projects/${projectId}/groups/${groupId}`
+            : `/projects/${projectId}/groups`;
+
         const response = await this.httpClient.request<ITaskGroup[]>({
-            path: "/taskGroups",
-            params: {
-                project_id: projectId,
-                id: groupId,
-            },
+            path,
         });
 
         return response;
@@ -28,8 +25,9 @@ export class TasksRepository implements ITasksRepository {
 
     public async createTask(task: CreateTaskDTO): Promise<ITask> {
         const response = await this.httpClient.request<ITask>({
-            path: "/taskGroups",
+            path: `/projects/${task.projectId}/groups/${task.groupId}`,
             body: task,
+            method: "POST"
         });
 
         return response;
