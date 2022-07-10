@@ -32,7 +32,7 @@ The application layer contains the app's specific implementation of the domain's
 
 ## Testing
 
--   This project uses the [json server](https://github.com/typicode/json-server) library to mock the backend API. You can inspect the `db.json` file in the root project to learn more.
+-   This project uses [MirageJS](https://miragejs.com/) to mock the backend API. You can inspect the `src/lib/mock-server` folder to learn more.
 
 -   I am yet to learn about unit tests and integrate them into the application once I find enough time.
 
