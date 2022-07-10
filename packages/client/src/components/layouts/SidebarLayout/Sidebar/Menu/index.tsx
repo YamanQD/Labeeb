@@ -36,7 +36,7 @@ const SidebarMenu = () => {
                              *  - Group
                              *  - Group
                              */
-                            <SidebarMenuItemsList key={project.title}>
+                            <SidebarMenuItemsList key={project.id}>
                                 <SubMenuWrapper>
                                     <SidebarMenuItem
                                         title={project.title}
@@ -53,7 +53,7 @@ const SidebarMenu = () => {
                                                 {project.groups?.map((group) => {
                                                     return (
                                                         <SidebarMenuItem
-                                                            key={group.title}
+                                                            key={group.id}
                                                             title={group.title}
                                                             badge={group.tasksCount}
                                                             onClick={() =>
