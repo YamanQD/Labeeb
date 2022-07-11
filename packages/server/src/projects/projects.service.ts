@@ -12,7 +12,7 @@ export class ProjectsService {
 	) { }
 
 	async findAll(): Promise<Project[]> {
-		return await this.projectRepository.find();
+		return await this.projectRepository.find({ relations: { lists: true } });
 	}
 
 	async findProjectTasks(id: number): Promise<any> {
