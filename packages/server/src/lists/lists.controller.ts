@@ -7,7 +7,7 @@ export class ListsController {
 	constructor(private readonly listsService: ListsService) { }
 
 	@Post()
-	async create(@Body() body: any): Promise<List> {
+	async create(@Body() body: List): Promise<List> {
 		return await this.listsService.create(body);
 	}
 }
