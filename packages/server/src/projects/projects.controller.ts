@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
 
@@ -12,7 +13,7 @@ export class ProjectsController {
 	}
 
 	@Post()
-	async create(@Body() body: any): Promise<Project> {
+	async create(@Body() body: CreateProjectDto): Promise<Project> {
 		return await this.projectsService.create(body);
 	}
 }
