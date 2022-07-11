@@ -21,7 +21,7 @@ export class ListsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		return await this.listRepository.save(list);
+		return await this.listRepository.save({ ...list, project });
 	}
 
 	async findListTasks(id: number): Promise<Task[]> {
