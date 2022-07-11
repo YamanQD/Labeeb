@@ -11,6 +11,10 @@ export class ProjectsService {
 		private readonly projectRepository: Repository<Project>
 	) { }
 
+	async findAll(): Promise<Project[]> {
+		return await this.projectRepository.find();
+	}
+
 	async findProjectTasks(id: number): Promise<any> {
 		const project = await this.projectRepository.findOne({
 			where: { id },

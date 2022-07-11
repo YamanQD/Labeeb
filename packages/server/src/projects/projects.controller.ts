@@ -7,6 +7,11 @@ import { ProjectsService } from './projects.service';
 export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) { }
 
+	@Get()
+	async findAll(): Promise<Project[]> {
+		return await this.projectsService.findAll();
+	}
+
 	@Get(':id/tasks')
 	async findProjectTasks(@Param('id') id: number): Promise<any> {
 		return await this.projectsService.findProjectTasks(id);
