@@ -1,5 +1,4 @@
 import { List } from 'src/lists/list.entity';
-import { Task } from 'src/tasks/task.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
