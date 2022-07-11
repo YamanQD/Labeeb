@@ -7,7 +7,6 @@ import { ProjectsService } from './projects.service';
 export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) { }
 
-
 	@Get(':id/tasks')
 	async findProjectTasks(@Param('id') id): Promise<Task[]> {
 		return await this.projectsService.findProjectTasks(id);
@@ -17,6 +16,4 @@ export class ProjectsController {
 	async create(@Body() body: any): Promise<Project> {
 		return await this.projectsService.create(body);
 	}
-
-	// }
 }
