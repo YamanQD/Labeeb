@@ -1,11 +1,11 @@
 import { HTTPClient } from "src/core/infrastructure/http/httpClient";
 import { IUserRepository } from "../domain/IuserRepository";
-import { UserCredentials } from "../domain/user";
+import { IUserCredentials } from "../domain/user";
 
-export class UserRepository implements IUserRepository{
-    constructor(private httpClient: HTTPClient) { }
+export class UserRepository implements IUserRepository {
+    constructor(private httpClient: HTTPClient) {}
 
-    async login({ email, password } : UserCredentials) {
+    async login({ email, password }: IUserCredentials) {
         return Promise.resolve(true);
     }
 

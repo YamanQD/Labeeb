@@ -1,6 +1,7 @@
 export interface TaskDTO {
     id: number;
     title: string;
+    status: string;
 }
 
 export interface TaskListDTO {
@@ -13,4 +14,13 @@ export interface TaskGroupDTO {
     id: number;
     title: string;
     taskLists: TaskListDTO[];
+}
+
+export interface CreateTaskDTO {
+    projectId: number;
+    groupId: number;
+    
+    title: string;
+    description?: string;
+    status: string;
 }

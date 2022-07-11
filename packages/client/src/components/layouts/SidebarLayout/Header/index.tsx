@@ -10,7 +10,7 @@ const HeaderWrapper = styled(Box)(
     ({ theme }) => `
 		display: flex;
 		align-items: center;
-        height: ${theme.header.height};
+        height: 88px;
         color: ${theme.header.textColor};
         padding: ${theme.spacing(0, 2)};
         right: 0;

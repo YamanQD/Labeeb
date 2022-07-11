@@ -1,13 +1,7 @@
 import { useQuery } from "react-query";
-import { HTTPClient } from "src/core/infrastructure/http/httpClient";
-import { TasksRepository } from "../infrastructure/taskRepository";
-import { TasksService } from "../services/taskService";
+import { tasksService } from "../services";
 
-const httpClient = new HTTPClient();
-const tasksRepository = new TasksRepository(httpClient);
-const tasksService = new TasksService(tasksRepository);
-
-interface UseGetTaskGroups {
+interface UseGetTaskGroupsProps {
     projectId: number | undefined;
     groupId: number | undefined;
 
@@ -15,7 +9,7 @@ interface UseGetTaskGroups {
     queryOptions?: Object;
 }
 
-export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroups) => {
+export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroupsProps) => {
     const fetchAllTaskGroups = async () => {
         return tasksService.getTaskGroupsForProject({
             projectId,

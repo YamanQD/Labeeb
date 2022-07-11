@@ -7,6 +7,8 @@ export interface IRequestOptions {
     path: string;
     method?: HTTPMethod;
     params?: any,
+    body?: any;
+    headers?: any;
 
     /**
      * An optional method that parses the response provided by the client.

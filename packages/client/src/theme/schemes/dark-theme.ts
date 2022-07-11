@@ -145,7 +145,6 @@ export const DarkTheme = createTheme({
 		width: "280px",
 	},
 	header: {
-		height: "88px",
 		background: themeColors.primaryAlt,
 		boxShadow: "0px 1px 0px #272C48",
 		textColor: colors.secondary.main,
@@ -233,7 +232,7 @@ export const DarkTheme = createTheme({
 
 	typography: {
 		fontFamily: [
-			'"Inter"',
+			'"Poppins"',
 			'-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
 		].join(","),
 		fontSize: 16,

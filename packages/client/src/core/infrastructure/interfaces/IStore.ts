@@ -4,7 +4,13 @@ interface TaskGroupInfo {
 }
 
 export interface IStore {
+    /**
+     * The project that the user is currently navigating.
+     */
     currentProjectId: number | undefined;
+    /**
+     * The project group that the user is currently navigating.
+     */
     currentGroupId: number | undefined;
 
     /**

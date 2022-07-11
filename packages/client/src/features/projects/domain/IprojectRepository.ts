@@ -1,8 +1,8 @@
-import { Project } from "./project";
+import { IProject } from "./project";
 
 export interface IProjectRepository {
     /**
      * Returns the projects that are assigned to the user.
      */
-    getProjects(): Promise<Project[]>;
+    getProjects(): Promise<IProject[]>;
 }

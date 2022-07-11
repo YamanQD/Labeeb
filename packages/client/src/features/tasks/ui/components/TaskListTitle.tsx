@@ -1,7 +1,16 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import styles from "./task-list.module.css";
+
+const TitleButton = styled(Button)(
+    ({ theme }) => `
+    margin-left: 5px;
+    padding: 0 ${theme.spacing(1)}px;
+    text-transform: uppercase;
+`
+);
 
 const TaskListTitle = ({
     title = "",
@@ -9,6 +18,7 @@ const TaskListTitle = ({
     isListExpanded = true,
     toggleListExpansion = () => {},
 }) => {
+    const tasksCountText = `${tasksCount} ${tasksCount > 1 ? "tasks": "task"}`;
     return (
         <div className={styles.listTitleContainer} onClick={toggleListExpansion}>
             <div
@@ -17,25 +27,16 @@ const TaskListTitle = ({
                     transform: isListExpanded ? "" : "rotate(-90deg)",
                 }}
             >
-                <KeyboardArrowDownSharpIcon color="primary" />
+                <KeyboardArrowDownSharpIcon color="secondary" />
             </div>
-            <Button
-                variant="contained"
-                color="primary"
-                disableElevation
-                sx={{
-                    ml: "5px",
-                    px: 1,
-                    textTransform: "uppercase",
-                }}
-            >
-                
+
+            <TitleButton variant="contained" color="secondary" disableElevation>
                 <Typography variant="h4">{title}</Typography>
                 <span style={{ margin: "0 5px" }}>-</span>
                 <Typography variant="h4" component="span">
-                    {tasksCount} Tasks
+                    {tasksCountText}
                 </Typography>
-            </Button>
+            </TitleButton>
         </div>
     );
 };
