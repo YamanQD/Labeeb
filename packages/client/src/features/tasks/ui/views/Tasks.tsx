@@ -1,28 +1,21 @@
-import AddIcon from '@mui/icons-material/Add';
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import { styled } from '@mui/material/styles';
+import { useCallback, useState } from "react";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { useStore } from "src/core/infrastructure/store";
-import { useAddTask } from "../../application/addTask";
 import { useGetTaskGroups } from "../../application/getTaskGroups";
+import AddTaskContainer from "../components/AddTaskContainer";
+import AddTaskModal from "../components/AddTaskModal";
 import TaskGroup from "../components/TaskGroup";
 
-const AddTaskButton = styled(IconButton) (({ theme }) => `
-    background-color: ${theme.palette.primary.light};
-    color: ${theme.palette.primary.contrastText};
-    position: fixed;
-    bottom: 3%;
-    right: 3%;
-    &:hover {
-        background-color: ${theme.palette.primary.dark}
-    }
-`);
-
 const Tasks = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = useCallback(() => setIsModalOpen(true), []);
+    const closeModal = useCallback(() => setIsModalOpen(false), []);
+
     const currentProjectId = useStore((state) => state.currentProjectId);
     const currentGroupId = useStore((state) => state.currentGroupId);
-    const addTaskQuery = useAddTask();
+
+    const isQueryEnabled = !!currentProjectId;
 
     const {
         data: taskGroups,
@@ -31,10 +24,14 @@ const Tasks = () => {
     } = useGetTaskGroups({
         projectId: currentProjectId,
         groupId: currentGroupId,
+        queryOptions: {
+            enabled: isQueryEnabled,
+        },
     });
 
     if (isLoading) return <SuspenseLoader />;
-    if (isError) return <p>Hmmmm error</p>;
+    if (isError) return <p>An error occurred while fetching data. Please refresh your browser.</p>;
+    if (!isQueryEnabled) return <p>Please select a project from the sidebar.</p>;
 
     return (
         <div>
@@ -48,19 +45,10 @@ const Tasks = () => {
                 </>
             </Box>
 
-            <AddTaskButton
-                onClick={() =>
-                    addTaskQuery.mutate({
-                        status: "ANGRY",
-                        title: "No more tasks please",
-                        description: "Plz no more tasks",
-                        projectId: (currentProjectId as number),
-                        groupId: (currentGroupId as number),
-                    })
-                }
-            >
-                <AddIcon />
-            </AddTaskButton>
-        </div>); };
+            <AddTaskContainer onClick={openModal} />
+            <AddTaskModal open={isModalOpen} closeModal={closeModal} />
+        </div>
+    );
+};
 
 export default Tasks;

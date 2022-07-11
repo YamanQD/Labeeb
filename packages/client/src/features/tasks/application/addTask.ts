@@ -10,7 +10,11 @@ export const useAddTask = () => {
         {
             // The second argument is the same that the mutate function receives
             onSuccess(responseData, newTask) {
-                queryClient.invalidateQueries(["taskGroups", newTask.projectId, newTask.groupId]);
+                /**
+                 * The user can add a task from all pages inside the '/tasks' route,
+                 * so it's necessary to invalidate all 'taskGroups' queries.
+                 */
+                queryClient.invalidateQueries(["taskGroups"]);
             },
         }
     );
