@@ -22,30 +22,33 @@ export class UsersService {
 
   async seed() {
     const allUsers = await this.usersRepository.find();
+    if (allUsers.length > 0) return;
 
-    if (allUsers.filter((user) => user.username.toLowerCase() === 'admin').length === 0) {
-      const admin = new User();
-      admin.username = 'admin';
-      admin.password = 'admin';
-      admin.role = Role.ADMIN;
-      await this.create(admin);
-    }
+    const users = [
+      {
+        username: 'admin',
+        password: 'admin',
+        role: Role.ADMIN
+      },
+      {
+        username: 'Yaman',
+        password: 'Yaman',
+        role: Role.USER
+      },
+      {
+        username: 'Hasan',
+        password: 'Hasan',
+        role: Role.USER
+      }
+    ];
 
-    if (allUsers.filter((user) => user.username.toLowerCase() === 'yaman').length === 0) {
-      const user = new User();
-      user.username = 'Yaman';
-      user.password = 'Yaman';
-      user.role = Role.USER;
-      await this.create(user);
-    }
+    users.forEach(async (user) => {
+      const newUser = new User();
+      newUser.username = user.username;
+      newUser.password = user.password;
+      newUser.role = user.role;
 
-    if (allUsers.filter((user) => user.username.toLowerCase() === 'hasan').length === 0) {
-      const user = new User();
-      user.username = 'Hasan';
-      user.password = 'Hasan';
-      user.role = Role.USER;
-
-      await this.create(user);
-    }
+      await this.create(newUser);
+    });
   }
 }
