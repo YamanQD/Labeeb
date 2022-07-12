@@ -8,6 +8,7 @@ import { ListsService } from './lists.service';
 @Module({
   imports: [TypeOrmModule.forFeature([List, Project])],
   controllers: [ListsController],
-  providers: [ListsService]
+  providers: [ListsService],
+  exports: [ListsService]
 })
 export class ListsModule { }
