@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { faker } from '@faker-js/faker';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
@@ -29,5 +30,23 @@ export class ProjectsService {
 
 	async create(project: CreateProjectDto): Promise<Project> {
 		return await this.projectRepository.save(project);
+	}
+
+	async seed() {
+		const allProjects = await this.projectRepository.find();
+		if (allProjects.length > 0) return;
+
+		const projects: CreateProjectDto[] = [
+			{
+				name: faker.word.noun()
+			},
+			{
+				name: faker.word.noun()
+			},
+		];
+
+		await projects.forEach(async project => {
+			await this.create(project);
+		})
 	}
 }
