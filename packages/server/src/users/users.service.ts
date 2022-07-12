@@ -23,7 +23,7 @@ export class UsersService {
   async seed() {
     const allUsers = await this.usersRepository.find();
 
-    if (allUsers.filter((user) => user.username === 'admin').length === 0) {
+    if (allUsers.filter((user) => user.username.toLowerCase() === 'admin').length === 0) {
       const admin = new User();
       admin.username = 'admin';
       admin.password = 'admin';
@@ -31,7 +31,7 @@ export class UsersService {
       await this.usersRepository.save(admin);
     }
 
-    if (allUsers.filter((user) => user.username === 'Yaman').length === 0) {
+    if (allUsers.filter((user) => user.username.toLowerCase() === 'yaman').length === 0) {
       const user = new User();
       user.username = 'Yaman';
       user.password = 'Yaman';
@@ -39,7 +39,7 @@ export class UsersService {
       await this.usersRepository.save(user);
     }
 
-    if (allUsers.filter((user) => user.username === 'Hasan').length === 0) {
+    if (allUsers.filter((user) => user.username.toLowerCase() === 'hasan').length === 0) {
       const user = new User();
       user.username = 'Hasan';
       user.password = 'Hasan';
