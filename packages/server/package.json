@@ -13,6 +13,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "seed": "ts-node ../../.yarn/unplugged/typeorm-seeding-virtual-a22ff67e2d/node_modules/typeorm-seeding/dist/cli.js seed",
     "start": "nest start",
     "start-dev": "nest start --watch",
     "start-debug": "nest start --debug --watch",
