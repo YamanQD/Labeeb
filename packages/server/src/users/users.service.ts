@@ -28,7 +28,7 @@ export class UsersService {
       admin.username = 'admin';
       admin.password = 'admin';
       admin.role = Role.ADMIN;
-      await this.usersRepository.save(admin);
+      await this.create(admin);
     }
 
     if (allUsers.filter((user) => user.username.toLowerCase() === 'yaman').length === 0) {
@@ -36,7 +36,7 @@ export class UsersService {
       user.username = 'Yaman';
       user.password = 'Yaman';
       user.role = Role.USER;
-      await this.usersRepository.save(user);
+      await this.create(user);
     }
 
     if (allUsers.filter((user) => user.username.toLowerCase() === 'hasan').length === 0) {
@@ -44,7 +44,8 @@ export class UsersService {
       user.username = 'Hasan';
       user.password = 'Hasan';
       user.role = Role.USER;
-      await this.usersRepository.save(user);
+
+      await this.create(user);
     }
   }
 }
