@@ -43,10 +43,13 @@ export class ProjectsService {
 			{
 				name: faker.word.noun()
 			},
+			{
+				name: faker.word.noun()
+			}
 		];
 
 		await projects.forEach(async project => {
 			await this.create(project);
-		})
+		});
 	}
 }
