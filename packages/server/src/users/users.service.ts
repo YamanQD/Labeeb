@@ -42,7 +42,7 @@ export class UsersService {
       }
     ];
 
-    users.forEach(async (user) => {
+    await users.forEach(async (user) => {
       const newUser = new User();
       newUser.username = user.username;
       newUser.password = user.password;
