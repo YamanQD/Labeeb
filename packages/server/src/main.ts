@@ -13,6 +13,15 @@ async function bootstrap() {
 			'The official documentation of the best Task Management System in existence.',
 		)
 		.setVersion('1.0')
+		.addBearerAuth(
+			{
+				type: 'http',
+				scheme: 'bearer',
+				bearerFormat: 'JWT',
+			},
+			'api_auth',
+		)
+		.addSecurityRequirements('api_auth')
 		.addTag('auth', 'Authentication (login/logout).')
 		.addTag('tasks', 'The task resource.')
 		.addTag('projects', 'The project resource.')
