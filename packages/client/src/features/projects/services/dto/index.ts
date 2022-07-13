@@ -5,13 +5,13 @@ interface ProjectStatusDTO {
 
 export interface ProjectListDTO {
     id: number;
-    name: string;
+    title: string;
     tasksCount: number;
 }
 
 export interface ProjectDTO {
     id: number;
-    name: string;
+    title: string;
     lists: ProjectListDTO[];
     statuses: ProjectStatusDTO[];
 }

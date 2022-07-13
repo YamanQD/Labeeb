@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { useStore } from "src/core/infrastructure/store";
-import { useGetTaskLists } from "../../application/getTaskGroups";
+import { useGetTaskLists } from "../../application/getTaskLists";
 import AddTaskContainer from "../components/AddTaskContainer";
 import TaskList from "../components/TaskList";
 
@@ -12,7 +12,7 @@ const Tasks = () => {
     const isQueryEnabled = !!currentProjectId;
 
     const {
-        data: taskGroups,
+        data: taskLists,
         isLoading,
         isError,
     } = useGetTaskLists({
@@ -33,10 +33,9 @@ const Tasks = () => {
         content = (
             <Box sx={{ p: 4 }}>
                 <>
-                    {taskGroups?.map((group) => (
-                        // Task groups contain task lists (open tasks, WIP tasks, .etc)
-                        // And task lists are composed of individual tasks
-                        <TaskList key={group.id} {...group} />
+                    {taskLists?.map((list) => (
+                        // Task list -> Task group (tasks that belong to the same status) -> single task
+                        <TaskList key={list.id} {...list} />
                     ))}
                 </>
             </Box>

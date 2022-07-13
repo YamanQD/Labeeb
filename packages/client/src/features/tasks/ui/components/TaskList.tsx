@@ -1,5 +1,5 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
-import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { TaskListDTO } from "../../services";
@@ -26,25 +26,33 @@ const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false }) =>
     );
 };
 
+const TaskListContainer = styled("div")(
+    ({ theme }) => `
+    border: 0.1px solid rgb(192 192 192 / 25%);
+    padding: ${theme.spacing(2)};
+    margin-bottom: ${theme.spacing(3)};
+    `
+)
+
 const TaskList = ({ id, title = "", taskGroups = [] }: TaskListDTO) => {
-    const [isGroupExpanded, setIsGroupExpanded] = useState(true);
-    const toggleGroupExpansion = () => setIsGroupExpanded((previous) => !previous);
+    const [isListExpanded, setIsListExpanded] = useState(true);
+    const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
 
     return (
-        <Box sx={{ border: "0.1px solid rgb(192 192 192 / 25%)", p: 2, mb: 3 }}>
+        <TaskListContainer>
             <TaskListHeader
                 title={title}
-                onClick={toggleGroupExpansion}
-                expanded={isGroupExpanded}
+                onClick={toggleListExpansion}
+                expanded={isListExpanded}
             />
-            {isGroupExpanded && (
+            {isListExpanded && (
                 <>
                     {taskGroups.map((group) => (
                         <TaskGroup key={group.id} {...group} />
                     ))}
                 </>
             )}
-        </Box>
+        </TaskListContainer>
     );
 };
 export default TaskList;
