@@ -6,8 +6,9 @@ import { ListsController } from './lists.controller';
 import { ListsService } from './lists.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([List, Project])],
-  controllers: [ListsController],
-  providers: [ListsService]
+	imports: [TypeOrmModule.forFeature([List, Project])],
+	controllers: [ListsController],
+	providers: [ListsService],
+	exports: [ListsService],
 })
-export class ListsModule { }
+export class ListsModule {}

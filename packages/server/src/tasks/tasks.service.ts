@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { faker } from '@faker-js/faker';
 import { List } from 'src/lists/list.entity';
 import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
+import { Priority } from 'src/enums/priority.enum';
 
 @Injectable()
 export class TasksService {
@@ -12,8 +14,8 @@ export class TasksService {
 		@InjectRepository(Task)
 		private readonly taskRepository: Repository<Task>,
 		@InjectRepository(List)
-		private readonly listRepository: Repository<List>
-	) { }
+		private readonly listRepository: Repository<List>,
+	) {}
 
 	async findAll(): Promise<Task[]> {
 		return await this.taskRepository.find();
@@ -28,13 +30,18 @@ export class TasksService {
 	}
 
 	async create(body: CreateTaskDto, userId: any): Promise<Task> {
-		const list = await this.listRepository.findOne({ where: { id: body.listId } });
+		const list = await this.listRepository.findOne({
+			where: { id: body.listId },
+		});
+		if (!list) {
+			throw new NotFoundException('List not found');
+		}
 
 		const task = this.taskRepository.create({
 			created_by: userId,
 			createdAt: new Date(),
 			list: list,
-			...body
+			...body,
 		});
 
 		return await this.taskRepository.save(task);
@@ -56,5 +63,23 @@ export class TasksService {
 		}
 		await this.taskRepository.remove(task);
 		return;
+	}
+
+	async seed() {
+		const priorities = [Priority.HIGH, Priority.MEDIUM, Priority.LOW, Priority.NONE];
+
+		const allTasks = await this.taskRepository.find();
+		if (allTasks.length > 0) return;
+
+		for (let i = 0; i < 10; i++) {
+			const task: CreateTaskDto = {
+				title: faker.random.words(),
+				description: faker.random.words(10),
+				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
+				deadline: faker.date.future(),
+				listId: (Math.floor(Math.random() * 10) % 3) + 1,
+			};
+			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
+		}
 	}
 }

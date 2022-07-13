@@ -10,9 +10,9 @@ export class List {
 	@Column()
 	name: string;
 
-	@ManyToOne(() => Project, project => project.lists)
+	@ManyToOne(() => Project, (project) => project.lists)
 	project: Project;
 
-	@OneToMany(() => Task, task => task.list)
+	@OneToMany(() => Task, (task) => task.list)
 	tasks: Task[];
 }

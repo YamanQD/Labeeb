@@ -17,41 +17,41 @@ import { List } from './lists/list.entity';
 import { ListsModule } from './lists/lists.module';
 
 @Module({
-  imports: [
-    UsersModule,
-    AuthModule,
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        return {
-          type: 'mariadb',
-          host: configService.get<string>('DATABASE_HOST'),
-          port: configService.get<number>('DATABASE_PORT'),
-          username: configService.get<string>('DATABASE_USERNAME'),
-          password: configService.get<string>('DATABASE_PASSWORD'),
-          database: configService.get<string>('DATABASE_NAME'),
-          entities: [User, Task, Project, List],
-          synchronize: true, //! DO NOT USE IN PRODUCTION
-        };
-      },
-      inject: [ConfigService]
-    }),
-    TasksModule,
-    ProjectsModule,
-    ListsModule
-  ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+	imports: [
+		UsersModule,
+		AuthModule,
+		ConfigModule.forRoot(),
+		TypeOrmModule.forRootAsync({
+			imports: [ConfigModule],
+			useFactory: async (configService: ConfigService) => {
+				return {
+					type: 'mariadb',
+					host: configService.get<string>('DATABASE_HOST'),
+					port: configService.get<number>('DATABASE_PORT'),
+					username: configService.get<string>('DATABASE_USERNAME'),
+					password: configService.get<string>('DATABASE_PASSWORD'),
+					database: configService.get<string>('DATABASE_NAME'),
+					entities: [User, Task, Project, List],
+					synchronize: true, //! DO NOT USE IN PRODUCTION
+				};
+			},
+			inject: [ConfigService],
+		}),
+		TasksModule,
+		ProjectsModule,
+		ListsModule,
+	],
+	controllers: [AppController],
+	providers: [
+		AppService,
+		{
+			provide: APP_GUARD,
+			useClass: JwtAuthGuard,
+		},
+		{
+			provide: APP_GUARD,
+			useClass: RolesGuard,
+		},
+	],
 })
-export class AppModule { }
+export class AppModule {}

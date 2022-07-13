@@ -9,6 +9,6 @@ export class Project {
 	@Column()
 	name: string;
 
-	@OneToMany(() => List, list => list.project)
+	@OneToMany(() => List, (list) => list.project)
 	lists: List[];
 }

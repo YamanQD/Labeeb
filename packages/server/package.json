@@ -12,15 +12,14 @@
     "postinstall": "node ./scripts/postinstall.js",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "seed": "ts-node ../../.yarn/unplugged/typeorm-seeding-virtual-a22ff67e2d/node_modules/typeorm-seeding/dist/cli.js seed",
+    "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "start-dev": "nest start --watch",
     "start-debug": "nest start --debug --watch",
     "start-prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "server:build": "nest build",
-    "server:format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "server:format": "prettier --write \"src/**/*.ts\"",
     "server:start": "nest start",
     "server:start-dev": "nest start --watch",
     "server:start-debug": "nest start --debug --watch",
@@ -47,8 +46,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
-    "typeorm": "^0.3.6",
-    "typeorm-seeding": "^1.6.1"
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.3.0",
