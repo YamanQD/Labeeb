@@ -1,15 +1,18 @@
 import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
 
 export class HTTPClient implements IHTTPClient {
+    constructor(private baseURL: string = "") {}
+
     async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
         const { path, method = "GET", params = {}, body = undefined, headers = {} } = options;
 
         const requestPath = this.constructRequestPath(path, params);
+        const requestHeaders = this.constructRequestHeaders(headers);
 
         const response = await fetch(requestPath, {
             method,
             body,
-            headers,
+            headers: requestHeaders,
         });
 
         const parsedResponse = options.parser
@@ -26,7 +29,7 @@ export class HTTPClient implements IHTTPClient {
 
     private constructRequestPath(originalPath: string, params: Object): string {
         const queryParameters = this.constructQueryParameters(params);
-        return `${originalPath}?${queryParameters}`;
+        return `${this.baseURL}${originalPath}?${queryParameters}`;
     }
 
     private constructQueryParameters(params: Object): URLSearchParams {
@@ -38,5 +41,15 @@ export class HTTPClient implements IHTTPClient {
         }
 
         return new URLSearchParams(parameters);
+    }
+
+    private constructRequestHeaders(headers: Record<string, string>): Record<string, string> {
+        const accessToken = localStorage.getItem('token');
+        if (accessToken) return {
+            'Authorization': `Bearer ${accessToken}`,
+            ...headers
+        };
+
+        return headers;
     }
 }
