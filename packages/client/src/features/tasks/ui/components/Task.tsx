@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { darken } from "@mui/material"
+import { TaskDTO } from "../../services";
 
 const TaskContainer = styled(Paper)(
     ({ theme }) => `
@@ -24,7 +25,7 @@ const TaskStatus = styled("div")(
     `
 );
 
-const Task = ({ title = "default" }) => {
+const Task = ({ title = "default", priority }: TaskDTO) => {
     return (
         <TaskContainer>
             <Grid container>
@@ -38,7 +39,7 @@ const Task = ({ title = "default" }) => {
                 </Grid>
 
                 <Grid item xs={2}>
-                    Hasan Mothaffar
+                    {priority}
                 </Grid>
 
                 <Grid item xs={2}>

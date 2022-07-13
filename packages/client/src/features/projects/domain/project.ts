@@ -1,3 +1,8 @@
+interface IProjectStatus {
+    id: number;
+    label: string;
+}
+
 export interface IProjectGroup {
     id: number;
     title: string;
@@ -8,4 +13,5 @@ export interface IProject {
     id: number;
     title: string;
     groups: IProjectGroup[];
+    statuses: IProjectStatus[]
 }
