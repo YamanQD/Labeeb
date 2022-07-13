@@ -9,11 +9,13 @@ import { Project } from './project.entity';
 export class ProjectsService {
 	constructor(
 		@InjectRepository(Project)
-		private readonly projectRepository: Repository<Project>
-	) { }
+		private readonly projectRepository: Repository<Project>,
+	) {}
 
 	async findAll(): Promise<Project[]> {
-		return await this.projectRepository.find({ relations: { lists: true } });
+		return await this.projectRepository.find({
+			relations: { lists: true },
+		});
 	}
 
 	async findProjectTasks(id: number): Promise<any> {
@@ -38,17 +40,17 @@ export class ProjectsService {
 
 		const projects: CreateProjectDto[] = [
 			{
-				name: faker.word.noun()
+				name: faker.word.noun(),
 			},
 			{
-				name: faker.word.noun()
+				name: faker.word.noun(),
 			},
 			{
-				name: faker.word.noun()
-			}
+				name: faker.word.noun(),
+			},
 		];
 
-		await projects.forEach(async project => {
+		await projects.forEach(async (project) => {
 			await this.create(project);
 		});
 	}

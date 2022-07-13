@@ -13,11 +13,13 @@ export class ListsService {
 		@InjectRepository(List)
 		private readonly listRepository: Repository<List>,
 		@InjectRepository(Project)
-		private readonly projectRepository: Repository<Project>
-	) { }
+		private readonly projectRepository: Repository<Project>,
+	) {}
 
 	async create(list: CreateListDto): Promise<List> {
-		const project = await this.projectRepository.findOne({ where: { id: list.projectId } });
+		const project = await this.projectRepository.findOne({
+			where: { id: list.projectId },
+		});
 		if (!project) {
 			throw new NotFoundException('Project not found');
 		}
@@ -28,7 +30,7 @@ export class ListsService {
 	async findListTasks(id: number): Promise<Task[]> {
 		const list = await this.listRepository.findOne({
 			where: { id },
-			relations: { tasks: true }
+			relations: { tasks: true },
 		});
 		if (!list) {
 			throw new NotFoundException('List not found');
@@ -44,19 +46,19 @@ export class ListsService {
 		const lists: CreateListDto[] = [
 			{
 				name: faker.word.noun(),
-				projectId: 1
+				projectId: 1,
 			},
 			{
 				name: faker.word.noun(),
-				projectId: 3
+				projectId: 3,
 			},
 			{
 				name: faker.word.noun(),
-				projectId: 3
-			}
+				projectId: 3,
+			},
 		];
 
-		await lists.forEach(async list => {
+		await lists.forEach(async (list) => {
 			await this.create(list);
 		});
 	}

@@ -6,7 +6,7 @@ import { ListsService } from './lists.service';
 
 @Controller('lists')
 export class ListsController {
-	constructor(private readonly listsService: ListsService) { }
+	constructor(private readonly listsService: ListsService) {}
 
 	@Get(':id')
 	async findListTasks(@Param('id') id: number): Promise<Task[]> {

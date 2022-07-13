@@ -5,16 +5,13 @@ import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-	constructor(
-		private usersService: UsersService,
-		private jwtService: JwtService,
-	) { }
+	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-	async validateUser(username: string, password: string): Promise<any> {
+	async validateUser(username: string, password: string): Promise<User> {
 		const user = await this.usersService.findOne(username);
 		if (user && user.password === password) {
-			const { password, ...result } = user;
-			return result;
+			delete user.password;
+			return user;
 		}
 		return null;
 	}
@@ -24,7 +21,11 @@ export class AuthService {
 	}
 
 	async login(user: User) {
-		const payload = { username: user.username, sub: user.id, role: user.role };
+		const payload = {
+			username: user.username,
+			sub: user.id,
+			role: user.role,
+		};
 		return { access_token: this.jwtService.sign(payload) };
 	}
 }
