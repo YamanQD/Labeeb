@@ -44,15 +44,15 @@ export class ListsService {
 		const lists: CreateListDto[] = [
 			{
 				name: faker.word.noun(),
-				projectId: 0
+				projectId: 1
 			},
 			{
 				name: faker.word.noun(),
-				projectId: 2
+				projectId: 3
 			},
 			{
 				name: faker.word.noun(),
-				projectId: 2
+				projectId: 3
 			}
 		];
 
