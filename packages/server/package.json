@@ -13,6 +13,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "seed": "ts-node ../../.yarn/unplugged/typeorm-seeding-virtual-a22ff67e2d/node_modules/typeorm-seeding/dist/cli.js seed",
     "start": "nest start",
     "start-dev": "nest start --watch",
     "start-debug": "nest start --debug --watch",
@@ -46,9 +47,11 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.6",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@types/express": "^4.17.13",

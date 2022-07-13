@@ -8,7 +8,7 @@ export class CreateTaskDto {
 	title: string;
 
 	@IsNotEmpty()
-	projectId: number;
+	listId: number;
 
 	@IsOptional()
 	description?: string;

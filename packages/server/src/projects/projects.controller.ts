@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, Post, } from '@nestjs/common';
-import { Task } from 'src/tasks/task.entity';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
 
@@ -7,16 +7,18 @@ import { ProjectsService } from './projects.service';
 export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) { }
 
+	@Get()
+	async findAll(): Promise<Project[]> {
+		return await this.projectsService.findAll();
+	}
 
 	@Get(':id/tasks')
-	async findProjectTasks(@Param('id') id): Promise<Task[]> {
+	async findProjectTasks(@Param('id') id: number): Promise<any> {
 		return await this.projectsService.findProjectTasks(id);
 	}
 
 	@Post()
-	async create(@Body() body: any): Promise<Project> {
+	async create(@Body() body: CreateProjectDto): Promise<Project> {
 		return await this.projectsService.create(body);
 	}
-
-	// }
 }

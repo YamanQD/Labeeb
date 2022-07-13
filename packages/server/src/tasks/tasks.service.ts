@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Project } from 'src/projects/project.entity';
+import { List } from 'src/lists/list.entity';
 import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -11,8 +11,8 @@ export class TasksService {
 	constructor(
 		@InjectRepository(Task)
 		private readonly taskRepository: Repository<Task>,
-		@InjectRepository(Project)
-		private readonly projectRepository: Repository<Project>
+		@InjectRepository(List)
+		private readonly listRepository: Repository<List>
 	) { }
 
 	async findAll(): Promise<Task[]> {
@@ -28,12 +28,12 @@ export class TasksService {
 	}
 
 	async create(body: CreateTaskDto, userId: any): Promise<Task> {
-		const project = await this.projectRepository.findOne({ where: { id: body.projectId } });
+		const list = await this.listRepository.findOne({ where: { id: body.listId } });
 
 		const task = this.taskRepository.create({
 			created_by: userId,
 			createdAt: new Date(),
-			project: project,
+			list: list,
 			...body
 		});
 

@@ -1,4 +1,4 @@
-import { Task } from 'src/tasks/task.entity';
+import { List } from 'src/lists/list.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
@@ -9,6 +9,6 @@ export class Project {
 	@Column()
 	name: string;
 
-	@OneToMany(() => Task, task => task.project)
-	tasks: Task[];
+	@OneToMany(() => List, list => list.project)
+	lists: List[];
 }
