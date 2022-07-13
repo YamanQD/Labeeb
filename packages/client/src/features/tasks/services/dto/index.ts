@@ -7,21 +7,22 @@ export interface TaskDTO {
     priority: ETaskPriority;
 }
 
-export interface TaskListDTO {
+// HERE IT"S OKAY
+export interface TaskGroupDTO {
     id: number;
     status: string;
     tasks: TaskDTO[];
 }
 
-export interface TaskGroupDTO {
+export interface TaskListDTO {
     id: number;
     title: string;
-    taskLists: TaskListDTO[];
+    taskGroups: TaskGroupDTO[];
 }
 
 export interface CreateTaskDTO {
     projectId: number;
-    groupId: number;
+    listId: number;
 
     title: string;
     description?: string;

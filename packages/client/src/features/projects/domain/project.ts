@@ -3,15 +3,15 @@ interface IProjectStatus {
     label: string;
 }
 
-export interface IProjectGroup {
+export interface IProjectList {
     id: number;
-    title: string;
+    name: string;
     tasksCount: number;
 }
 
 export interface IProject {
     id: number;
-    title: string;
-    groups: IProjectGroup[];
-    statuses: IProjectStatus[]
+    name: string;
+    lists: IProjectList[];
+    statuses: IProjectStatus[];
 }

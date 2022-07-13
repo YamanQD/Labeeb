@@ -1,17 +1,20 @@
-import { ITasksRepository, TaskGroupFilters } from "../domain/ItaskRepository";
-import { CreateTaskDTO, TaskDTO, TaskGroupDTO } from "./dto";
+import { ITasksRepository, TaskListFilters } from "../domain/ItaskRepository";
+import { CreateTaskDTO, TaskDTO, TaskListDTO } from "./dto";
 import { TaskMapper } from "./mappers";
 
 export class TasksService {
     constructor(private tasksRepository: ITasksRepository) {}
 
-    public async getTaskGroupsForProject({ projectId, groupId }: TaskGroupFilters): Promise<TaskGroupDTO[]> {
-        const taskGroups = await this.tasksRepository.getTaskGroups({
+    public async getTaskListsForProject({
+        projectId,
+        listId,
+    }: TaskListFilters): Promise<TaskListDTO[]> {
+        const taskLists = await this.tasksRepository.getTaskLists({
             projectId,
-            groupId
+            listId,
         });
 
-        return taskGroups.map(TaskMapper.taskGroupToDTO);
+        return taskLists.map(TaskMapper.taskListToDTO);
     }
 
     public async createTask(task: CreateTaskDTO): Promise<TaskDTO> {

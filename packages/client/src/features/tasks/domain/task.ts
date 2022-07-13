@@ -34,7 +34,7 @@ export interface ITask {
     priority: ETaskPriority;
 }
 
-export interface ITaskGroup {
+export interface ITaskList {
     id: number;
     title: string;
     tasks: ITask[];

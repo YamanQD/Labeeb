@@ -1,4 +1,4 @@
-import { ITask, ITaskGroup } from "../../domain/task";
+import { ITask, ITaskList } from "../../domain/task";
 import { TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
 
 let dummyId = 0;
@@ -7,33 +7,32 @@ export class TaskMapper {
         return task;
     }
 
-    static taskGroupToDTO(taskGroup: ITaskGroup): TaskGroupDTO {
+    static taskListToDTO(taskList: ITaskList): TaskListDTO {
         /**
          * taskGroup:
-         * 
+         *
          * title: "";
          * tasks: []
-         * 
+         *
          * Output:
-         * 
+         *
          * title: "";
          * taskLists: [
          *      status: "",
          *      tasks: []
          * ]
          */
-        const taskLists: TaskListDTO[] = [];
+        const taskGroups: TaskGroupDTO[] = [];
 
-        taskGroup.tasks.forEach((task) => {
+        taskList.tasks.forEach((task) => {
             // Do we have a list that corresponds to the task's status?
-            const suitableTaskList = taskLists.find((list) => list.status == task.status);
+            const suitableTaskGroup = taskGroups.find((group) => group.status == task.status);
 
             // If so, push the task to the list
-            if (suitableTaskList) suitableTaskList.tasks.push(task);
-
+            if (suitableTaskGroup) suitableTaskGroup.tasks.push(task);
             // Else create a new list and push this task to it
             else {
-                taskLists.push({
+                taskGroups.push({
                     status: task.status,
                     id: dummyId,
                     tasks: [task],
@@ -44,9 +43,9 @@ export class TaskMapper {
         });
 
         return {
-            id: taskGroup.id,
-            title: taskGroup.title,
-            taskLists,
+            id: taskList.id,
+            title: taskList.title,
+            taskGroups,
         };
     }
 }

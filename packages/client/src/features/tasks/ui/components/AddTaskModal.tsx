@@ -13,22 +13,33 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useGetProjects } from "src/features/projects/application/getProjects";
-import { ProjectGroupDTO } from "src/features/projects/services/dto";
+import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask } from "../../application/addTask";
+import { ETaskPriority, taskPriorities } from "../../domain/task";
 
 interface FormFields {
     title: string;
     description: string;
-    status: string;
     projectId: number;
-    groupId: number;
+    listId: number;
+    status: string;
+    priority: ETaskPriority;
+    deadline: string;
 }
 
 const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
-    const [groups, setGroups] = useState<ProjectGroupDTO[]>([]);
-
     const { data: projects } = useGetProjects();
     const { mutate, isLoading } = useAddTask();
+    const [selectedProject, setSelectedProject] = useState<ProjectDTO | undefined>();
+
+    const lists = selectedProject?.lists ?? [];
+    const statuses = selectedProject?.statuses ?? [];
+
+    // The `?? ""` is useful so that MUI doesn't think my form fields
+    // are uncontrolled.
+    const defaultProject = selectedProject?.id ?? "";
+    const defaultList = lists[0]?.id ?? "";
+    const defaultStatus = statuses[0]?.label ?? "";
 
     const {
         register,
@@ -38,36 +49,23 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
     } = useForm<FormFields>();
 
     useEffect(() => {
-        // Update project groups when the user selects a project
+        // Update project lists when the user selects a project
         const subscription = watch((data) => {
-            const selectedProjectId = data.projectId;
+            const selectedProjectId = Number(data.projectId);
             const selectedProject = projects?.find((project) => project.id == selectedProjectId);
 
-            if (selectedProject) setGroups(selectedProject.groups);
+            setSelectedProject(selectedProject);
         });
 
+        /**
+         * Setting the select project like this: `const ... = useState(projects?.[0])`
+         * will only initialize it once, and not on every re-render.
+         */
+        setSelectedProject(projects?.[0]);
+
         return () => subscription.unsubscribe();
-    }, [watch]);
+    }, [watch, projects]);
 
-    const statuses = [
-        {
-            id: 1,
-            label: "TODO",
-            value: 0,
-        },
-
-        {
-            id: 2,
-            label: "In Progress",
-            value: 1,
-        },
-
-        {
-            id: 3,
-            label: "Done",
-            value: 2,
-        },
-    ];
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         mutate(
             {
@@ -85,78 +83,108 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
     };
 
     return (
-        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="md">
+        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
             <DialogTitle>Add a new task</DialogTitle>
             <DialogContent>
                 <DialogContentText>Please fill the details of the new task</DialogContentText>
                 <form noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={5}>
-                            <Stack>
+                            <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
                                 <TextField
                                     autoFocus
                                     margin="normal"
                                     label="Title"
                                     variant="standard"
+                                    placeholder="Fix bug #23"
                                     error={!!errors.title}
                                     helperText={errors.title?.message ?? ""}
                                     {...register("title", { required: "Task title is required." })}
                                 />
+
                                 <TextField
                                     margin="normal"
                                     label="Description"
+                                    placeholder="When the user clicks on the ..."
                                     variant="standard"
+                                    multiline
+                                    rows={4}
                                     {...register("description")}
                                 />
 
                                 <TextField
                                     margin="normal"
-                                    label="Status"
-                                    defaultValue={0}
-                                    select
-                                    variant="standard"
-                                    {...register("status")}
-                                >
-                                    {statuses.map((status) => (
-                                        <MenuItem key={status.id} value={status.value}>
-                                            {status.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Stack>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Stack>
-                                <TextField
-                                    margin="normal"
                                     label="Project"
-                                    defaultValue=""
+                                    defaultValue={defaultProject}
                                     select
                                     variant="standard"
                                     {...register("projectId")}
                                 >
                                     {projects?.map((project) => (
                                         <MenuItem key={project.id} value={project.id}>
-                                            {project.title}
+                                            {project.name}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
+                                <TextField
+                                    margin="normal"
+                                    label="List"
+                                    defaultValue={defaultList}
+                                    select
+                                    variant="standard"
+                                    {...register("listId")}
+                                >
+                                    {lists?.map((list) => (
+                                        <MenuItem key={list.id} value={list.id}>
+                                            {list.name}
                                         </MenuItem>
                                     ))}
                                 </TextField>
 
                                 <TextField
                                     margin="normal"
-                                    label="Group"
-                                    defaultValue=""
+                                    label="Status"
+                                    defaultValue={defaultStatus}
                                     select
                                     variant="standard"
-                                    {...register("groupId")}
+                                    {...register("status")}
                                 >
-                                    {groups?.map((group) => (
-                                        <MenuItem key={group.id} value={group.id}>
-                                            {" "}
-                                            {group.title}{" "}
+                                    {statuses.map((status) => (
+                                        <MenuItem key={status.id} value={status.label}>
+                                            {status.label}
                                         </MenuItem>
                                     ))}
                                 </TextField>
+
+                                <TextField
+                                    margin="normal"
+                                    label="Priority"
+                                    defaultValue={taskPriorities[0]?.value}
+                                    select
+                                    variant="standard"
+                                    {...register("priority")}
+                                >
+                                    {taskPriorities.map((priority) => (
+                                        <MenuItem key={priority.value} value={priority.value}>
+                                            {priority.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
+                                <TextField
+                                    type="date"
+                                    margin="normal"
+                                    variant="standard"
+                                    InputLabelProps={{ shrink: true }}
+                                    label="Deadline"
+                                    error={!!errors?.deadline}
+                                    helperText={errors?.deadline?.message}
+                                    {...register("deadline")}
+                                />
                             </Stack>
                         </Grid>
                     </Grid>
