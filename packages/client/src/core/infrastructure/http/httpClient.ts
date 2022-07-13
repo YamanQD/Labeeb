@@ -15,16 +15,11 @@ export class HTTPClient implements IHTTPClient {
             headers: requestHeaders,
         });
 
-        const parsedResponse = options.parser
-            ? options.parser<ResponseType>(response)
-            : await this.parser<ResponseType>(response);
+        const json = await response.json();
+        const parsedResponse = options.parser ? options.parser<ResponseType>(json) : json;
 
         // TODO: Handle errors
         return parsedResponse;
-    }
-
-    private async parser<ResponseType>(data: Response): Promise<ResponseType> {
-        return await data.json();
     }
 
     private constructRequestPath(originalPath: string, params: Object): string {
