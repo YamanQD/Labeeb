@@ -7,7 +7,7 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
 	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-	async validateUser(username: string, password: string): Promise<any> {
+	async validateUser(username: string, password: string): Promise<User> {
 		const user = await this.usersService.findOne(username);
 		if (user && user.password === password) {
 			delete user.password;
