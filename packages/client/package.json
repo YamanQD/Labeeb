@@ -41,11 +41,6 @@
         "client:test": "react-scripts test",
         "prettify": "prettier . --write"
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app"
-        ]
-    },
     "browserslist": {
         "production": [
             ">0.2%",
