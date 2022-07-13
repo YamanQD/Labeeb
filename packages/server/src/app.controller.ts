@@ -7,6 +7,9 @@ import { AppService } from './app.service';
 export class AppController {
 	constructor(private readonly appService: AppService) {}
 
+	/**
+	 * Get the details of the authenticated user.
+	 */
 	@ApiTags('auth')
 	@Get('profile')
 	getProfile(@Req() req: Request) {

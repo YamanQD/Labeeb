@@ -11,12 +11,18 @@ import { Public } from './public.decorator';
 export class AuthController {
 	constructor(private authService: AuthService) {}
 
+	/**
+	 * Create a new user.
+	 */
 	@Public()
 	@Post('register')
 	async register(@Body() user: User) {
 		return this.authService.register(user);
 	}
 
+	/**
+	 * Get an authentication token.
+	 */
 	@Public()
 	@UseGuards(LocalAuthGuard)
 	@Post('login')
