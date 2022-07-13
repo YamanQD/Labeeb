@@ -1,20 +1,14 @@
 import Box from "@mui/material/Box";
-import { useCallback, useState } from "react";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { useStore } from "src/core/infrastructure/store";
 import { useGetTaskGroups } from "../../application/getTaskGroups";
 import AddTaskContainer from "../components/AddTaskContainer";
-import AddTaskModal from "../components/AddTaskModal";
 import TaskGroup from "../components/TaskGroup";
 
 const Tasks = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = useCallback(() => setIsModalOpen(true), []);
-    const closeModal = useCallback(() => setIsModalOpen(false), []);
-
     const currentProjectId = useStore((state) => state.currentProjectId);
     const currentGroupId = useStore((state) => state.currentGroupId);
-
+    
     const isQueryEnabled = !!currentProjectId;
 
     const {
@@ -29,12 +23,14 @@ const Tasks = () => {
         },
     });
 
-    if (isLoading) return <SuspenseLoader />;
-    if (isError) return <p>An error occurred while fetching data. Please refresh your browser.</p>;
-    if (!isQueryEnabled) return <p>Please select a project from the sidebar.</p>;
+    let content;
 
-    return (
-        <div>
+    if (isLoading) content = <SuspenseLoader />;
+    else if (isError)
+        content = <p>An error occurred while fetching data. Please refresh your browser.</p>;
+    else if (!isQueryEnabled) content = <p>Please select a project from the sidebar.</p>;
+    else
+        content = (
             <Box sx={{ p: 4 }}>
                 <>
                     {taskGroups?.map((group) => (
@@ -44,9 +40,12 @@ const Tasks = () => {
                     ))}
                 </>
             </Box>
+        );
 
-            <AddTaskContainer onClick={openModal} />
-            <AddTaskModal open={isModalOpen} closeModal={closeModal} />
+    return (
+        <div>
+            {content}
+            <AddTaskContainer disabled={isLoading || !isQueryEnabled} />
         </div>
     );
 };
