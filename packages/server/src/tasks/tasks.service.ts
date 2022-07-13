@@ -67,19 +67,14 @@ export class TasksService {
 		if (allTasks.length > 0) return;
 
 		for (let i = 0; i < 10; i++) {
-			const list = await this.listRepository.findOne({ where: { id: (Math.floor(Math.random() * 10) % 3) + 1 } });
-
-			const task = {
-				created_by: (Math.floor(Math.random() * 10) % 3) + 1,
-				createdAt: new Date(),
-				title: faker.lorem.sentence(),
-				description: faker.lorem.sentences(3),
+			const task: CreateTaskDto = {
+				title: faker.random.words(),
+				description: faker.random.words(10),
 				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
 				deadline: faker.date.future(),
-				list
+				listId: (Math.floor(Math.random() * 10) % 3) + 1
 			}
-
-			await this.taskRepository.save(task);
+			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
 	}
 }
