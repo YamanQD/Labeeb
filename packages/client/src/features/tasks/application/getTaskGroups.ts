@@ -1,21 +1,21 @@
 import { useQuery } from "react-query";
 import { tasksService } from "../services";
 
-interface UseGetTaskGroupsProps {
+interface UseGetTaskListsProps {
     projectId: number | undefined;
-    groupId: number | undefined;
+    listId: number | undefined;
 
     // TODO: Set a proper type for query options
     queryOptions?: Object;
 }
 
-export const useGetTaskGroups = ({ projectId, groupId, queryOptions = {} }: UseGetTaskGroupsProps) => {
-    const fetchAllTaskGroups = async () => {
-        return tasksService.getTaskGroupsForProject({
+export const useGetTaskLists = ({ projectId, listId, queryOptions = {} }: UseGetTaskListsProps) => {
+    const fetchAllTaskLists = async () => {
+        return tasksService.getTaskListsForProject({
             projectId,
-            groupId,
+            listId,
         });
     };
 
-    return useQuery(["taskGroups", projectId, groupId], fetchAllTaskGroups, queryOptions);
+    return useQuery(["taskLists", projectId, listId], fetchAllTaskLists, queryOptions);
 };

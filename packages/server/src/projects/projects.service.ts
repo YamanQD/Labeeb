@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { faker } from '@faker-js/faker';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
@@ -40,13 +39,13 @@ export class ProjectsService {
 
 		const projects: CreateProjectDto[] = [
 			{
-				name: faker.word.noun(),
+				name: 'Satellite Simulator',
 			},
 			{
-				name: faker.word.noun(),
+				name: 'E-Commerce App',
 			},
 			{
-				name: faker.word.noun(),
+				name: 'Banking App',
 			},
 		];
 

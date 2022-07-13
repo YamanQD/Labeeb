@@ -3,15 +3,15 @@ interface ProjectStatusDTO {
     label: string;
 }
 
-export interface ProjectGroupDTO {
+export interface ProjectListDTO {
     id: number;
-    title: string;
+    name: string;
     tasksCount: number;
 }
 
 export interface ProjectDTO {
     id: number;
-    title: string;
-    groups: ProjectGroupDTO[];
-    statuses: ProjectStatusDTO[]
+    name: string;
+    lists: ProjectListDTO[];
+    statuses: ProjectStatusDTO[];
 }

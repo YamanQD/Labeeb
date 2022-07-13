@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { faker } from '@faker-js/faker';
 import { Project } from 'src/projects/project.entity';
 import { Task } from 'src/tasks/task.entity';
 import { Repository } from 'typeorm';
@@ -45,15 +44,21 @@ export class ListsService {
 
 		const lists: CreateListDto[] = [
 			{
-				name: faker.word.noun(),
+				name: 'Frontend',
 				projectId: 1,
 			},
+
 			{
-				name: faker.word.noun(),
+				name: 'Backend',
+				projectId: 2,
+			},
+
+			{
+				name: 'UI',
 				projectId: 3,
 			},
 			{
-				name: faker.word.noun(),
+				name: 'UX',
 				projectId: 3,
 			},
 		];

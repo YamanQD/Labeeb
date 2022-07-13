@@ -1,50 +1,56 @@
-import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import { TaskGroupDTO } from "../../services";
+import Task from "./Task";
 import styles from "./task-list.module.css";
-import TaskList from "./TaskList";
+import TaskGroupTitle from "./TaskGroupTitle";
 
-const TaskGroupHeader = ({ onClick = () => {}, title = "", expanded = false }) => {
+const TaskGroupColumns = () => {
     return (
-        <div
-            className={styles.listTitleContainer}
-            onClick={onClick}
-            style={{ marginBottom: "1rem" }}
-        >
-            <div
-                className={styles.arrowIcon}
-                style={{ transform: expanded ? "" : "rotate(-90deg)" }}
-            >
-                <KeyboardArrowDownSharpIcon color="action" />
-            </div>
-            <Typography variant="h2" sx={{ ml: 0.2 }}>
-                {title}
-            </Typography>
-        </div>
+        <Grid item xs={6} className={styles.columnContainer}>
+            <Grid container>
+                <Grid item xs={4} className={styles.column}>
+                    Assignee
+                </Grid>
+                <Grid item xs={4} className={styles.column}>
+                    Priority
+                </Grid>
+                <Grid item xs={4} className={styles.column}>
+                    Deadline
+                </Grid>
+            </Grid>
+        </Grid>
     );
 };
 
-const TaskGroup = ({ id, title = "", taskLists = [] }: TaskGroupDTO) => {
+const TaskGroup = ({ status = "", tasks = [] }: TaskGroupDTO) => {
     const [isGroupExpanded, setIsGroupExpanded] = useState(true);
     const toggleGroupExpansion = () => setIsGroupExpanded((previous) => !previous);
 
     return (
-        <Box sx={{ border: "0.1px solid rgb(192 192 192 / 25%)", p: 2, mb: 3 }}>
-            <TaskGroupHeader
-                title={title}
-                onClick={toggleGroupExpansion}
-                expanded={isGroupExpanded}
-            />
+        <div className={styles.listContainer}>
+            <Grid container sx={{ alignItems: "center" }}>
+                <Grid item xs={6}>
+                    <TaskGroupTitle
+                        title={status}
+                        tasksCount={tasks.length}
+                        toggleListExpansion={toggleGroupExpansion}
+                        isListExpanded={isGroupExpanded}
+                    />
+                </Grid>
+
+                {isGroupExpanded && <TaskGroupColumns />}
+            </Grid>
+
             {isGroupExpanded && (
-                <>
-                    {taskLists.map((list) => (
-                        <TaskList key={list.id} {...list} />
+                <div className={styles.tasksContainer}>
+                    {tasks.map((task) => (
+                        <Task key={task.id} {...task} />
                     ))}
-                </>
+                </div>
             )}
-        </Box>
+        </div>
     );
 };
+
 export default TaskGroup;

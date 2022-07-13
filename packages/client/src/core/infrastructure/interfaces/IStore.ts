@@ -1,6 +1,6 @@
-interface TaskGroupInfo {
+interface TaskListInfo {
     projectId: number | undefined;
-    groupId: number | undefined;
+    listId: number | undefined;
 }
 
 export interface IStore {
@@ -9,12 +9,12 @@ export interface IStore {
      */
     currentProjectId: number | undefined;
     /**
-     * The project group that the user is currently navigating.
+     * The project list that the user is currently navigating.
      */
-    currentGroupId: number | undefined;
+    currentListId: number | undefined;
 
     /**
-     * Sets which task group the user should be seeing in the tasks view.
+     * Sets which task list the user should be seeing in the tasks view.
      */
-    setTaskGroupToView: (taskGroupInfo: TaskGroupInfo) => void;
+    setTaskListToView: (taskListInfo: TaskListInfo) => void;
 }

@@ -1,14 +1,14 @@
 import { CreateTaskDTO } from "../services";
-import { ITask, ITaskGroup } from "./task";
+import { ITask, ITaskList } from "./task";
 
-export interface TaskGroupFilters {
+export interface TaskListFilters {
     projectId: number | undefined;
-    groupId: number | undefined;
+    listId: number | undefined;
 }
 
 export interface ITasksRepository {
     getTask(id: number): Promise<ITask>;
-    getTaskGroups(filters: TaskGroupFilters): Promise<ITaskGroup[]>;
+    getTaskLists(filters: TaskListFilters): Promise<ITaskList[]>;
 
     createTask(task: CreateTaskDTO): Promise<ITask>;
 }

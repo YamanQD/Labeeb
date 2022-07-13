@@ -3,12 +3,12 @@ import { IStore } from "../interfaces/IStore";
 
 export const useStore = create<IStore>()((set) => ({
     currentProjectId: undefined,
-    currentGroupId: undefined,
+    currentListId: undefined,
 
-    setTaskGroupToView({ projectId, groupId }) {
+    setTaskListToView({ projectId, listId }) {
         set(() => ({
-            currentGroupId: groupId,
-            currentProjectId: projectId
-        }))
-    }
+            currentListId: listId,
+            currentProjectId: projectId,
+        }));
+    },
 }));

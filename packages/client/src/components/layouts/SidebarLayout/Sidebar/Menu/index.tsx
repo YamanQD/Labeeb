@@ -7,10 +7,10 @@ import SidebarMenuItemsList from "./SidebarMenuItemsList";
 import SubMenuWrapper from "./SubMenuWrapper";
 
 const SidebarMenu = () => {
-    const { data, isLoading, isError } = useGetProjects();
+    const { data, isLoading } = useGetProjects();
     const projects = data ?? [];
 
-    const setTaskGroupToView = useStore((state) => state.setTaskGroupToView);
+    const setTaskListToView = useStore((state) => state.setTaskListToView);
 
     return (
         <Box
@@ -26,40 +26,39 @@ const SidebarMenu = () => {
             ) : (
                 <>
                     {projects.map((project) => {
-                        const hasChildren = (project.groups?.length ?? 0) > 0;
+                        const hasChildren = (project.lists?.length ?? 0) > 0;
                         return (
                             /**
                              * Each project is structured like this:
                              *
                              * Project
-                             *  - Group
-                             *  - Group
-                             *  - Group
+                             *  - List
+                             *  - List
+                             *  - List
                              */
                             <SidebarMenuItemsList key={project.id}>
                                 <SubMenuWrapper>
                                     <SidebarMenuItem
-                                        title={project.title}
-                                        badge={"N"}
+                                        title={project.name}
                                         onClick={() =>
-                                            setTaskGroupToView({
+                                            setTaskListToView({
                                                 projectId: project.id,
-                                                groupId: undefined,
+                                                listId: undefined,
                                             })
                                         }
                                     >
                                         {hasChildren && (
                                             <SubMenuWrapper>
-                                                {project.groups?.map((group) => {
+                                                {project.lists?.map((list) => {
                                                     return (
                                                         <SidebarMenuItem
-                                                            key={group.id}
-                                                            title={group.title}
-                                                            badge={group.tasksCount}
+                                                            key={list.id}
+                                                            title={list.name}
+                                                            badge={list.tasksCount}
                                                             onClick={() =>
-                                                                setTaskGroupToView({
-                                                                    projectId: project.id,
-                                                                    groupId: group.id,
+                                                                setTaskListToView({
+                                                                    projectId: list.id,
+                                                                    listId: list.id,
                                                                 })
                                                             }
                                                         />

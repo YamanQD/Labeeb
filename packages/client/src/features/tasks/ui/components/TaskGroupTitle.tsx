@@ -12,13 +12,13 @@ const TitleButton = styled(Button)(
 `
 );
 
-const TaskListTitle = ({
+const TaskGroupTitle = ({
     title = "",
     tasksCount = 0,
     isListExpanded = true,
     toggleListExpansion = () => {},
 }) => {
-    const tasksCountText = `${tasksCount} ${tasksCount > 1 ? "tasks": "task"}`;
+    const tasksCountText = `${tasksCount} ${tasksCount > 1 ? "tasks" : "task"}`;
     return (
         <div className={styles.listTitleContainer} onClick={toggleListExpansion}>
             <div
@@ -41,4 +41,4 @@ const TaskListTitle = ({
     );
 };
 
-export default TaskListTitle;
+export default TaskGroupTitle;
