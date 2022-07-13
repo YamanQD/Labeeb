@@ -11,7 +11,9 @@ async function bootstrap() {
 		.setTitle('Labeeb')
 		.setDescription('The labeeb API description')
 		.setVersion('1.0')
-		.addTag('labeeb')
+		.addTag('auth', 'Authentication (login/logout).')
+		.addTag('tasks', 'The task resource.')
+		.addTag('projects', 'The project resource.')
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);

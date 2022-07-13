@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
 
+@ApiTags('projects')
 @Controller('projects')
 export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) {}
