@@ -2,6 +2,7 @@ import { createServer } from "miragejs";
 import { factories } from "./factories";
 import { models } from "./models";
 import { serializers } from "./serializer";
+import { getRandomElementFromArray } from "./utils";
 
 export const createAPIMockServer = () => {
     createServer({
@@ -13,7 +14,12 @@ export const createAPIMockServer = () => {
             const project = server.create("project", { title: "Satellite Simulator" });
 
             server.createList("group", 2, { project }).forEach((group) => {
-                server.createList("task", 4, { group });
+                for (let i = 0; i < 4; i++) {
+                    server.create("task", {
+                        group,
+                        status: getRandomElementFromArray(project.statuses).label,
+                    })
+                }
             });
 
             console.log("MIRAGE.JS DATABASE: ", server.db.dump());
