@@ -45,13 +45,14 @@ export const createAPIMockServer = () => {
 
             this.post("/projects/:projectId/groups/:groupId", (schema, request) => {
                 const { groupId } = request.params;
-                const { status, title, description } = request.requestBody;
+                const { status, title, description, priority } = request.requestBody;
 
                 return schema.tasks.create({
                     groupId,
                     status,
                     title,
                     description,
+                    priority,
                 });
             });
         },
