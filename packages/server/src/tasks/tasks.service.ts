@@ -31,6 +31,9 @@ export class TasksService {
 
 	async create(body: CreateTaskDto, userId: any): Promise<Task> {
 		const list = await this.listRepository.findOne({ where: { id: body.listId } });
+		if (!list) {
+			throw new NotFoundException('List not found');
+		}
 
 		const task = this.taskRepository.create({
 			created_by: userId,
