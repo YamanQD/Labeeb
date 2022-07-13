@@ -7,22 +7,24 @@ import { UsersService } from './users/users.service';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
-  constructor(
-    private usersService: UsersService,
-    private tasksService: TasksService,
-    private listsService: ListsService,
-    private projectsService: ProjectsService,
-  ) { }
+	constructor(
+		private usersService: UsersService,
+		private tasksService: TasksService,
+		private listsService: ListsService,
+		private projectsService: ProjectsService,
+	) {}
 
-  async getProfile(user: User) {
-    const { password, ...profile } = await this.usersService.findOne(user.username);
-    return profile;
-  }
+	async getProfile(user: User) {
+		const { password, ...profile } = await this.usersService.findOne(
+			user.username,
+		);
+		return profile;
+	}
 
-  async onApplicationBootstrap() {
-    await this.usersService.seed();
-    await this.projectsService.seed();
-    setTimeout(async () => await this.listsService.seed(), 1000);
-    setTimeout(async () => await this.tasksService.seed(), 2000);
-  }
+	async onApplicationBootstrap() {
+		await this.usersService.seed();
+		await this.projectsService.seed();
+		setTimeout(async () => await this.listsService.seed(), 1000);
+		setTimeout(async () => await this.tasksService.seed(), 2000);
+	}
 }

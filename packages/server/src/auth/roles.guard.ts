@@ -5,13 +5,13 @@ import { ROLE_KEY } from './roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-	constructor(private reflector: Reflector) { }
+	constructor(private reflector: Reflector) {}
 
 	canActivate(context: ExecutionContext): boolean {
-		const allowedRoles = this.reflector.getAllAndOverride<Role[]>(ROLE_KEY, [
-			context.getHandler(),
-			context.getClass(),
-		]);
+		const allowedRoles = this.reflector.getAllAndOverride<Role[]>(
+			ROLE_KEY,
+			[context.getHandler(), context.getClass()],
+		);
 		if (!allowedRoles) {
 			return true;
 		}

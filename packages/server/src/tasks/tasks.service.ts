@@ -14,8 +14,8 @@ export class TasksService {
 		@InjectRepository(Task)
 		private readonly taskRepository: Repository<Task>,
 		@InjectRepository(List)
-		private readonly listRepository: Repository<List>
-	) { }
+		private readonly listRepository: Repository<List>,
+	) {}
 
 	async findAll(): Promise<Task[]> {
 		return await this.taskRepository.find();
@@ -30,7 +30,9 @@ export class TasksService {
 	}
 
 	async create(body: CreateTaskDto, userId: any): Promise<Task> {
-		const list = await this.listRepository.findOne({ where: { id: body.listId } });
+		const list = await this.listRepository.findOne({
+			where: { id: body.listId },
+		});
 		if (!list) {
 			throw new NotFoundException('List not found');
 		}
@@ -39,7 +41,7 @@ export class TasksService {
 			created_by: userId,
 			createdAt: new Date(),
 			list: list,
-			...body
+			...body,
 		});
 
 		return await this.taskRepository.save(task);
@@ -64,7 +66,12 @@ export class TasksService {
 	}
 
 	async seed() {
-		const priorities = [Priority.HIGH, Priority.MEDIUM, Priority.LOW, Priority.NONE];
+		const priorities = [
+			Priority.HIGH,
+			Priority.MEDIUM,
+			Priority.LOW,
+			Priority.NONE,
+		];
 
 		const allTasks = await this.taskRepository.find();
 		if (allTasks.length > 0) return;
@@ -73,10 +80,13 @@ export class TasksService {
 			const task: CreateTaskDto = {
 				title: faker.random.words(),
 				description: faker.random.words(10),
-				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
+				priority:
+					priorities[
+						Math.floor(Math.random() * 100) % priorities.length
+					],
 				deadline: faker.date.future(),
-				listId: (Math.floor(Math.random() * 10) % 3) + 1
-			}
+				listId: (Math.floor(Math.random() * 10) % 3) + 1,
+			};
 			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
 	}
