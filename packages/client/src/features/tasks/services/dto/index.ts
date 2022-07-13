@@ -1,7 +1,10 @@
+import { ETaskPriority } from "../../domain/task";
+
 export interface TaskDTO {
     id: number;
     title: string;
     status: string;
+    priority: ETaskPriority;
 }
 
 export interface TaskListDTO {
@@ -19,8 +22,9 @@ export interface TaskGroupDTO {
 export interface CreateTaskDTO {
     projectId: number;
     groupId: number;
-    
+
     title: string;
     description?: string;
     status: string;
+    priority: ETaskPriority;
 }
