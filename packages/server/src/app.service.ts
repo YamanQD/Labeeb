@@ -15,9 +15,9 @@ export class AppService implements OnApplicationBootstrap {
 	) {}
 
 	async getProfile(user: User) {
-		const { password, ...profile } = await this.usersService.findOne(
-			user.username,
-		);
+		const profile = await this.usersService.findOne(user.username);
+		delete profile.password;
+
 		return profile;
 	}
 
