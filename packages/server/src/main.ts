@@ -9,7 +9,9 @@ async function bootstrap() {
 
 	const config = new DocumentBuilder()
 		.setTitle('Labeeb')
-		.setDescription('The labeeb API description')
+		.setDescription(
+			'The official documentation of the best Task Management System in existence.',
+		)
 		.setVersion('1.0')
 		.addTag('auth', 'Authentication (login/logout).')
 		.addTag('tasks', 'The task resource.')
