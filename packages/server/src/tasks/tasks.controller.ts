@@ -31,18 +31,12 @@ export class TasksController {
 	}
 
 	@Post()
-	async create(
-		@Req() req: Request,
-		@Body() body: CreateTaskDto,
-	): Promise<Task> {
+	async create(@Req() req: Request, @Body() body: CreateTaskDto): Promise<Task> {
 		return await this.tasksService.create(body, req.user.id);
 	}
 
 	@Patch(':id')
-	async update(
-		@Param('id') id: number,
-		@Body() body: UpdateTaskDto,
-	): Promise<Task> {
+	async update(@Param('id') id: number, @Body() body: UpdateTaskDto): Promise<Task> {
 		return await this.tasksService.update(id, body);
 	}
 

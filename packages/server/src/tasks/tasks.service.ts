@@ -66,12 +66,7 @@ export class TasksService {
 	}
 
 	async seed() {
-		const priorities = [
-			Priority.HIGH,
-			Priority.MEDIUM,
-			Priority.LOW,
-			Priority.NONE,
-		];
+		const priorities = [Priority.HIGH, Priority.MEDIUM, Priority.LOW, Priority.NONE];
 
 		const allTasks = await this.taskRepository.find();
 		if (allTasks.length > 0) return;
@@ -80,10 +75,7 @@ export class TasksService {
 			const task: CreateTaskDto = {
 				title: faker.random.words(),
 				description: faker.random.words(10),
-				priority:
-					priorities[
-						Math.floor(Math.random() * 100) % priorities.length
-					],
+				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
 			};
