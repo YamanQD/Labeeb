@@ -2,7 +2,7 @@ import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSha
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import styles from "./task-list.module.css";
+import styles from "./task-group.module.css";
 
 const TitleButton = styled(Button)(
     ({ theme }) => `

@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useMemo, useState } from "react";
 import { TaskGroupDTO, TaskListDTO } from "../../services";
-import styles from "./task-list.module.css";
+import styles from "./TaskGroup/task-group.module.css";
 import TaskGroup from "./TaskGroup";
 
 const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
