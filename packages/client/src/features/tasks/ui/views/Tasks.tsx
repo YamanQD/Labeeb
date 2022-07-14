@@ -9,7 +9,8 @@ const Tasks = () => {
     const currentProjectId = useStore((state) => state.currentProjectId);
     const currentListId = useStore((state) => state.currentListId);
 
-    const isQueryEnabled = !!currentProjectId;
+    // One of these two must be truthy, otherwise the query is disabled
+    const isQueryEnabled = (!!currentProjectId || !!currentListId);
 
     const {
         data: taskLists,

@@ -1,5 +1,5 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
-import { ITasksRepository, TaskListFilters } from "../domain/ItaskRepository";
+import { ITasksRepository } from "../domain/ItaskRepository";
 import { ITask, ITaskList } from "../domain/task";
 import { CreateTaskDTO } from "../services";
 
@@ -10,14 +10,20 @@ export class TasksRepository implements ITasksRepository {
         throw new Error("Method not implemented.");
     }
 
-    public async getTaskLists(filters: TaskListFilters): Promise<ITaskList[]> {
-        const { projectId, listId } = filters;
-        const path = listId
-            ? `/projects/${projectId}/groups/${listId}`
-            : `/projects/${projectId}/groups`;
-
+    public async getTaskListsForProject(projectId: number): Promise<ITaskList[]> {
         const response = await this.httpClient.request<ITaskList[]>({
-            path,
+            path: `/projects/${projectId}/tasks`,
+            parser(data) {
+                return data.lists;
+            }
+        });
+
+        return response;
+    }
+
+    public async getTaskList(listId: number): Promise<ITaskList> {
+        const response = await this.httpClient.request<ITaskList>({
+            path: `/lists/${listId}`,
         });
 
         return response;

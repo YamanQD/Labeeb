@@ -25,6 +25,7 @@ export class TaskMapper {
         const taskGroups: TaskGroupDTO[] = [];
 
         taskList.tasks.forEach((task) => {
+            task.status = "In Progress";
             // Do we have a list that corresponds to the task's status?
             const suitableTaskGroup = taskGroups.find((group) => group.status == task.status);
 
