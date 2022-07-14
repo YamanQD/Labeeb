@@ -1,12 +1,18 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { TaskListDTO } from "../../services";
+import { useMemo, useState } from "react";
+import { TaskGroupDTO, TaskListDTO } from "../../services";
 import styles from "./task-list.module.css";
 import TaskGroup from "./TaskGroup";
 
-const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false }) => {
+const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
+    return listTaskGroups.reduce((previousTasksCount, newGroup) => {
+        return previousTasksCount + newGroup.tasks.length;
+    }, 0);
+};
+
+const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, tasksCount = 0 }) => {
     return (
         <div
             className={styles.listTitleContainer}
@@ -20,7 +26,7 @@ const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false }) =>
                 <KeyboardArrowDownSharpIcon color="action" />
             </div>
             <Typography variant="h2" sx={{ ml: 0.2 }}>
-                {title}
+                {title} - {tasksCount}
             </Typography>
         </div>
     );
@@ -32,11 +38,13 @@ const TaskListContainer = styled("div")(
     padding: ${theme.spacing(2)};
     margin-bottom: ${theme.spacing(3)};
     `
-)
+);
 
 const TaskList = ({ id, title = "", taskGroups = [] }: TaskListDTO) => {
     const [isListExpanded, setIsListExpanded] = useState(true);
     const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
+
+    const tasksCount = useMemo<number>(() => getTasksCountForList(taskGroups), [taskGroups]);
 
     return (
         <TaskListContainer>
@@ -44,6 +52,7 @@ const TaskList = ({ id, title = "", taskGroups = [] }: TaskListDTO) => {
                 title={title}
                 onClick={toggleListExpansion}
                 expanded={isListExpanded}
+                tasksCount={tasksCount}
             />
             {isListExpanded && (
                 <>
