@@ -5,3 +5,5 @@ export type APIError = {
      */
     status: number;
 };
+
+export type ErrorListener = (error: APIError) => void;

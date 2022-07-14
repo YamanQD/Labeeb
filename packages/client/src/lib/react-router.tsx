@@ -20,9 +20,11 @@ const Status404 = Loader(lazy(() => import("src/pages/404")));
 
 const RedirectIfUnauthorized = () => {
     const navigate = useNavigate();
+    // const user = useStore((state) => state.user);
+
+    // if (!user) navigate('/login');
 
     useEffect(() => {
-        // TODO: Check on initial load if the user is unauthenticated
         const unsubscribe = httpClient.subscribeToError((error) => {
             if (error.status == 401) {
                 navigate("/login");

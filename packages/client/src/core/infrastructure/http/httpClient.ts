@@ -1,8 +1,6 @@
 import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
-import { type APIError } from "./types";
+import { type APIError, type ErrorListener } from "./types";
 import { getErrorMessageFromHTTPStatus } from "./utils";
-
-type ErrorListener = (error: APIError) => void;
 
 export class HTTPClient implements IHTTPClient {
     private errorListeners: ErrorListener[] = [];
