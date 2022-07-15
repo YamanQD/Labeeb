@@ -9,7 +9,7 @@ export class ProjectsService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectRepository: Repository<Project>,
-	) {}
+	) { }
 
 	async findAll(): Promise<Project[]> {
 		return await this.projectRepository.find({
@@ -39,13 +39,13 @@ export class ProjectsService {
 
 		const projects: CreateProjectDto[] = [
 			{
-				name: 'Satellite Simulator',
+				title: 'Satellite Simulator',
 			},
 			{
-				name: 'E-Commerce App',
+				title: 'E-Commerce App',
 			},
 			{
-				name: 'Banking App',
+				title: 'Banking App',
 			},
 		];
 

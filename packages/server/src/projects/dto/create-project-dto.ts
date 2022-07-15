@@ -4,5 +4,5 @@ import { IsNotEmpty } from 'class-validator';
 export class CreateProjectDto {
 	@IsNotEmpty()
 	@Type(() => String)
-	name: string;
+	title: string;
 }

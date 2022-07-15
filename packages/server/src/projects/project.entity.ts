@@ -7,7 +7,7 @@ export class Project {
 	id: number;
 
 	@Column()
-	name: string;
+	title: string;
 
 	@OneToMany(() => List, (list) => list.project)
 	lists: List[];
