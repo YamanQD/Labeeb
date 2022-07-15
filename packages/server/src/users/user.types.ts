@@ -12,6 +12,11 @@ export class UserWithoutPassword {
 	username: string;
 
 	/**
+	 * @example "wilson@example.com"
+	 */
+	email: string;
+
+	/**
 	 * @example "user"
 	 */
 	role: Role;
