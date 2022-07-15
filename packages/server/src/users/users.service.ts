@@ -9,11 +9,11 @@ export class UsersService {
 	constructor(
 		@InjectRepository(User)
 		private usersRepository: Repository<User>,
-	) {}
+	) { }
 
-	create(user: User) {
+	async create(user: User) {
 		const newUser = this.usersRepository.create(user);
-		return this.usersRepository.save(newUser);
+		return await this.usersRepository.save(newUser);
 	}
 
 	async findOne(username: string) {
