@@ -5,13 +5,13 @@ interface IProjectStatus {
 
 export interface IProjectList {
     id: number;
-    name: string;
+    title: string;
     tasksCount: number;
 }
 
 export interface IProject {
     id: number;
-    name: string;
+    title: string;
     lists: IProjectList[];
     statuses: IProjectStatus[];
 }

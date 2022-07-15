@@ -122,7 +122,7 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
                                 >
                                     {projects?.map((project) => (
                                         <MenuItem key={project.id} value={project.id}>
-                                            {project.name}
+                                            {project.title}
                                         </MenuItem>
                                     ))}
                                 </TextField>
@@ -140,7 +140,7 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
                                 >
                                     {lists?.map((list) => (
                                         <MenuItem key={list.id} value={list.id}>
-                                            {list.name}
+                                            {list.title}
                                         </MenuItem>
                                     ))}
                                 </TextField>

@@ -1,8 +1,8 @@
-import { HTTPClient } from "src/core/infrastructure/http/httpClient";
+import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { IProject } from "../domain/project";
 
 export class ProjectRepository {
-    constructor(private httpClient: HTTPClient) {}
+    constructor(private httpClient: IHTTPClient) {}
 
     public async getProjects(): Promise<IProject[]> {
         const response = await this.httpClient.request<IProject[]>({

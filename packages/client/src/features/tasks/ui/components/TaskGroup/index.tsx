@@ -1,8 +1,8 @@
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
-import { TaskGroupDTO } from "../../services";
-import Task from "./Task";
-import styles from "./task-list.module.css";
+import { TaskGroupDTO } from "../../../services";
+import Task from "../Task";
+import styles from "./task-group.module.css";
 import TaskGroupTitle from "./TaskGroupTitle";
 
 const TaskGroupColumns = () => {

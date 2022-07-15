@@ -2,6 +2,7 @@ import { ITask, ITaskList } from "../../domain/task";
 import { TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
 
 let dummyId = 0;
+const dummyStatuses = ["In Progress", "Done", "Todo"];
 export class TaskMapper {
     static taskToDTO(task: ITask): TaskDTO {
         return task;
@@ -25,6 +26,7 @@ export class TaskMapper {
         const taskGroups: TaskGroupDTO[] = [];
 
         taskList.tasks.forEach((task) => {
+            task.status = dummyStatuses[dummyId % 3] as string;
             // Do we have a list that corresponds to the task's status?
             const suitableTaskGroup = taskGroups.find((group) => group.status == task.status);
 

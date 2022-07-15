@@ -39,7 +39,7 @@ const SidebarMenu = () => {
                             <SidebarMenuItemsList key={project.id}>
                                 <SubMenuWrapper>
                                     <SidebarMenuItem
-                                        title={project.name}
+                                        title={project.title}
                                         onClick={() =>
                                             setTaskListToView({
                                                 projectId: project.id,
@@ -53,11 +53,11 @@ const SidebarMenu = () => {
                                                     return (
                                                         <SidebarMenuItem
                                                             key={list.id}
-                                                            title={list.name}
+                                                            title={list.title}
                                                             badge={list.tasksCount}
                                                             onClick={() =>
                                                                 setTaskListToView({
-                                                                    projectId: list.id,
+                                                                    projectId: undefined,
                                                                     listId: list.id,
                                                                 })
                                                             }

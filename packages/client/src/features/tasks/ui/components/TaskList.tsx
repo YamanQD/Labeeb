@@ -1,12 +1,18 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
-import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { TaskListDTO } from "../../services";
-import styles from "./task-list.module.css";
+import { useMemo, useState } from "react";
+import { TaskGroupDTO, TaskListDTO } from "../../services";
+import styles from "./TaskGroup/task-group.module.css";
 import TaskGroup from "./TaskGroup";
 
-const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false }) => {
+const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
+    return listTaskGroups.reduce((previousTasksCount, newGroup) => {
+        return previousTasksCount + newGroup.tasks.length;
+    }, 0);
+};
+
+const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, tasksCount = 0 }) => {
     return (
         <div
             className={styles.listTitleContainer}
@@ -20,31 +26,42 @@ const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false }) =>
                 <KeyboardArrowDownSharpIcon color="action" />
             </div>
             <Typography variant="h2" sx={{ ml: 0.2 }}>
-                {title}
+                {title} - {tasksCount}
             </Typography>
         </div>
     );
 };
 
+const TaskListContainer = styled("div")(
+    ({ theme }) => `
+    border: 0.1px solid rgb(192 192 192 / 25%);
+    padding: ${theme.spacing(2)};
+    margin-bottom: ${theme.spacing(3)};
+    `
+);
+
 const TaskList = ({ id, title = "", taskGroups = [] }: TaskListDTO) => {
-    const [isGroupExpanded, setIsGroupExpanded] = useState(true);
-    const toggleGroupExpansion = () => setIsGroupExpanded((previous) => !previous);
+    const [isListExpanded, setIsListExpanded] = useState(true);
+    const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
+
+    const tasksCount = useMemo<number>(() => getTasksCountForList(taskGroups), [taskGroups]);
 
     return (
-        <Box sx={{ border: "0.1px solid rgb(192 192 192 / 25%)", p: 2, mb: 3 }}>
+        <TaskListContainer>
             <TaskListHeader
                 title={title}
-                onClick={toggleGroupExpansion}
-                expanded={isGroupExpanded}
+                onClick={toggleListExpansion}
+                expanded={isListExpanded}
+                tasksCount={tasksCount}
             />
-            {isGroupExpanded && (
+            {isListExpanded && (
                 <>
                     {taskGroups.map((group) => (
                         <TaskGroup key={group.id} {...group} />
                     ))}
                 </>
             )}
-        </Box>
+        </TaskListContainer>
     );
 };
 export default TaskList;
