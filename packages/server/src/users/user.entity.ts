@@ -19,6 +19,6 @@ export class User {
 	@Column('enum', { enum: Role, default: Role.USER })
 	role: Role;
 
-	@ManyToMany(() => Project, (project) => project.users, { nullable: true })
+	@ManyToMany(() => Project, { nullable: true })
 	projects: Project[];
 }

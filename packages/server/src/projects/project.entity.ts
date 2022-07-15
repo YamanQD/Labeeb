@@ -1,6 +1,6 @@
 import { List } from 'src/lists/list.entity';
 import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class Project {
@@ -13,6 +13,7 @@ export class Project {
 	@OneToMany(() => List, (list) => list.project)
 	lists: List[];
 
-	@ManyToMany(() => User, (user) => user.projects, { nullable: true })
+	@ManyToMany(() => User, { nullable: true })
+	@JoinTable({ name: 'project_user' })
 	users: User[];
 }
