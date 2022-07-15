@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { ApplicationRoutes } from "./router";
+import { ApplicationRoutes } from "./lib/react-router";
 
 import { CssBaseline } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';

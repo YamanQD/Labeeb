@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/projects/project.entity';
-import { Task } from 'src/tasks/task.entity';
 import { Repository } from 'typeorm';
 import { CreateListDto } from './dto/create-list-dto';
 import { List } from './list.entity';
@@ -13,7 +12,7 @@ export class ListsService {
 		private readonly listRepository: Repository<List>,
 		@InjectRepository(Project)
 		private readonly projectRepository: Repository<Project>,
-	) { }
+	) {}
 
 	async create(list: CreateListDto): Promise<List> {
 		const project = await this.projectRepository.findOne({
@@ -26,7 +25,7 @@ export class ListsService {
 		return await this.listRepository.save({ ...list, project });
 	}
 
-	async findListTasks(id: number): Promise<Task[]> {
+	async findOne(id: number): Promise<List> {
 		const list = await this.listRepository.findOne({
 			where: { id },
 			relations: { tasks: true },
@@ -35,7 +34,7 @@ export class ListsService {
 			throw new NotFoundException('List not found');
 		}
 
-		return list.tasks;
+		return list;
 	}
 
 	async seed() {

@@ -33,12 +33,30 @@ And for now instructions will be only provided for development purposes.
 
 ```bash
 # Start frontend (client) development server and watch for changes.
-yarn client:start
+yarn frontend
 
 # Start backend server for development and watch for changes.
-yarn server:start-dev
-# make sure that your mariadb instance is running.
+# Make sure to set up the database before doing this.
+yarn backend
 ```
+
+### Setting up the database
+
+Before starting the backend server, make sure that your MariaDB instance is running.
+
+On Windows, the easiest way is to use [XAMPP](https://www.apachefriends.org/). Here are the details steps:
+
+1. Download XAMPP from the website provided above.
+2. Install it on your machine.
+3. Open the `xampp-control.exe` file and start the MySQL and Apache services.
+4. Navigate to `localhost/phpmyadmin` in any browser.
+5. Log in (username: root, password: '')
+6. Create a new Database called 'Labeeb'
+7. Spin up the backend server using `yarn backend`.
+
+> Note: It isn't necessary to start the Apache service unless you want to access phpmyadmin.
+
+> Although XAMPP calls it MySQL, it actualy uses MariaDB.
 
 ## Developing with Visual Studio Code
 

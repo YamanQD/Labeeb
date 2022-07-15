@@ -1,8 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
-import { useCallback, useState } from "react";
-import AddTaskModal from "./AddTaskModal";
+import { useCallback } from "react";
+import { useStore } from "src/core/infrastructure/store";
+import TaskModal from "./TaskModal";
 
 const AddTaskButtonContainer = styled("div")`
     display: flex;
@@ -32,9 +33,11 @@ const AddTaskButton = styled(IconButton)(
 );
 
 const AddTaskContainer = ({ disabled = false }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = useCallback(() => setIsModalOpen(true), []);
-    const closeModal = useCallback(() => setIsModalOpen(false), []);
+    const isModalOpen = useStore((state) => state.isTaskModalOpen);
+    const toggleModal = useStore((state) => state.toggleTaskModal);
+
+    const openModal = useCallback(() => toggleModal(true), [toggleModal]);
+    const closeModal = useCallback(() => toggleModal(false), [toggleModal]);
 
     return (
         <>
@@ -43,7 +46,7 @@ const AddTaskContainer = ({ disabled = false }) => {
                     <AddIcon />
                 </AddTaskButton>
             </AddTaskButtonContainer>
-            <AddTaskModal open={isModalOpen} closeModal={closeModal} />
+            <TaskModal open={isModalOpen} closeModal={closeModal} />
         </>
     );
 };

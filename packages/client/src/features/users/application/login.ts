@@ -1,6 +1,11 @@
-import { IUserCredentials } from "../domain/user";
+import { useMutation } from "react-query";
+import { APIError } from "src/core/infrastructure/interfaces/IhttpClient";
 import { userService } from "../services";
+import { UserCredentialsDTO, UserDTO } from "../services/dto";
 
-export const login = async (credentials: IUserCredentials) => {
-    await userService.login(credentials);
+export const useLogin = () => {
+    const mutation = useMutation<UserDTO, APIError, UserCredentialsDTO>((credentials) => {
+        return userService.login(credentials);
+    });
+    return mutation;
 };

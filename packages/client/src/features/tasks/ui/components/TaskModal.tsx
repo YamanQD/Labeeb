@@ -27,10 +27,13 @@ interface FormFields {
     deadline: string;
 }
 
-const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
+/**
+ * The modal that's used for adding/viewing/editing tasks
+ */
+const TaskModal = ({ open = false, closeModal = () => {}, isEditMode = false }) => {
     const { data: projects } = useGetProjects();
     const { mutate, isLoading } = useAddTask();
-    const [selectedProject, setSelectedProject] = useState<ProjectDTO | undefined>();
+    const [selectedProject, setSelectedProject] = useState<ProjectDTO | null>();
 
     const lists = selectedProject?.lists ?? [];
     const statuses = selectedProject?.statuses ?? [];
@@ -97,6 +100,7 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
                                     label="Title"
                                     variant="standard"
                                     placeholder="Fix bug #23"
+                                    defaultValue={"HENLNLNO"}
                                     error={!!errors.title}
                                     helperText={errors.title?.message ?? ""}
                                     {...register("title", { required: "Task title is required." })}
@@ -201,4 +205,4 @@ const AddTaskModal = ({ open = false, closeModal = () => {} }) => {
     );
 };
 
-export default AddTaskModal;
+export default TaskModal;

@@ -1,6 +1,7 @@
-import { IUserCredentials } from "./user";
+import { UserCredentialsDTO } from "../services/dto";
+import { IUser } from "./user";
 
 export interface IUserRepository {
-    login(credentials: IUserCredentials): Promise<boolean>;
+    login(credentials: UserCredentialsDTO): Promise<IUser>;
     logout(): Promise<boolean>;
 }

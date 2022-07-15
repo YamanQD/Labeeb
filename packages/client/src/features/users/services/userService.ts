@@ -1,11 +1,13 @@
 import { IUserRepository } from "../domain/IuserRepository";
-import { IUserCredentials } from "../domain/user";
+import { UserCredentialsDTO, UserDTO } from "./dto";
+import { UserMapper } from "./mappers";
 
 export class UserService {
     constructor(private userRepository: IUserRepository) {}
 
-    async login(credentials: IUserCredentials) {
-        return await this.userRepository.login(credentials);
+    async login(credentials: UserCredentialsDTO): Promise<UserDTO> {
+        const user = await this.userRepository.login(credentials);
+        return UserMapper.userToDTO(user);
     }
 
     async logout() {

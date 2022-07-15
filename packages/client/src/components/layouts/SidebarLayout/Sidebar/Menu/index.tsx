@@ -43,7 +43,7 @@ const SidebarMenu = () => {
                                         onClick={() =>
                                             setTaskListToView({
                                                 projectId: project.id,
-                                                listId: undefined,
+                                                listId: null,
                                             })
                                         }
                                     >
@@ -57,7 +57,7 @@ const SidebarMenu = () => {
                                                             badge={list.tasksCount}
                                                             onClick={() =>
                                                                 setTaskListToView({
-                                                                    projectId: undefined,
+                                                                    projectId: null,
                                                                     listId: list.id,
                                                                 })
                                                             }

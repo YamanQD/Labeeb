@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import SidebarLayout from "src/components/layouts/SidebarLayout";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { HTTPClient } from "src/core/infrastructure/http/httpClient";
-import Admin from "src/pages/admin";
+import { useStore } from "src/core/infrastructure/store";
 
 const httpClient = HTTPClient.getInstance();
 
@@ -17,16 +17,16 @@ const Loader = (Component: React.FC) => (props: any) =>
 // Pages
 const Tasks = Loader(lazy(() => import("src/features/tasks/ui/views/Tasks")));
 const Status404 = Loader(lazy(() => import("src/pages/404")));
+const Login = Loader(lazy(() => import("src/features/users/views/Login")));
 
 const RedirectIfUnauthorized = () => {
     const navigate = useNavigate();
-    // const user = useStore((state) => state.user);
-
-    // if (!user) navigate('/login');
+    const user = useStore((state) => state.user);
 
     useEffect(() => {
+        if (!user) navigate("/login");
         const unsubscribe = httpClient.subscribeToError((error) => {
-            if (error.status == 401) {
+            if (error.status === 401) {
                 navigate("/login");
             }
         });
@@ -43,8 +43,9 @@ export const ApplicationRoutes = () => {
             <Routes>
                 <Route path="/" element={<SidebarLayout />}>
                     <Route path="" element={<Tasks />} />
-                    <Route path="/admin" element={<Admin />} />
                 </Route>
+
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Status404 />} />
             </Routes>
             <RedirectIfUnauthorized />
