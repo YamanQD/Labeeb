@@ -2,19 +2,19 @@ import { TaskDTO } from "src/features/tasks/services";
 import { UserDTO } from "src/features/users/services/dto";
 
 interface TaskListInfo {
-    projectId: number | undefined;
-    listId: number | undefined;
+    projectId: number | null;
+    listId: number | null;
 }
 
 export interface IStore {
     /**
      * The project that the user is currently navigating.
      */
-    currentProjectId: number | undefined;
+    currentProjectId: number | null;
     /**
      * The project list that the user is currently navigating.
      */
-    currentListId: number | undefined;
+    currentListId: number | null;
 
     /**
      * Sets which task list the user should be seeing in the tasks view.
@@ -30,7 +30,7 @@ export interface IStore {
     /**
      * The task that the user is currently viewing/editing/deleting.
      */
-    currentTaskInfo: TaskDTO | undefined;
+    currentTaskInfo: TaskDTO | null;
 
     /**
      * Toggle the visibility of the modal. If `value` is provided,
@@ -46,6 +46,6 @@ export interface IStore {
      */
     setCurrentTaskInfo: (task: TaskDTO) => void;
 
-    user: UserDTO | undefined,
-    setUserInfo: (info: UserDTO) => void;
+    user: UserDTO | null,
+    setUserInfo: (info: UserDTO | null) => void;
 }

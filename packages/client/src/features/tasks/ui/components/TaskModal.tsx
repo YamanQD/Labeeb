@@ -33,7 +33,7 @@ interface FormFields {
 const TaskModal = ({ open = false, closeModal = () => {}, isEditMode = false }) => {
     const { data: projects } = useGetProjects();
     const { mutate, isLoading } = useAddTask();
-    const [selectedProject, setSelectedProject] = useState<ProjectDTO | undefined>();
+    const [selectedProject, setSelectedProject] = useState<ProjectDTO | null>();
 
     const lists = selectedProject?.lists ?? [];
     const statuses = selectedProject?.statuses ?? [];

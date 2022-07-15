@@ -2,15 +2,15 @@ import create from "zustand";
 import { IStore } from "../interfaces/IStore";
 
 const getInitialUser = () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : undefined;
-}
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+};
 
 export const useStore = create<IStore>()((set, get) => ({
-    currentProjectId: undefined,
-    currentListId: undefined,
+    currentProjectId: null,
+    currentListId: null,
     isTaskModalOpen: false,
-    currentTaskInfo: undefined,
+    currentTaskInfo: null,
     user: getInitialUser(),
 
     setTaskListToView({ projectId, listId }) {
@@ -28,15 +28,16 @@ export const useStore = create<IStore>()((set, get) => ({
 
     setCurrentTaskInfo(task) {
         set(() => ({
-            currentTaskInfo: task
-        }))
+            currentTaskInfo: task,
+        }));
     },
 
     setUserInfo(user) {
         set(() => ({
-            user
+            user,
         }));
 
-        localStorage.setItem('user', JSON.stringify(user));
-    }
+        if (user) localStorage.setItem("user", JSON.stringify(user));
+        else localStorage.removeItem("user");
+    },
 }));
