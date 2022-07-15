@@ -15,6 +15,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/project.entity';
 import { List } from './lists/list.entity';
 import { ListsModule } from './lists/lists.module';
+import { mailProvider } from './mails.service';
 
 @Module({
 	imports: [
@@ -44,6 +45,7 @@ import { ListsModule } from './lists/lists.module';
 	controllers: [AppController],
 	providers: [
 		AppService,
+		mailProvider,
 		{
 			provide: APP_GUARD,
 			useClass: JwtAuthGuard,
