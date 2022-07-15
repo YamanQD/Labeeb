@@ -3,10 +3,14 @@ import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import Logo from "src/components/Logo";
 import { SidebarContext } from "src/contexts/SidebarContext";
+import LogoutButton from "./LogoutButton";
 import SidebarMenu from "./Menu";
 
 const SidebarWrapper = styled(Box)(
-	({ theme }) => `
+    ({ theme }) => `
+		display: flex;
+		flex-direction: column;
+		
         width: ${theme.sidebar.width};
         color: ${theme.sidebar.textColor};
         background: ${theme.sidebar.background};
@@ -21,7 +25,7 @@ const SidebarWrapper = styled(Box)(
 );
 
 const TopSection = styled(Box)(
-	({ theme }) => `
+    ({ theme }) => `
         display: flex;
         height: 88px;
         align-items: center;
@@ -31,51 +35,52 @@ const TopSection = styled(Box)(
 );
 
 const Sidebar = () => {
-	const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
+    const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
 
-	return (
-		<>
-			<Box
-				sx={{
-					display: {
-						lg: "block",
-						xs: "none",
-					},
-				}}
-			>
-				<SidebarWrapper>
-					<TopSection>
-						<Logo />
-					</TopSection>
-					<SidebarMenu />
-				</SidebarWrapper>
-			</Box>
+    return (
+        <>
+            <Box
+                sx={{
+                    display: {
+                        lg: "block",
+                        xs: "none",
+                    },
+                }}
+            >
+                <SidebarWrapper>
+                    <TopSection>
+                        <Logo />
+                    </TopSection>
+                    <SidebarMenu />
+                    <LogoutButton />
+                </SidebarWrapper>
+            </Box>
 
-			<Box
-				sx={{
-					display: {
-						lg: "none",
-						xs: "none",
-					},
-				}}
-			>
-				<Drawer
-					anchor="left"
-					open={isSidebarVisible}
-					onClose={toggleSidebar}
-					variant="temporary"
-					elevation={9}
-				>
-					<SidebarWrapper>
-						<TopSection>
-							<Logo />
-						</TopSection>
-						<SidebarMenu />
-					</SidebarWrapper>
-				</Drawer>
-			</Box>
-		</>
-	);
+            <Box
+                sx={{
+                    display: {
+                        lg: "none",
+                        xs: "none",
+                    },
+                }}
+            >
+                <Drawer
+                    anchor="left"
+                    open={isSidebarVisible}
+                    onClose={toggleSidebar}
+                    variant="temporary"
+                    elevation={9}
+                >
+                    <SidebarWrapper>
+                        <TopSection>
+                            <Logo />
+                        </TopSection>
+                        <SidebarMenu />
+                    </SidebarWrapper>
+                </Drawer>
+            </Box>
+        </>
+    );
 };
 
 export default Sidebar;
