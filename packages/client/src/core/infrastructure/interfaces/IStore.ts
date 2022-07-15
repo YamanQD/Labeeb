@@ -1,4 +1,5 @@
 import { TaskDTO } from "src/features/tasks/services";
+import { UserDTO } from "src/features/users/services/dto";
 
 interface TaskListInfo {
     projectId: number | undefined;
@@ -44,4 +45,7 @@ export interface IStore {
      * a certain task.
      */
     setCurrentTaskInfo: (task: TaskDTO) => void;
+
+    user: UserDTO | undefined,
+    setUserInfo: (info: UserDTO) => void;
 }
