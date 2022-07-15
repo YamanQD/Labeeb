@@ -1,7 +1,10 @@
-import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
-import { type APIError, type ErrorListener } from "./types";
-import { getErrorMessageFromHTTPStatus } from "./utils";
-
+import {
+    APIError,
+    IHTTPClient,
+    IRequestOptions,
+    type ErrorListener,
+} from "../interfaces/IhttpClient";
+import { useStore } from "../store";
 export class HTTPClient implements IHTTPClient {
     private errorListeners: ErrorListener[] = [];
     private baseURL = "";
@@ -26,20 +29,18 @@ export class HTTPClient implements IHTTPClient {
             headers: requestHeaders,
         });
 
+        const json = await response.json();
+
         if (!response.ok) {
             const error: APIError = {
-                message: getErrorMessageFromHTTPStatus(response.status),
+                message: json.message,
                 status: response.status,
             };
 
             this.errorListeners.forEach((callback) => callback(error));
-
-            // Throw all errors except for authorization ones,
-            // Because there is a React component that will handle them.
-            if (response.status != 401) throw error;
+            throw error;
         }
 
-        const json = await response.json();
         const parsedResponse = options.parser ? options.parser<ResponseType>(json) : json;
         return parsedResponse;
     }
@@ -50,7 +51,7 @@ export class HTTPClient implements IHTTPClient {
         // Unsubscribe function
         return () => {
             this.errorListeners = this.errorListeners.filter((func) => func != listener);
-        }
+        };
     }
 
     private constructRequestPath(originalPath: string, params: Object): string {
@@ -70,13 +71,13 @@ export class HTTPClient implements IHTTPClient {
     }
 
     private constructRequestHeaders(headers: Record<string, string>): Record<string, string> {
-        const accessToken = localStorage.getItem("token");
-        if (accessToken)
-            return {
-                Authorization: `Bearer ${accessToken}`,
-                ...headers,
-            };
+        const user = useStore.getState().user;
+        const accessToken = user?.access_token;
 
-        return headers;
+        return {
+            Authorization: accessToken ? `Bearer ${accessToken}` : "",
+            "Content-Type": "application/json",
+            ...headers,
+        };
     }
 }

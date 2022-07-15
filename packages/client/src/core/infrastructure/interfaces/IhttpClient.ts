@@ -1,8 +1,16 @@
 // Check out this repo for inspiration:
 
-import { ErrorListener } from "../http/types";
-
 type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
+
+export interface APIError {
+    message: string;
+    /**
+     * HTTP Status
+     */
+    status: number;
+}
+
+export type ErrorListener = (error: APIError) => void;
 
 export interface IRequestOptions {
     path: string;
