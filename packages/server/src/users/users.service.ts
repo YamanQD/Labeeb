@@ -28,16 +28,19 @@ export class UsersService {
 			{
 				username: 'admin',
 				password: 'admin',
+				email: 'admin@example.com',
 				role: Role.ADMIN,
 			},
 			{
 				username: 'Yaman',
 				password: 'Yaman',
+				email: 'yaman@example.com',
 				role: Role.USER,
 			},
 			{
 				username: 'Hasan',
 				password: 'Hasan',
+				email: 'hasan@example.com',
 				role: Role.USER,
 			},
 		];
@@ -46,6 +49,7 @@ export class UsersService {
 			const newUser = new User();
 			newUser.username = user.username;
 			newUser.password = user.password;
+			newUser.email = user.email;
 			newUser.role = user.role;
 
 			await this.create(newUser);
