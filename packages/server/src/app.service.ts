@@ -24,8 +24,8 @@ export class AppService implements OnApplicationBootstrap {
 
 	async onApplicationBootstrap() {
 		await this.usersService.seed();
-		await this.projectsService.seed();
-		setTimeout(async () => await this.listsService.seed(), 1000);
-		setTimeout(async () => await this.tasksService.seed(), 2000);
+		setTimeout(async () => await this.projectsService.seed(), 1000);
+		setTimeout(async () => await this.listsService.seed(), 2000);
+		setTimeout(async () => await this.tasksService.seed(), 3000);
 	}
 }
