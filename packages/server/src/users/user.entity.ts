@@ -1,5 +1,6 @@
 import { Role } from '../enums/role.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Project } from 'src/projects/project.entity';
 
 @Entity('labeeb_user')
 export class User {
@@ -17,4 +18,7 @@ export class User {
 
 	@Column('enum', { enum: Role, default: Role.USER })
 	role: Role;
+
+	@ManyToMany(() => Project, (project) => project.users, { nullable: true })
+	projects: Project[];
 }
