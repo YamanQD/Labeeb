@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { User } from 'src/users/user.entity';
+import { In, Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { Project } from './project.entity';
 
@@ -9,6 +10,8 @@ export class ProjectsService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectRepository: Repository<Project>,
+		@InjectRepository(User)
+		private readonly userRepository: Repository<User>,
 	) { }
 
 	async findAll(): Promise<Project[]> {
@@ -30,7 +33,14 @@ export class ProjectsService {
 	}
 
 	async create(project: CreateProjectDto): Promise<Project> {
-		return await this.projectRepository.save(project);
+		const newProject = this.projectRepository.create(project);
+
+		if (project.userIds && project.userIds.length > 0) {
+			const users = await this.userRepository.findBy({ id: In(project.userIds) });
+			newProject.users = users;
+		}
+
+		return await this.projectRepository.save(newProject);
 	}
 
 	async seed() {
@@ -40,9 +50,11 @@ export class ProjectsService {
 		const projects: CreateProjectDto[] = [
 			{
 				title: 'Satellite Simulator',
+				userIds: [1, 2],
 			},
 			{
 				title: 'E-Commerce App',
+				userIds: [3, 6, 1],
 			},
 			{
 				title: 'Banking App',
