@@ -6,9 +6,15 @@ export class User {
 	@PrimaryGeneratedColumn()
 	id: number;
 
+	/**
+	 * @example "admin"
+	 */
 	@Column({ unique: true })
 	username: string;
 
+	/**
+	 * @example "admin"
+	 */
 	@Column()
 	password: string;
 

@@ -2,6 +2,7 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { ListsService } from './lists/lists.service';
 import { ProjectsService } from './projects/projects.service';
 import { TasksService } from './tasks/tasks.service';
+import { UserWithoutPassword } from './users/user.types';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
 
@@ -12,9 +13,9 @@ export class AppService implements OnApplicationBootstrap {
 		private tasksService: TasksService,
 		private listsService: ListsService,
 		private projectsService: ProjectsService,
-	) {}
+	) { }
 
-	async getProfile(user: User) {
+	async getProfile(user: User): Promise<UserWithoutPassword> {
 		const profile = await this.usersService.findOne(user.username);
 		delete profile.password;
 
