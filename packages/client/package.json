@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "The front-end web application for Labeeb, an Arabic-first Tasks Management System.",
     "private": true,
-    "proxy": "http://localhost:5000",
+    "proxy": "http://localhost:4000",
     "dependencies": {
         "@emotion/cache": "^11.7.1",
         "@emotion/react": "^11.9.0",
@@ -36,9 +36,6 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "mock:server": "json-server --watch ./mock-server/index.js --port 5000",
-        "client:start": "react-scripts start",
-        "client:build": "react-scripts build",
-        "client:test": "react-scripts test",
         "prettify": "prettier . --write"
     },
     "browserslist": {

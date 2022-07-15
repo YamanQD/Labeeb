@@ -12,7 +12,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn client:build && yarn server:build"
+    "build": "yarn workspaces foreach run build",
+    "frontend": "yarn workspace client start",
+    "backend": "yarn workspace server start-dev"
   },
   "devDependencies": {
     "@types/eslint": "^8",
