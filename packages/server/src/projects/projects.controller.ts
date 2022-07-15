@@ -7,7 +7,7 @@ import { ProjectsService } from './projects.service';
 @ApiTags('projects')
 @Controller('projects')
 export class ProjectsController {
-	constructor(private readonly projectsService: ProjectsService) {}
+	constructor(private readonly projectsService: ProjectsService) { }
 
 	@Get()
 	async findAll(): Promise<Project[]> {
