@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 export class CreateListDto {
 	@IsNotEmpty()
 	@Type(() => String)
-	name: string;
+	title: string;
 
 	@IsNotEmpty()
 	projectId: number;

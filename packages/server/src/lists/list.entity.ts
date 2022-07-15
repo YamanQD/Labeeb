@@ -8,7 +8,7 @@ export class List {
 	id: number;
 
 	@Column()
-	name: string;
+	title: string;
 
 	@ManyToOne(() => Project, (project) => project.lists)
 	project: Project;

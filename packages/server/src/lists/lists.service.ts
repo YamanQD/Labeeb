@@ -13,7 +13,7 @@ export class ListsService {
 		private readonly listRepository: Repository<List>,
 		@InjectRepository(Project)
 		private readonly projectRepository: Repository<Project>,
-	) {}
+	) { }
 
 	async create(list: CreateListDto): Promise<List> {
 		const project = await this.projectRepository.findOne({
@@ -44,21 +44,21 @@ export class ListsService {
 
 		const lists: CreateListDto[] = [
 			{
-				name: 'Frontend',
+				title: 'Frontend',
 				projectId: 1,
 			},
 
 			{
-				name: 'Backend',
+				title: 'Backend',
 				projectId: 2,
 			},
 
 			{
-				name: 'UI',
+				title: 'UI',
 				projectId: 3,
 			},
 			{
-				name: 'UX',
+				title: 'UX',
 				projectId: 3,
 			},
 		];
