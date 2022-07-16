@@ -78,7 +78,7 @@ export class ProjectsService {
 		return;
 	}
 
-	async addStatus(id: number, status: any): Promise<any> {
+	async addStatus(id: number, status: string): Promise<any> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['statuses'],
@@ -87,7 +87,7 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		const newStatus = await this.statusRepository.save(status);
+		const newStatus = await this.statusRepository.save({ title: status });
 
 		project.statuses = [...project.statuses, newStatus];
 		await this.projectRepository.save(project);

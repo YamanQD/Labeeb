@@ -38,7 +38,7 @@ export class ProjectsController {
 
 	@Post(':id/statuses')
 	@HttpCode(HttpStatus.CREATED)
-	async addStatus(@Param('id') id: number, @Body() body: any): Promise<any> {
-		return await this.projectsService.addStatus(id, body);
+	async addStatus(@Param('id') id: number, @Body() body: { title: string }): Promise<any> {
+		return await this.projectsService.addStatus(id, body.title);
 	}
 }
