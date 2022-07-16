@@ -7,7 +7,6 @@ export interface TaskDTO {
     priority: ETaskPriority;
 }
 
-// HERE IT"S OKAY
 export interface TaskGroupDTO {
     id: number;
     status: string;

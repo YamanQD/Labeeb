@@ -25,7 +25,7 @@ export class HTTPClient implements IHTTPClient {
 
         const response = await fetch(requestPath, {
             method,
-            body,
+            body: JSON.stringify(body),
             headers: requestHeaders,
         });
 

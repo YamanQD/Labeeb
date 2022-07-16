@@ -10,10 +10,10 @@ export class UserRepository implements IUserRepository {
         const response = await this.httpClient.request<IUser>({
             path: "/auth/login",
             method: "POST",
-            body: JSON.stringify({
+            body: {
                 username: email,
                 password,
-            }),
+            },
         });
 
         return response;
