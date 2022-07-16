@@ -4,6 +4,7 @@ import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
+import { Status } from './status.entity';
 
 @ApiTags('projects')
 @Controller('projects')
@@ -18,6 +19,11 @@ export class ProjectsController {
 	@Get(':id/tasks')
 	async findProjectTasks(@Param('id') id: number): Promise<any> {
 		return await this.projectsService.findProjectTasks(id);
+	}
+
+	@Get(':id/statuses')
+	async findProjectStatuses(@Param('id') id: number): Promise<string[]> {
+		return await this.projectsService.findProjectStatuses(id);
 	}
 
 	@Post()

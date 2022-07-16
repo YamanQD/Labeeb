@@ -36,6 +36,18 @@ export class ProjectsService {
 		return project;
 	}
 
+	async findProjectStatuses(id: number): Promise<string[]> {
+		const project = await this.projectRepository.findOne({
+			where: { id },
+			relations: ['statuses'],
+		});
+		if (!project) {
+			throw new NotFoundException('Project not found');
+		}
+
+		return project.statuses.map((s) => s.title);
+	}
+
 	async create(project: CreateProjectDto): Promise<Project> {
 		const newProject = this.projectRepository.create(project);
 
