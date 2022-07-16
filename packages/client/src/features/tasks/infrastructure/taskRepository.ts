@@ -6,8 +6,12 @@ import { CreateTaskDTO } from "../services";
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
 
-    public getTask(id: number): Promise<ITask> {
-        throw new Error("Method not implemented.");
+    public async getTask(id: number): Promise<ITask> {
+        const response = await this.httpClient.request<ITask>({
+            path: `/tasks/${id}`,
+        });
+
+        return response;
     }
 
     public async getTaskListsForProject(projectId: number): Promise<ITaskList[]> {
@@ -31,7 +35,7 @@ export class TasksRepository implements ITasksRepository {
 
     public async createTask(task: CreateTaskDTO): Promise<ITask> {
         const response = await this.httpClient.request<ITask>({
-            path: `/projects/${task.projectId}/groups/${task.listId}`,
+            path: `/tasks`,
             body: task,
             method: "POST",
         });
