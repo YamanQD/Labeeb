@@ -41,4 +41,10 @@ export class ProjectsController {
 	async addStatus(@Param('id') id: number, @Body() body: { title: string }): Promise<any> {
 		return await this.projectsService.addStatus(id, body.title);
 	}
+
+	@Delete(':id/statuses/:title')
+	@HttpCode(HttpStatus.NO_CONTENT)
+	async removeStatus(@Param('id') id: number, @Param('title') title: string) {
+		return await this.projectsService.removeStatus(id, title);
+	}
 }

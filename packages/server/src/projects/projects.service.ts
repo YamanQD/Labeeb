@@ -95,6 +95,21 @@ export class ProjectsService {
 		return;
 	}
 
+	async removeStatus(id: number, status: string) {
+		const project = await this.projectRepository.findOne({
+			where: { id },
+			relations: ['statuses'],
+		});
+		if (!project) {
+			throw new NotFoundException('Project not found');
+		}
+
+		project.statuses = project.statuses.filter((s) => s.title !== status);
+		await this.projectRepository.save(project);
+
+		return;
+	}
+
 	async seed() {
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
