@@ -1,4 +1,3 @@
-import { TaskDTO } from "src/features/tasks/services";
 import { UserDTO } from "src/features/users/services/dto";
 
 interface TaskListInfo {
@@ -28,24 +27,23 @@ export interface IStore {
     isTaskModalOpen: boolean;
 
     /**
-     * The task that the user is currently viewing/editing/deleting.
-     */
-    currentTaskInfo: TaskDTO | null;
-
-    /**
      * Toggle the visibility of the modal. If `value` is provided,
      * the modal's visibility is set to it. Otherwise, the modal's
      * visibility will be toggled (previous => !previous).
      */
     toggleTaskModal: (value?: boolean) => void;
 
-    /**
-     * Sets the info of the task that the user is now seeing.
+      /**
+     * The ID of task that the user is currently viewing/editing/deleting.
+     */
+    currentTaskId: number | null;
+     /**
+     * Sets the ID of the task that the user is now seeing.
      * This is used only in the task modal when the user wants to edit/delete
      * a certain task.
      */
-    setCurrentTaskInfo: (task: TaskDTO) => void;
+    setCurrentTaskId: (id: number | null) => void;
 
-    user: UserDTO | null,
+    user: UserDTO | null;
     setUserInfo: (info: UserDTO | null) => void;
 }

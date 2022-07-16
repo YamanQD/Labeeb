@@ -9,8 +9,8 @@ const getInitialUser = () => {
 export const useStore = create<IStore>()((set, get) => ({
     currentProjectId: null,
     currentListId: null,
+    currentTaskId: null,
     isTaskModalOpen: false,
-    currentTaskInfo: null,
     user: getInitialUser(),
 
     setTaskListToView({ projectId, listId }) {
@@ -26,12 +26,6 @@ export const useStore = create<IStore>()((set, get) => ({
         }));
     },
 
-    setCurrentTaskInfo(task) {
-        set(() => ({
-            currentTaskInfo: task,
-        }));
-    },
-
     setUserInfo(user) {
         set(() => ({
             user,
@@ -40,4 +34,10 @@ export const useStore = create<IStore>()((set, get) => ({
         if (user) localStorage.setItem("user", JSON.stringify(user));
         else localStorage.removeItem("user");
     },
+
+    setCurrentTaskId(id) {
+        set(() => ({
+            currentTaskId: id
+        }))
+    }
 }));
