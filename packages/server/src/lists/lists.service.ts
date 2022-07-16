@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/projects/project.entity';
 import { Repository } from 'typeorm';
 import { CreateListDto } from './dto/create-list-dto';
+import { UpdateListDto } from './dto/update-list-dto';
 import { List } from './list.entity';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class ListsService {
 		private readonly listRepository: Repository<List>,
 		@InjectRepository(Project)
 		private readonly projectRepository: Repository<Project>,
-	) {}
+	) { }
 
 	async create(list: CreateListDto): Promise<List> {
 		const project = await this.projectRepository.findOne({
@@ -35,6 +36,12 @@ export class ListsService {
 		}
 
 		return list;
+	}
+
+	async update(id: number, list: UpdateListDto): Promise<List> {
+		const listToUpdate = await this.findOne(id);
+		listToUpdate.title = list.title;
+		return await this.listRepository.save(listToUpdate);
 	}
 
 	async seed() {
