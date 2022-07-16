@@ -1,8 +1,9 @@
-import { Type } from 'class-transformer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateProjectDto {
 	@IsNotEmpty()
-	@Type(() => String)
 	title: string;
+
+	@IsOptional()
+	userIds?: number[];
 }

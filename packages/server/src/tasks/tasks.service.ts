@@ -15,14 +15,14 @@ export class TasksService {
 		private readonly taskRepository: Repository<Task>,
 		@InjectRepository(List)
 		private readonly listRepository: Repository<List>,
-	) {}
+	) { }
 
 	async findAll(): Promise<Task[]> {
 		return await this.taskRepository.find();
 	}
 
 	async findOne(id: number): Promise<Task> {
-		const task = await this.taskRepository.findOne({ where: { id } });
+		const task = await this.taskRepository.findOne({ where: { id }, relations: ['list', 'list.project'] });
 		if (!task) {
 			throw new NotFoundException('Task not found');
 		}
