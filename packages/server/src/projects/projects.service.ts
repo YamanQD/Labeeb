@@ -5,6 +5,7 @@ import { In, Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
 import { Project } from './project.entity';
+import { Status } from './status.entity';
 
 @Injectable()
 export class ProjectsService {
@@ -13,6 +14,8 @@ export class ProjectsService {
 		private readonly projectRepository: Repository<Project>,
 		@InjectRepository(User)
 		private readonly userRepository: Repository<User>,
+		@InjectRepository(Status)
+		private readonly statusRepository: Repository<Status>,
 	) { }
 
 	async findAll(): Promise<Project[]> {
@@ -24,7 +27,7 @@ export class ProjectsService {
 	async findProjectTasks(id: number): Promise<any> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
-			relations: ['lists', 'lists.tasks'],
+			relations: ['statuses', 'lists', 'lists.tasks'],
 		});
 		if (!project) {
 			throw new NotFoundException('Project not found');
@@ -72,6 +75,23 @@ export class ProjectsService {
 		}
 
 		await this.projectRepository.remove(project);
+		return;
+	}
+
+	async addStatus(id: number, status: any): Promise<any> {
+		const project = await this.projectRepository.findOne({
+			where: { id },
+			relations: ['statuses'],
+		});
+		if (!project) {
+			throw new NotFoundException('Project not found');
+		}
+
+		const newStatus = await this.statusRepository.save(status);
+
+		project.statuses = [...project.statuses, newStatus];
+		await this.projectRepository.save(project);
+
 		return;
 	}
 
