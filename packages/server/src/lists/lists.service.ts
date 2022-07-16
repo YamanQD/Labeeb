@@ -44,6 +44,16 @@ export class ListsService {
 		return await this.listRepository.save(listToUpdate);
 	}
 
+	async delete(id: number): Promise<void> {
+		const list = await this.findOne(id);
+		if (!list) {
+			throw new NotFoundException('List not found');
+		}
+
+		await this.listRepository.remove(list);
+		return;
+	}
+
 	async seed() {
 		const allLists = await this.listRepository.find();
 		if (allLists.length > 0) return;
