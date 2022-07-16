@@ -65,6 +65,16 @@ export class ProjectsService {
 		return await this.projectRepository.save(updatedProject);
 	}
 
+	async delete(id: number): Promise<void> {
+		const project = await this.projectRepository.findOne({ where: { id } });
+		if (!project) {
+			throw new NotFoundException('Project not found');
+		}
+
+		await this.projectRepository.remove(project);
+		return;
+	}
+
 	async seed() {
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
