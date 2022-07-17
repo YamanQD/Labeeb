@@ -10,6 +10,10 @@ export class TasksService {
         return TaskMapper.taskDetailsToDTO(task);
     }
 
+    public async deleteTask(taskId: number): Promise<void> {
+        await this.tasksRepository.deleteTask(taskId);
+    }
+
     public async getTaskListsForProject(projectId: number): Promise<TaskListDTO[]> {
         const taskLists = await this.tasksRepository.getTaskListsForProject(projectId);
         return taskLists.map(TaskMapper.taskListToDTO);

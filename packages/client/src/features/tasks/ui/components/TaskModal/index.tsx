@@ -18,6 +18,7 @@ import { useStore } from "src/core/infrastructure/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";
+import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { ETaskPriority, taskPriorities } from "src/features/tasks/domain/task";
 
 interface FormFields {
@@ -35,7 +36,8 @@ interface FormFields {
  */
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { data: projects } = useGetProjects();
-    const { mutate, isLoading: isAddTaskLoading } = useAddTask();
+    const { mutate: addTaskMutate, isLoading: isAddTaskLoading } = useAddTask();
+    const { mutate: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
     // Get task ID from store. This should not be null if the user is viewing a specific task
     const taskId = useStore((state) => state.currentTaskId);
@@ -60,12 +62,13 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
-    const isLoading = isGetTaskLoading || isAddTaskLoading;
+    const isLoading = isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading;
 
     const {
         register,
         handleSubmit,
         setValue,
+        reset,
         control,
         formState: { errors },
     } = useForm<FormFields>({
@@ -108,11 +111,14 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             setValue("priority", priority);
             setValue("description", description);
             setValue("listId", listId);
+        } else {
+            reset();
         }
-    }, [taskInfo, setValue, onProjectChange]);
+
+    }, [taskInfo, setValue, onProjectChange, reset]);
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        mutate(
+        addTaskMutate(
             {
                 projectId: +data.projectId,
                 listId: +data.listId,
@@ -132,11 +138,24 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         );
     };
 
+    const onDeleteTask = () => {
+        if (taskId) {
+            deleteTaskMutate(taskId, {
+                onSuccess() {
+                    closeModal();
+                    toast("Task deleted successfully!", {
+                        position: toast.POSITION.BOTTOM_LEFT,
+                    });
+                },
+            });
+        }
+    };
+
     return (
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
             <DialogTitle>
                 <span>{taskId ? `Task #${taskId}` : "Add a new task"}</span>
-                <IconButton color="error">
+                <IconButton color="error" onClick={onDeleteTask}>
                     <DeleteIcon />
                 </IconButton>
             </DialogTitle>

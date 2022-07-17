@@ -1,6 +1,6 @@
 // Check out this repo for inspiration:
 
-type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH";
+type HTTPMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 export interface APIError {
     message: string;
