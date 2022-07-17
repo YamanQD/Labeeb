@@ -6,4 +6,7 @@ export class CreateProjectDto {
 
 	@IsOptional()
 	userIds?: number[];
+
+	@IsOptional()
+	statuses?: string[];
 }
