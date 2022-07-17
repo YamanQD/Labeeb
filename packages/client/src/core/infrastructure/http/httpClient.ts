@@ -4,11 +4,12 @@ import {
     IRequestOptions,
     type ErrorListener,
 } from "../interfaces/IhttpClient";
-import { useStore } from "../store";
+import { RequestHelper } from "./requestHelper";
 export class HTTPClient implements IHTTPClient {
     private errorListeners: ErrorListener[] = [];
     private baseURL = "";
 
+    private requestHelper = new RequestHelper(this.baseURL);
     private static instance: HTTPClient;
 
     private constructor() {}
@@ -20,8 +21,9 @@ export class HTTPClient implements IHTTPClient {
 
     public async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
         const { path, method = "GET", params = {}, body = undefined, headers = {} } = options;
-        const requestPath = this.constructRequestPath(path, params);
-        const requestHeaders = this.constructRequestHeaders(headers);
+
+        const requestPath = this.requestHelper.getRequestPath(path, params);
+        const requestHeaders = this.requestHelper.getRequestHeaders(headers);
 
         const response = await fetch(requestPath, {
             method,
@@ -29,7 +31,8 @@ export class HTTPClient implements IHTTPClient {
             headers: requestHeaders,
         });
 
-        const json = await response.json();
+        const json = await this.requestHelper.responseToJSON(response);
+      
 
         if (!response.ok) {
             const error: APIError = {
@@ -51,33 +54,6 @@ export class HTTPClient implements IHTTPClient {
         // Unsubscribe function
         return () => {
             this.errorListeners = this.errorListeners.filter((func) => func != listener);
-        };
-    }
-
-    private constructRequestPath(originalPath: string, params: Object): string {
-        const queryParameters = this.constructQueryParameters(params);
-        return `${this.baseURL}${originalPath}?${queryParameters}`;
-    }
-
-    private constructQueryParameters(params: Object): URLSearchParams {
-        const parameters: Record<string, string> = {};
-
-        for (const [key, value] of Object.entries(params)) {
-            if (value == undefined || value == null) continue;
-            parameters[key] = value;
-        }
-
-        return new URLSearchParams(parameters);
-    }
-
-    private constructRequestHeaders(headers: Record<string, string>): Record<string, string> {
-        const user = useStore.getState().user;
-        const accessToken = user?.access_token;
-
-        return {
-            Authorization: accessToken ? `Bearer ${accessToken}` : "",
-            "Content-Type": "application/json",
-            ...headers,
         };
     }
 }
