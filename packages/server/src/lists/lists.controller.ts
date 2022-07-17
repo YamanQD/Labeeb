@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { CreateListDto } from './dto/create-list-dto';
 import { UpdateListDto } from './dto/update-list-dto';
 import { List } from './list.entity';
@@ -21,5 +21,11 @@ export class ListsController {
 	@Patch(':id')
 	async update(@Param('id') id: number, @Body() body: UpdateListDto): Promise<List> {
 		return await this.listsService.update(id, body);
+	}
+
+	@Delete(':id')
+	@HttpCode(HttpStatus.NO_CONTENT)
+	async delete(@Param('id') id: number): Promise<void> {
+		return await this.listsService.delete(id);
 	}
 }
