@@ -1,13 +1,13 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { ITasksRepository } from "../domain/ItaskRepository";
-import { ITask, ITaskList } from "../domain/task";
+import { ITask, ITaskDetails, ITaskList } from "../domain/task";
 import { CreateTaskDTO } from "../services";
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
 
-    public async getTask(id: number): Promise<ITask> {
-        const response = await this.httpClient.request<ITask>({
+    public async getTask(id: number): Promise<ITaskDetails> {
+        const response = await this.httpClient.request<ITaskDetails>({
             path: `/tasks/${id}`,
         });
 
@@ -19,7 +19,7 @@ export class TasksRepository implements ITasksRepository {
             path: `/projects/${projectId}/tasks`,
             parser(data) {
                 return data.lists;
-            }
+            },
         });
 
         return response;

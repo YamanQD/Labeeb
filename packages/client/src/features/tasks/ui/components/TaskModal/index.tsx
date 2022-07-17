@@ -1,3 +1,4 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -6,20 +7,22 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useStore } from "src/core/infrastructure/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
-import { useAddTask } from "src/features/tasks/application";
+import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { ETaskPriority, taskPriorities } from "src/features/tasks/domain/task";
 
 interface FormFields {
     title: string;
-    description: string;
+    description?: string;
     listId: number | string;
     projectId: number | string;
     status: string;
@@ -32,11 +35,32 @@ interface FormFields {
  */
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { data: projects } = useGetProjects();
-    const { mutate, isLoading } = useAddTask();
+    const { mutate, isLoading: isAddTaskLoading } = useAddTask();
+
+    // Get task ID from store. This should not be null if the user is viewing a specific task
+    const taskId = useStore((state) => state.currentTaskId);
+
+    /**
+     * Fetch the task's details if:
+     * 1. taskId is set
+     * 2. the projects list is loaded
+     *
+     * Why wait for projects? Because I want to set: projectId form field = taskId.projectId
+     * But when the projects list is empty, even if I set it this way the title of the project
+     * won't appear in the form because there are no option elements.
+     */
+    const { data: taskInfo, isLoading: isGetTaskLoading } = useGetTask({
+        id: taskId ?? 1,
+        queryOptions: {
+            enabled: !!taskId && !!projects,
+        },
+    });
+
     const [selectedProjectInfo, setSelectedProjectInfo] = useState<ProjectDTO | undefined>();
 
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
+    const isLoading = isGetTaskLoading || isAddTaskLoading;
 
     const {
         register,
@@ -56,19 +80,36 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         },
     });
 
-    const onProjectChange = (projectId: number) => {
-        const selectedProject = projects?.find((project) => project.id === projectId);
+    // Adjust the values of lists and statuses according to the projectId
+    const onProjectChange = useCallback(
+        (projectId: number) => {
+            const selectedProject = projects?.find((project) => project.id === projectId);
 
-        const lists = selectedProject?.lists ?? [];
-        const statuses = selectedProject?.statuses ?? [];
+            const lists = selectedProject?.lists ?? [];
+            const statuses = selectedProject?.statuses ?? [];
 
-        const defaultList = lists[0]?.id ?? "";
-        const defaultStatus = statuses[0]?.label ?? "";
+            setValue("listId", lists[0]?.id ?? "");
+            setValue("status", statuses[0]?.label ?? "");
+            setSelectedProjectInfo(selectedProject);
+        },
+        [projects, setValue]
+    );
 
-        setValue("listId", defaultList);
-        setValue("status", defaultStatus);
-        setSelectedProjectInfo(selectedProject);
-    };
+    useEffect(() => {
+        // User is viewing a single task
+        if (taskInfo) {
+            const { title, status, priority, description, projectId, listId } = taskInfo;
+            setValue("projectId", projectId);
+            // Fill the values of lists and statuses first
+            onProjectChange(projectId);
+
+            setValue("title", title);
+            setValue("status", status);
+            setValue("priority", priority);
+            setValue("description", description);
+            setValue("listId", listId);
+        }
+    }, [taskInfo, setValue, onProjectChange]);
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         mutate(
@@ -93,9 +134,16 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     return (
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
-            <DialogTitle>Add a new task</DialogTitle>
+            <DialogTitle>
+                <span>{taskId ? `Task #${taskId}` : "Add a new task"}</span>
+                <IconButton color="error">
+                    <DeleteIcon />
+                </IconButton>
+            </DialogTitle>
             <DialogContent>
-                <DialogContentText>Please fill the details of the new task</DialogContentText>
+                <DialogContentText>
+                    {taskId ? "" : "Please fill the details of the new task"}
+                </DialogContentText>
                 <form noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={5}>
@@ -147,7 +195,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                             </Stack>
                         </Grid>
                         <Grid item xs={3}>
-                            <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
+                            <Stack style={{ justifyContent: "space-between", height: "100%" }}>
                                 <Controller
                                     control={control}
                                     name="listId"
@@ -179,7 +227,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             variant="standard"
                                             {...field}
                                         >
-                                            {statuses.map((status) => (
+                                            {statuses?.map((status) => (
                                                 <MenuItem key={status.id} value={status.label}>
                                                     {status.label}
                                                 </MenuItem>
@@ -237,7 +285,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                     <CircularProgress sx={{ mr: 2 }} size={20} disableShrink thickness={3} />
                 )}
                 <Button onClick={closeModal}>Cancel</Button>
-                <Button onClick={handleSubmit(onSubmit)}>Add</Button>
+                <Button onClick={handleSubmit(onSubmit)}>{taskId ? "Edit" : "Add"}</Button>
             </DialogActions>
         </Dialog>
     );

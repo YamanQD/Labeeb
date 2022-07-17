@@ -1,8 +1,8 @@
 import { CreateTaskDTO } from "../services";
-import { ITask, ITaskList } from "./task";
+import { ITask, ITaskDetails, ITaskList } from "./task";
 
 export interface ITasksRepository {
-    getTask(id: number): Promise<ITask>;
+    getTask(id: number): Promise<ITaskDetails>;
 
     getTaskList(listId: number): Promise<ITaskList>;
     getTaskListsForProject(projectId: number): Promise<ITaskList[]>;
