@@ -20,7 +20,7 @@ export class Task {
 	@Column({ nullable: true })
 	deadline: Date;
 
-	@ManyToOne(() => Status, (status) => status.tasks)
+	@ManyToOne(() => Status, (status) => status.tasks, { eager: true })
 	status: Status;
 
 	@ManyToOne(() => List, (list) => list.tasks, { onDelete: 'CASCADE' })
