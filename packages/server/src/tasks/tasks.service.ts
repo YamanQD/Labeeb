@@ -7,6 +7,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
 import { Priority } from 'src/enums/priority.enum';
+import { Status } from 'src/projects/status.entity';
 
 @Injectable()
 export class TasksService {
@@ -15,6 +16,8 @@ export class TasksService {
 		private readonly taskRepository: Repository<Task>,
 		@InjectRepository(List)
 		private readonly listRepository: Repository<List>,
+		@InjectRepository(Status)
+		private readonly statusRepository: Repository<Status>,
 	) { }
 
 	async findAll(): Promise<Task[]> {
@@ -37,10 +40,16 @@ export class TasksService {
 			throw new NotFoundException('List not found');
 		}
 
+		const status = await this.statusRepository.findOne({ where: { title: body.currentStatus } });
+		if (!status) {
+			throw new NotFoundException('Status not found, please add status to project first');
+		}
+
 		const task = this.taskRepository.create({
 			created_by: userId,
 			createdAt: new Date(),
 			list: list,
+			status: status,
 			...body,
 		});
 
