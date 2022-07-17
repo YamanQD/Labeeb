@@ -10,6 +10,9 @@ export class CreateTaskDto {
 	@IsNotEmpty()
 	listId: number;
 
+	@IsNotEmpty()
+	currentStatus: string;
+
 	@IsOptional()
 	description?: string;
 
