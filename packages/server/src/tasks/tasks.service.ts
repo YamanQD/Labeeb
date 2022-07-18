@@ -61,8 +61,33 @@ export class TasksService {
 		if (!task) {
 			throw new NotFoundException('Task not found');
 		}
-		await this.taskRepository.update(id, body);
-		return await this.taskRepository.findOne({ where: { id } });
+
+		let list: List | undefined;
+		if (body.listId) {
+			list = await this.listRepository.findOne({
+				where: { id: body.listId },
+			});
+			if (!list) {
+				throw new NotFoundException('List not found');
+			}
+		}
+
+		let status: Status | undefined;
+		if (body.currentStatus) {
+			status = await this.statusRepository.findOne({ where: { title: body.currentStatus } });
+			if (!status) {
+				throw new NotFoundException('Status not found, please add status to project first');
+			}
+		}
+
+		task.title = body.title ?? task.title;
+		task.description = body.description ?? task.description;
+		task.priority = body.priority ?? task.priority;
+		task.deadline = body.deadline ?? task.deadline;
+		task.list = body.listId ? list : task.list;
+		task.status = body.currentStatus ? status : task.status;
+
+		return await this.taskRepository.save(task);
 	}
 
 	async delete(id: number): Promise<void> {
@@ -87,6 +112,7 @@ export class TasksService {
 				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
+				currentStatus: 'Todo',
 			};
 			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
