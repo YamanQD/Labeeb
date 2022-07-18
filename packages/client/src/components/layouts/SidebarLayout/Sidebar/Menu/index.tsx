@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 import { useStore } from "src/core/infrastructure/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
-import SidebarMenuItem from "./SidebarMenuItem";
-import SidebarMenuItemsList from "./SidebarMenuItemsList";
-import SubMenuWrapper from "./SubMenuWrapper";
+import ProjectItem from "./ProjectItem";
+import ProjectListItem from "./ProjectListItem";
 
 const SidebarMenu = () => {
-    const { data, isLoading } = useGetProjects();
-    const projects = data ?? [];
+    const { t } = useTranslation();
+    const { data: projects, isLoading } = useGetProjects();
 
     const setTaskListToView = useStore((state) => state.setTaskListToView);
 
@@ -19,58 +19,41 @@ const SidebarMenu = () => {
             }}
         >
             <Typography variant="h4" sx={{ textTransform: "uppercase", mb: 2 }}>
-                My Projects
+                {t("sidebar.projects", { ns: "app"})}
             </Typography>
             {isLoading ? (
                 "Loading projects..."
             ) : (
                 <>
-                    {projects.map((project) => {
-                        const hasChildren = (project.lists?.length ?? 0) > 0;
-                        return (
-                            /**
-                             * Each project is structured like this:
-                             *
-                             * Project
-                             *  - List
-                             *  - List
-                             *  - List
-                             */
-                            <SidebarMenuItemsList key={project.id}>
-                                <SubMenuWrapper>
-                                    <SidebarMenuItem
-                                        title={project.title}
+                    {projects?.map((project) => (
+                        <Box sx={{ mb: 1 }} key={project.id}>
+                            <ProjectItem
+                                id={project.id}
+                                title={project.title}
+                                onClick={() =>
+                                    setTaskListToView({
+                                        projectId: project.id,
+                                        listId: null,
+                                    })
+                                }
+                            >
+                                {project.lists?.map((list) => (
+                                    <ProjectListItem
+                                        key={list.id}
+                                        id={list.id}
+                                        title={list.title}
+                                        badge={list.tasksCount}
                                         onClick={() =>
                                             setTaskListToView({
-                                                projectId: project.id,
-                                                listId: null,
+                                                projectId: null,
+                                                listId: list.id,
                                             })
                                         }
-                                    >
-                                        {hasChildren && (
-                                            <SubMenuWrapper>
-                                                {project.lists?.map((list) => {
-                                                    return (
-                                                        <SidebarMenuItem
-                                                            key={list.id}
-                                                            title={list.title}
-                                                            badge={list.tasksCount}
-                                                            onClick={() =>
-                                                                setTaskListToView({
-                                                                    projectId: null,
-                                                                    listId: list.id,
-                                                                })
-                                                            }
-                                                        />
-                                                    );
-                                                })}
-                                            </SubMenuWrapper>
-                                        )}
-                                    </SidebarMenuItem>
-                                </SubMenuWrapper>
-                            </SidebarMenuItemsList>
-                        );
-                    })}
+                                    />
+                                ))}
+                            </ProjectItem>
+                        </Box>
+                    ))}
                 </>
             )}
         </Box>

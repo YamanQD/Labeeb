@@ -35,9 +35,13 @@ const AddTaskButton = styled(IconButton)(
 const AddTaskContainer = ({ disabled = false }) => {
     const isModalOpen = useStore((state) => state.isTaskModalOpen);
     const toggleModal = useStore((state) => state.toggleTaskModal);
+    const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
 
     const openModal = useCallback(() => toggleModal(true), [toggleModal]);
-    const closeModal = useCallback(() => toggleModal(false), [toggleModal]);
+    const closeModal = useCallback(() => {
+        toggleModal(false);
+        setCurrentTaskId(null);
+    }, [toggleModal, setCurrentTaskId]);
 
     return (
         <>

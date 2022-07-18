@@ -27,9 +27,21 @@ export const taskPriorities = [
     },
 ];
 
+export interface ITaskDetails extends ITask {
+    list: {
+        id: number;
+        title: string;
+        project: {
+            id: number;
+            title: string;
+        };
+    };
+}
+
 export interface ITask {
     id: number;
     title: string;
+    description?: string;
     status: string;
     priority: ETaskPriority;
 }

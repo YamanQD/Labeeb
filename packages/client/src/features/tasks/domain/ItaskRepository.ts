@@ -1,11 +1,12 @@
-import { CreateTaskDTO } from "../services";
-import { ITask, ITaskList } from "./task";
+import { CreateTaskDTO, EditTaskDTO } from "../services";
+import { ITask, ITaskDetails, ITaskList } from "./task";
 
 export interface ITasksRepository {
-    getTask(id: number): Promise<ITask>;
+    createTask(task: CreateTaskDTO): Promise<ITask>;
+    getTask(id: number): Promise<ITaskDetails>;
+    editTask(id: number, editedTask: EditTaskDTO): Promise<ITaskDetails>;
+    deleteTask(id: number): Promise<void>;
 
     getTaskList(listId: number): Promise<ITaskList>;
     getTaskListsForProject(projectId: number): Promise<ITaskList[]>;
-
-    createTask(task: CreateTaskDTO): Promise<ITask>;
 }

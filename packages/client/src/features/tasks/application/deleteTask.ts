@@ -1,15 +1,14 @@
 import { useMutation, useQueryClient } from "react-query";
-import { CreateTaskDTO, tasksService } from "../services";
-
-export const useAddTask = () => {
+import { tasksService } from "../services";
+export const useDeleteTask = () => {
     const queryClient = useQueryClient();
     const mutation = useMutation(
-        (newTask: CreateTaskDTO) => {
-            return tasksService.createTask(newTask);
+        (taskId: number) => {
+            return tasksService.deleteTask(taskId);
         },
         {
             // The second argument is the same that the mutate function receives
-            onSuccess(responseData, newTask) {
+            onSuccess(responseData, taskId) {
                 queryClient.invalidateQueries(["taskLists"]);
             },
         }

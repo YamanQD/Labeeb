@@ -1,13 +1,19 @@
 import { ETaskPriority } from "../../domain/task";
 
+export interface TaskDetailsDTO extends TaskDTO {
+    listId: number;
+    projectId: number;
+}
+
 export interface TaskDTO {
     id: number;
     title: string;
+    description?: string;
+
     status: string;
     priority: ETaskPriority;
 }
 
-// HERE IT"S OKAY
 export interface TaskGroupDTO {
     id: number;
     status: string;
@@ -21,11 +27,14 @@ export interface TaskListDTO {
 }
 
 export interface CreateTaskDTO {
-    projectId: number;
     listId: number;
 
     title: string;
     description?: string;
     status: string;
     priority: ETaskPriority;
+}
+
+export interface EditTaskDTO extends Partial<CreateTaskDTO> {
+    id: number;
 }

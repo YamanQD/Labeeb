@@ -1,6 +1,18 @@
 {
 	"tasks": {
 		"name": "Tasks",
-		"remaining": "You have 99 remaining tasks"
+		"remaining": "You have 99 remaining tasks",
+		"title": "Title",
+		"description": "Description",
+		"deadline": "Deadline",
+		"status": "Status",
+		"priority": "Priority",
+		"add_task": "Add a new task",
+		"edit_task": "Edit task",
+		"delete_task": "Delete task"
+	},
+	
+	"sidebar": {
+		"projects": "Projects"
 	}
 }

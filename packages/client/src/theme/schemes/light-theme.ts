@@ -51,8 +51,6 @@ const colors = {
 			menuItemColorActive: themeColors.primary,
 			menuItemBg: "transparent",
 			menuItemBgActive: "#f2f5f9",
-			menuItemIconColor: lighten(themeColors.secondary, 0.3),
-			menuItemIconColorActive: themeColors.primary,
 			menuItemHeadingColor: darken(themeColors.secondary, 0.3),
 		},
 	},
@@ -137,8 +135,6 @@ export const LightTheme = createTheme({
 		menuItemColorActive: colors.layout.sidebar.menuItemColorActive,
 		menuItemBg: colors.layout.sidebar.menuItemBg,
 		menuItemBgActive: colors.layout.sidebar.menuItemBgActive,
-		menuItemIconColor: colors.layout.sidebar.menuItemIconColor,
-		menuItemIconColorActive: colors.layout.sidebar.menuItemIconColorActive,
 		menuItemHeadingColor: colors.layout.sidebar.menuItemHeadingColor,
 		boxShadow:
 			"2px 0 3px rgba(159, 162, 191, 0.18), 1px 0 1px rgba(159, 162, 191, 0.32)",
