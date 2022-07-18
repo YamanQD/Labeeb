@@ -19,6 +19,7 @@ import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { useDeleteTask } from "src/features/tasks/application/deleteTask";
+import { useEditTask } from "src/features/tasks/application/editTask";
 import { ETaskPriority, taskPriorities } from "src/features/tasks/domain/task";
 
 interface FormFields {
@@ -37,6 +38,7 @@ interface FormFields {
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { data: projects } = useGetProjects();
     const { mutate: addTaskMutate, isLoading: isAddTaskLoading } = useAddTask();
+    const { mutate: editTaskMutate, isLoading: isEditTaskLoading } = useEditTask();
     const { mutate: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
     // Get task ID from store. This should not be null if the user is viewing a specific task
@@ -62,7 +64,8 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
-    const isLoading = isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading;
+    const isLoading =
+        isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
 
     const {
         register,
@@ -109,33 +112,48 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             setValue("title", title);
             setValue("status", status);
             setValue("priority", priority);
-            setValue("description", description);
+            setValue("description", description ?? "");
             setValue("listId", listId);
         } else {
             reset();
         }
-
     }, [taskInfo, setValue, onProjectChange, reset]);
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        addTaskMutate(
-            {
-                projectId: +data.projectId,
-                listId: +data.listId,
-                priority: data.priority,
-                status: data.status,
-                title: data.title,
-                description: data.description,
-            },
-            {
+        const taskData = {
+            projectId: +data.projectId,
+            listId: +data.listId,
+            priority: data.priority,
+            status: data.status,
+            title: data.title,
+            description: data.description,
+        };
+
+        if (taskId) {
+            editTaskMutate(
+                {
+                    id: taskId,
+                    ...taskData,
+                },
+                {
+                    onSuccess() {
+                        closeModal();
+                        toast("Task edited successfully!", {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                        });
+                    },
+                }
+            );
+        } else {
+            addTaskMutate(taskData, {
                 onSuccess() {
                     closeModal();
                     toast("Task added successfully!", {
                         position: toast.POSITION.BOTTOM_LEFT,
                     });
                 },
-            }
-        );
+            });
+        }
     };
 
     const onDeleteTask = () => {
@@ -168,6 +186,9 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                         <Grid item xs={5}>
                             <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
                                 <TextField
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     autoFocus
                                     margin="normal"
                                     label="Title"
@@ -179,6 +200,9 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                 />
 
                                 <TextField
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     margin="normal"
                                     label="Description"
                                     placeholder="When the user clicks on the ..."
@@ -218,12 +242,17 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                 <Controller
                                     control={control}
                                     name="listId"
+                                    rules={{
+                                        required: "Project list is required",
+                                    }}
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
                                             label="List"
                                             select
                                             variant="standard"
+                                            error={!!errors.listId}
+                                            helperText={errors.listId?.message}
                                             {...field}
                                         >
                                             {lists?.map((list) => (

@@ -1,10 +1,20 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { ITasksRepository } from "../domain/ItaskRepository";
 import { ITask, ITaskDetails, ITaskList } from "../domain/task";
-import { CreateTaskDTO } from "../services";
+import { CreateTaskDTO, EditTaskDTO } from "../services";
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
+
+    public async createTask(task: CreateTaskDTO): Promise<ITask> {
+        const response = await this.httpClient.request<ITask>({
+            path: `/tasks`,
+            body: task,
+            method: "POST",
+        });
+
+        return response;
+    }
 
     public async getTask(id: number): Promise<ITaskDetails> {
         const response = await this.httpClient.request<ITaskDetails>({
@@ -12,6 +22,16 @@ export class TasksRepository implements ITasksRepository {
         });
 
         return response;
+    }
+
+    public async editTask(id: number, editedTask: EditTaskDTO): Promise<ITaskDetails> {
+        const response = await this.httpClient.request<ITaskDetails>({
+            path: `/tasks/${id}`,
+            method: "PATCH",
+            body: editedTask
+        });
+
+        return response;   
     }
 
     public async deleteTask(id: number) {
@@ -37,16 +57,6 @@ export class TasksRepository implements ITasksRepository {
     public async getTaskList(listId: number): Promise<ITaskList> {
         const response = await this.httpClient.request<ITaskList>({
             path: `/lists/${listId}`,
-        });
-
-        return response;
-    }
-
-    public async createTask(task: CreateTaskDTO): Promise<ITask> {
-        const response = await this.httpClient.request<ITask>({
-            path: `/tasks`,
-            body: task,
-            method: "POST",
         });
 
         return response;

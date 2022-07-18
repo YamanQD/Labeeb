@@ -1,12 +1,22 @@
 import { ITasksRepository } from "../domain/ItaskRepository";
-import { CreateTaskDTO, TaskDetailsDTO, TaskDTO, TaskListDTO } from "./dto";
+import { CreateTaskDTO, EditTaskDTO, TaskDetailsDTO, TaskDTO, TaskListDTO } from "./dto";
 import { TaskMapper } from "./mappers";
 
 export class TasksService {
     constructor(private tasksRepository: ITasksRepository) {}
 
+    public async createTask(task: CreateTaskDTO): Promise<TaskDTO> {
+        const newTask = await this.tasksRepository.createTask(task);
+        return TaskMapper.taskToDTO(newTask);
+    }
+
     public async getTask(taskId: number): Promise<TaskDetailsDTO> {
         const task = await this.tasksRepository.getTask(taskId);
+        return TaskMapper.taskDetailsToDTO(task);
+    }
+
+    public async editTask(taskId: number, editedTask: EditTaskDTO): Promise<TaskDetailsDTO> {
+        const task = await this.tasksRepository.editTask(taskId, editedTask);
         return TaskMapper.taskDetailsToDTO(task);
     }
 
@@ -24,8 +34,5 @@ export class TasksService {
         return TaskMapper.taskListToDTO(taskList);
     }
 
-    public async createTask(task: CreateTaskDTO): Promise<TaskDTO> {
-        const newTask = await this.tasksRepository.createTask(task);
-        return TaskMapper.taskToDTO(newTask);
-    }
+    
 }
