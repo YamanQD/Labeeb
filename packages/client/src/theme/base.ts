@@ -27,8 +27,6 @@ interface baseTheme {
 		menuItemColorActive: React.CSSProperties["color"];
 		menuItemBg: React.CSSProperties["color"];
 		menuItemBgActive: React.CSSProperties["color"];
-		menuItemIconColor: React.CSSProperties["color"];
-		menuItemIconColorActive: React.CSSProperties["color"];
 		menuItemHeadingColor: React.CSSProperties["color"];
 	};
 	header: {
