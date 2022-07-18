@@ -166,12 +166,14 @@ export class ProjectsService {
 		await projects.forEach(async (project) => {
 
 			const statuses: Status[] = [];
-			project.statuses?.forEach(async s => {
-				statuses.push(await this.statusRepository.findOneBy({ title: s }));
+			await project.statuses?.forEach(async s => {
+				const status = await this.statusRepository.findOneBy({ title: s });
+				statuses.push(status);
 			});
 
-			const newProject = this.projectRepository.create({ ...project, statuses });
+			await new Promise(r => setTimeout(r, 200));
 
+			const newProject = this.projectRepository.create({ ...project, statuses });
 			if (project.userIds && project.userIds.length > 0) {
 				const users = await this.userRepository.findBy({ id: In(project.userIds) });
 				newProject.users = users;
