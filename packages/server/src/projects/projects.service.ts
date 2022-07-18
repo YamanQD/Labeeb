@@ -33,7 +33,7 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		return project;
+		return { ...project, statuses: project.statuses.map((s) => s.title) };
 	}
 
 	async findProjectStatuses(id: number): Promise<string[]> {
