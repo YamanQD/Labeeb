@@ -11,7 +11,7 @@ export class CreateTaskDto {
 	listId: number;
 
 	@IsNotEmpty()
-	currentStatus: string;
+	status: string;
 
 	@IsOptional()
 	description?: string;

@@ -40,7 +40,7 @@ export class TasksService {
 			throw new NotFoundException('List not found');
 		}
 
-		const status = await this.statusRepository.findOne({ where: { title: body.currentStatus } });
+		const status = await this.statusRepository.findOne({ where: { title: body.status } });
 		if (!status) {
 			throw new NotFoundException('Status not found, please add status to project first');
 		}
@@ -50,7 +50,10 @@ export class TasksService {
 			createdAt: new Date(),
 			list: list,
 			status: status,
-			...body,
+			deadline: body.deadline,
+			priority: body.priority,
+			title: body.title,
+			description: body.description
 		});
 
 		return await this.taskRepository.save(task);
@@ -73,8 +76,8 @@ export class TasksService {
 		}
 
 		let status: Status | undefined;
-		if (body.currentStatus) {
-			status = await this.statusRepository.findOne({ where: { title: body.currentStatus } });
+		if (body.status) {
+			status = await this.statusRepository.findOne({ where: { title: body.status } });
 			if (!status) {
 				throw new NotFoundException('Status not found, please add status to project first');
 			}
@@ -85,7 +88,7 @@ export class TasksService {
 		task.priority = body.priority ?? task.priority;
 		task.deadline = body.deadline ?? task.deadline;
 		task.list = body.listId ? list : task.list;
-		task.status = body.currentStatus ? status : task.status;
+		task.status = body.status ? status : task.status;
 
 		return await this.taskRepository.save(task);
 	}
@@ -112,7 +115,7 @@ export class TasksService {
 				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
-				currentStatus: 'Todo',
+				status: 'Todo',
 			};
 			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
