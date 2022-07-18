@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { List } from 'src/lists/list.entity';
+import { Task } from 'src/tasks/task.entity';
 import { User } from 'src/users/user.entity';
 import { In, Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
@@ -33,7 +35,16 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		return { ...project, statuses: project.statuses.map((s) => s.title) };
+		const response: any = { ...project, statuses: project.statuses.map(s => s.title) };
+		response.lists = response.lists.map((l: List) => ({
+			...l,
+			tasks: l.tasks.map((t: Task) => ({
+				...t,
+				status: t.status.title,
+			})),
+		}));
+
+		return response;
 	}
 
 	async findProjectStatuses(id: number): Promise<string[]> {
