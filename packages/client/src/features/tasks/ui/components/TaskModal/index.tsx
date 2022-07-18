@@ -4,7 +4,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -13,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useStore } from "src/core/infrastructure/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
@@ -36,6 +36,7 @@ interface FormFields {
  * The modal that's used for adding/viewing/editing tasks
  */
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
+    const { t } = useTranslation();
     const { data: projects } = useGetProjects();
     const { mutate: addTaskMutate, isLoading: isAddTaskLoading } = useAddTask();
     const { mutate: editTaskMutate, isLoading: isEditTaskLoading } = useEditTask();
@@ -172,15 +173,12 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     return (
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
             <DialogTitle>
-                <span>{taskId ? `Task #${taskId}` : "Add a new task"}</span>
-                <IconButton color="error" onClick={onDeleteTask}>
+                <span>{taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}</span>
+                <IconButton color="error" onClick={onDeleteTask} title={t("tasks.delete_task")}>
                     <DeleteIcon />
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    {taskId ? "" : "Please fill the details of the new task"}
-                </DialogContentText>
                 <form noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={5}>
@@ -191,7 +189,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     }}
                                     autoFocus
                                     margin="normal"
-                                    label="Title"
+                                    label={t("tasks.title")}
                                     variant="standard"
                                     placeholder="Fix bug #23"
                                     error={!!errors.title}
@@ -204,7 +202,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                         shrink: true,
                                     }}
                                     margin="normal"
-                                    label="Description"
+                                    label={t("tasks.description")}
                                     placeholder="When the user clicks on the ..."
                                     variant="standard"
                                     multiline
@@ -218,7 +216,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="Project"
+                                            label={t("tasks.project")}
                                             select
                                             variant="standard"
                                             {...field}
@@ -248,7 +246,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="List"
+                                            label={t("tasks.list")}
                                             select
                                             variant="standard"
                                             error={!!errors.listId}
@@ -270,7 +268,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="Status"
+                                            label={t("tasks.status")}
                                             select
                                             variant="standard"
                                             {...field}
@@ -290,7 +288,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="Priority"
+                                            label={t("tasks.priority")}
                                             select
                                             variant="standard"
                                             {...field}
@@ -316,7 +314,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             margin="normal"
                                             variant="standard"
                                             InputLabelProps={{ shrink: true }}
-                                            label="Deadline"
+                                            label={t("tasks.deadline")}
                                             error={!!errors?.deadline}
                                             helperText={errors?.deadline?.message}
                                             {...field}
@@ -332,8 +330,12 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                 {isLoading && (
                     <CircularProgress sx={{ mr: 2 }} size={20} disableShrink thickness={3} />
                 )}
-                <Button onClick={closeModal}>Cancel</Button>
-                <Button onClick={handleSubmit(onSubmit)}>{taskId ? "Edit" : "Add"}</Button>
+                <Button onClick={closeModal}>{t("actions.cancel", { ns: "common" })}</Button>
+                <Button onClick={handleSubmit(onSubmit)}>
+                    {taskId
+                        ? t("actions.edit", { ns: "common" })
+                        : t("actions.add", { ns: "common" })}
+                </Button>
             </DialogActions>
         </Dialog>
     );

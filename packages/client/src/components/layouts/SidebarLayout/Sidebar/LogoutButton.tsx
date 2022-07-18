@@ -1,8 +1,10 @@
 import Button from "@mui/material/Button";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "src/core/infrastructure/store";
 
 const LogoutButton = () => {
+    const { t } = useTranslation();
     const setUserInfo = useStore((state) => state.setUserInfo);
     const navigate = useNavigate();
 
@@ -17,7 +19,7 @@ const LogoutButton = () => {
             variant="contained"
             onClick={logout}
         >
-            Logout
+            {t("actions.logout", { ns: "common"})}
         </Button>
     );
 };

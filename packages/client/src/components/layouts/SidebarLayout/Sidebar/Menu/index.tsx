@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 import { useStore } from "src/core/infrastructure/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import ProjectItem from "./ProjectItem";
 import ProjectListItem from "./ProjectListItem";
 
 const SidebarMenu = () => {
+    const { t } = useTranslation();
     const { data: projects, isLoading } = useGetProjects();
 
     const setTaskListToView = useStore((state) => state.setTaskListToView);
@@ -17,7 +19,7 @@ const SidebarMenu = () => {
             }}
         >
             <Typography variant="h4" sx={{ textTransform: "uppercase", mb: 2 }}>
-                My Projects
+                {t("sidebar.projects", { ns: "app"})}
             </Typography>
             {isLoading ? (
                 "Loading projects..."
