@@ -132,6 +132,17 @@ export class ProjectsService {
 	}
 
 	async seed() {
+		const allStatuses = await this.statusRepository.find();
+		if (allStatuses.length === 0) {
+			await this.statusRepository.save([
+				{ title: 'Todo' },
+				{ title: 'In Progress' },
+				{ title: 'Done' },
+			]);
+		}
+
+		await new Promise(r => setTimeout(r, 200));
+
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
 
@@ -139,18 +150,34 @@ export class ProjectsService {
 			{
 				title: 'Satellite Simulator',
 				userIds: [1, 2],
+				statuses: ['Todo', 'In Progress', 'Done'],
 			},
 			{
 				title: 'E-Commerce App',
 				userIds: [3, 6, 1],
+				statuses: ['Todo', 'In Progress', 'Done'],
 			},
 			{
 				title: 'Banking App',
+				statuses: ['Todo', 'In Progress', 'Done'],
 			},
 		];
 
 		await projects.forEach(async (project) => {
-			await this.create(project);
+
+			const statuses: Status[] = [];
+			project.statuses?.forEach(async s => {
+				statuses.push(await this.statusRepository.findOneBy({ title: s }));
+			});
+
+			const newProject = this.projectRepository.create({ ...project, statuses });
+
+			if (project.userIds && project.userIds.length > 0) {
+				const users = await this.userRepository.findBy({ id: In(project.userIds) });
+				newProject.users = users;
+			}
+
+			return await this.projectRepository.save(newProject);
 		});
 	}
 }
