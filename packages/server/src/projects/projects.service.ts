@@ -49,7 +49,16 @@ export class ProjectsService {
 	}
 
 	async create(project: CreateProjectDto): Promise<Project> {
-		const newProject = this.projectRepository.create(project);
+		const statuses: Status[] = [];
+		project.statuses?.forEach(async s => {
+			const status = await this.statusRepository.findOneBy({ title: s });
+			statuses.push(status ?? await this.statusRepository.save({ title: s }));
+		});
+
+		// Sleep for a bit to simulate a slow database
+		await new Promise(r => setTimeout(r, 200));
+
+		const newProject = this.projectRepository.create({ ...project, statuses });
 
 		if (project.userIds && project.userIds.length > 0) {
 			const users = await this.userRepository.findBy({ id: In(project.userIds) });
