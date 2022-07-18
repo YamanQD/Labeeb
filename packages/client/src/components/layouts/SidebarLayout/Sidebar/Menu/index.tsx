@@ -8,7 +8,6 @@ import ProjectListItem from "./ProjectListItem";
 const SidebarMenu = () => {
     const { data: projects, isLoading } = useGetProjects();
 
-    const currentProjectId = useStore((state) => state.currentProjectId);
     const setTaskListToView = useStore((state) => state.setTaskListToView);
 
     return (
@@ -27,7 +26,7 @@ const SidebarMenu = () => {
                     {projects?.map((project) => (
                         <Box sx={{ mb: 1 }} key={project.id}>
                             <ProjectItem
-                                isActive={project.id === currentProjectId}
+                                id={project.id}
                                 title={project.title}
                                 onClick={() =>
                                     setTaskListToView({
@@ -39,6 +38,7 @@ const SidebarMenu = () => {
                                 {project.lists?.map((list) => (
                                     <ProjectListItem
                                         key={list.id}
+                                        id={list.id}
                                         title={list.title}
                                         badge={list.tasksCount}
                                         onClick={() =>
