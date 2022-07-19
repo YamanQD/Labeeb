@@ -1,27 +1,32 @@
 import { ITask, ITaskDetails, ITaskList } from "../../domain/task";
 import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
 
+const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
+    return listTaskGroups.reduce((previousTasksCount, newGroup) => {
+        return previousTasksCount + newGroup.tasks.length;
+    }, 0);
+};
+
 let dummyId = 0;
-const dummyStatuses = ["In Progress", "Done", "Todo"];
 export class TaskMapper {
     static taskToDTO(task: ITask): TaskDTO {
-        task.status = dummyStatuses[dummyId % 3] as string;
         return {
-            ...task
-        }
+            ...task,
+            status: task.status.title,
+        };
     }
 
     static taskDetailsToDTO(taskDetails: ITaskDetails): TaskDetailsDTO {
-        const { id, title, description, status, priority } = taskDetails;
+        const { id, title, description, priority } = taskDetails;
         return {
             id,
             title,
             description,
-            status,
             priority,
+            status: taskDetails.status.title,
             projectId: taskDetails.list.project.id,
             listId: taskDetails.list.id,
-        }
+        };
     }
 
     static taskListToDTO(taskList: ITaskList): TaskListDTO {
@@ -65,6 +70,7 @@ export class TaskMapper {
             id: taskList.id,
             title: taskList.title,
             taskGroups,
+            tasksCount: getTasksCountForList(taskGroups),
         };
     }
 }

@@ -1,16 +1,10 @@
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useMemo, useState } from "react";
-import { TaskGroupDTO, TaskListDTO } from "../../services";
-import styles from "./TaskGroup/task-group.module.css";
+import { useState } from "react";
+import { TaskListDTO } from "../../services";
 import TaskGroup from "./TaskGroup";
-
-const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
-    return listTaskGroups.reduce((previousTasksCount, newGroup) => {
-        return previousTasksCount + newGroup.tasks.length;
-    }, 0);
-};
+import styles from "./TaskGroup/task-group.module.css";
 
 const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, tasksCount = 0 }) => {
     return (
@@ -40,11 +34,9 @@ const TaskListContainer = styled("div")(
     `
 );
 
-const TaskList = ({ id, title = "", taskGroups = [] }: TaskListDTO) => {
+const TaskList = ({ id, title = "", taskGroups = [], tasksCount = 0 }: TaskListDTO) => {
     const [isListExpanded, setIsListExpanded] = useState(true);
     const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
-
-    const tasksCount = useMemo<number>(() => getTasksCountForList(taskGroups), [taskGroups]);
 
     return (
         <TaskListContainer>
