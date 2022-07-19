@@ -1,4 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +5,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -21,6 +19,7 @@ import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { useEditTask } from "src/features/tasks/application/editTask";
 import { ETaskPriority, taskPriorities } from "src/features/tasks/domain/task";
+import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
     title: string;
@@ -32,22 +31,19 @@ interface FormFields {
     deadline: string;
 }
 
-/**
- * The modal that's used for adding/viewing/editing tasks
- */
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { t } = useTranslation();
     const { data: projects } = useGetProjects();
-    const { mutate: addTaskMutate, isLoading: isAddTaskLoading } = useAddTask();
-    const { mutate: editTaskMutate, isLoading: isEditTaskLoading } = useEditTask();
-    const { mutate: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
+    const { mutateAsync: addTaskMutate, isLoading: isAddTaskLoading } = useAddTask();
+    const { mutateAsync: editTaskMutate, isLoading: isEditTaskLoading } = useEditTask();
+    const { mutateAsync: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
     const taskId = useStore((state) => state.currentTaskId);
 
     /**
      * Before fetching task data, we have to wait for the projects list to be loaded
      * because I want to set: projectId form field = taskId.projectId
-     * 
+     *
      * When the projects list is empty, even if I set it this way the title of the project
      * won't appear in the form because there are no option elements.
      */
@@ -57,14 +53,14 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             enabled: !!taskId && !!projects,
         },
     });
-    const isUserViewingATask = taskData != null;
 
     const [selectedProjectInfo, setSelectedProjectInfo] = useState<ProjectDTO | undefined>();
-
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
+
     const isLoading =
         isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
+    const isUserViewingATask = taskData != null;
 
     const {
         register,
@@ -116,7 +112,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         }
     }, [taskData, isUserViewingATask, setValue, updateListAndStatusFieldsOfProject, reset]);
 
-    const onSubmit: SubmitHandler<FormFields> = (data) => {
+    const onSubmit: SubmitHandler<FormFields> = async (data) => {
         const taskData = {
             projectId: +data.projectId,
             listId: +data.listId,
@@ -127,52 +123,39 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         };
 
         if (taskId) {
-            editTaskMutate(
-                {
-                    id: taskId,
-                    ...taskData,
-                },
-                {
-                    onSuccess() {
-                        closeModal();
-                        toast("Task edited successfully!", {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                        });
-                    },
-                }
-            );
+            await editTaskMutate({
+                id: taskId,
+                ...taskData,
+            });
+
+            closeModal();
+            toast("Task edited successfully!", {
+                position: toast.POSITION.BOTTOM_LEFT,
+            });
         } else {
-            addTaskMutate(taskData, {
-                onSuccess() {
-                    closeModal();
-                    toast("Task added successfully!", {
-                        position: toast.POSITION.BOTTOM_LEFT,
-                    });
-                },
+            await addTaskMutate(taskData);
+            closeModal();
+            toast("Task added successfully!", {
+                position: toast.POSITION.BOTTOM_LEFT,
             });
         }
     };
 
-    const onDeleteTask = () => {
+    const deleteTask = async () => {
         if (taskId) {
-            deleteTaskMutate(taskId, {
-                onSuccess() {
-                    closeModal();
-                    toast("Task deleted successfully!", {
-                        position: toast.POSITION.BOTTOM_LEFT,
-                    });
-                },
+            await deleteTaskMutate(taskId);
+            closeModal();
+            toast("Task deleted successfully!", {
+                position: toast.POSITION.BOTTOM_LEFT,
             });
         }
     };
 
     return (
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
-            <DialogTitle>
+            <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
                 <span>{taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}</span>
-                <IconButton color="error" onClick={onDeleteTask} title={t("tasks.delete_task")}>
-                    <DeleteIcon />
-                </IconButton>
+                <DeleteTaskButton onConfirmation={deleteTask} />
             </DialogTitle>
             <DialogContent>
                 <form noValidate>
