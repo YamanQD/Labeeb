@@ -1,7 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { List } from 'src/lists/list.entity';
-import { Task } from 'src/tasks/task.entity';
 import { User } from 'src/users/user.entity';
 import { In, Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
@@ -18,11 +16,11 @@ export class ProjectsService {
 		private readonly userRepository: Repository<User>,
 		@InjectRepository(Status)
 		private readonly statusRepository: Repository<Status>,
-	) { }
+	) {}
 
 	async findAll(): Promise<Project[]> {
 		return await this.projectRepository.find({
-			relations: { lists: true },
+			relations: { lists: true, statuses: true },
 		});
 	}
 
@@ -34,20 +32,10 @@ export class ProjectsService {
 		if (!project) {
 			throw new NotFoundException('Project not found');
 		}
-
-		const response: any = { ...project, statuses: project.statuses.map(s => s.title) };
-		response.lists = response.lists.map((l: List) => ({
-			...l,
-			tasks: l.tasks.map((t: Task) => ({
-				...t,
-				status: t.status.title,
-			})),
-		}));
-
-		return response;
+		return project;
 	}
 
-	async findProjectStatuses(id: number): Promise<string[]> {
+	async findProjectStatuses(id: number): Promise<Status[]> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['statuses'],
@@ -56,18 +44,18 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		return project.statuses.map((s) => s.title);
+		return project.statuses;
 	}
 
 	async create(project: CreateProjectDto): Promise<Project> {
 		const statuses: Status[] = [];
-		project.statuses?.forEach(async s => {
+		project.statuses?.forEach(async (s) => {
 			const status = await this.statusRepository.findOneBy({ title: s });
-			statuses.push(status ?? await this.statusRepository.save({ title: s }));
+			statuses.push(status ?? (await this.statusRepository.save({ title: s })));
 		});
 
 		// Sleep for a bit to simulate a slow database
-		await new Promise(r => setTimeout(r, 200));
+		await new Promise((r) => setTimeout(r, 200));
 
 		const newProject = this.projectRepository.create({ ...project, statuses });
 
@@ -152,7 +140,7 @@ export class ProjectsService {
 			]);
 		}
 
-		await new Promise(r => setTimeout(r, 200));
+		await new Promise((r) => setTimeout(r, 200));
 
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
@@ -175,14 +163,13 @@ export class ProjectsService {
 		];
 
 		await projects.forEach(async (project) => {
-
 			const statuses: Status[] = [];
-			await project.statuses?.forEach(async s => {
+			await project.statuses?.forEach(async (s) => {
 				const status = await this.statusRepository.findOneBy({ title: s });
 				statuses.push(status);
 			});
 
-			await new Promise(r => setTimeout(r, 200));
+			await new Promise((r) => setTimeout(r, 200));
 
 			const newProject = this.projectRepository.create({ ...project, statuses });
 			if (project.userIds && project.userIds.length > 0) {

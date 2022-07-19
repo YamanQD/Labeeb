@@ -22,7 +22,7 @@ export class ProjectsController {
 	}
 
 	@Get(':id/statuses')
-	async findProjectStatuses(@Param('id') id: number): Promise<string[]> {
+	async findProjectStatuses(@Param('id') id: number): Promise<Status[]> {
 		return await this.projectsService.findProjectStatuses(id);
 	}
 
