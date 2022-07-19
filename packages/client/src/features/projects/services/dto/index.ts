@@ -1,6 +1,5 @@
 interface ProjectStatusDTO {
-    id: number;
-    label: string;
+    title: string;
 }
 
 export interface ProjectListDTO {

@@ -9,7 +9,11 @@
 		"priority": "Priority",
 		"add_task": "Add a new task",
 		"edit_task": "Edit task",
-		"delete_task": "Delete task"
+		"delete_task": "Delete task",
+		"single_task": "Task",
+		"project": "Project",
+		"list": "List",
+		"assignees": "Assignees"
 	},
 	
 	"sidebar": {

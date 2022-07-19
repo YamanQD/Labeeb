@@ -1,6 +1,5 @@
 interface IProjectStatus {
-    id: number;
-    label: string;
+    title: string;
 }
 
 export interface IProjectList {

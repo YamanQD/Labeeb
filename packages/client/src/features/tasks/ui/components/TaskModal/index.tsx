@@ -42,24 +42,22 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { mutate: editTaskMutate, isLoading: isEditTaskLoading } = useEditTask();
     const { mutate: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
-    // Get task ID from store. This should not be null if the user is viewing a specific task
     const taskId = useStore((state) => state.currentTaskId);
 
     /**
-     * Fetch the task's details if:
-     * 1. taskId is set
-     * 2. the projects list is loaded
-     *
-     * Why wait for projects? Because I want to set: projectId form field = taskId.projectId
-     * But when the projects list is empty, even if I set it this way the title of the project
+     * Before fetching task data, we have to wait for the projects list to be loaded
+     * because I want to set: projectId form field = taskId.projectId
+     * 
+     * When the projects list is empty, even if I set it this way the title of the project
      * won't appear in the form because there are no option elements.
      */
-    const { data: taskInfo, isLoading: isGetTaskLoading } = useGetTask({
+    const { data: taskData, isLoading: isGetTaskLoading } = useGetTask({
         id: taskId ?? 1,
         queryOptions: {
             enabled: !!taskId && !!projects,
         },
     });
+    const isUserViewingATask = taskData != null;
 
     const [selectedProjectInfo, setSelectedProjectInfo] = useState<ProjectDTO | undefined>();
 
@@ -87,8 +85,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         },
     });
 
-    // Adjust the values of lists and statuses according to the projectId
-    const onProjectChange = useCallback(
+    const updateListAndStatusFieldsOfProject = useCallback(
         (projectId: number) => {
             const selectedProject = projects?.find((project) => project.id === projectId);
 
@@ -96,19 +93,18 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             const statuses = selectedProject?.statuses ?? [];
 
             setValue("listId", lists[0]?.id ?? "");
-            setValue("status", statuses[0]?.label ?? "");
+            setValue("status", statuses[0]?.title ?? "");
             setSelectedProjectInfo(selectedProject);
         },
         [projects, setValue]
     );
 
     useEffect(() => {
-        // User is viewing a single task
-        if (taskInfo) {
-            const { title, status, priority, description, projectId, listId } = taskInfo;
+        if (isUserViewingATask) {
+            const { title, status, priority, description, projectId, listId } = taskData;
             setValue("projectId", projectId);
-            // Fill the values of lists and statuses first
-            onProjectChange(projectId);
+            // It's important to udpate these fields before assigning their default values.
+            updateListAndStatusFieldsOfProject(projectId);
 
             setValue("title", title);
             setValue("status", status);
@@ -118,7 +114,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         } else {
             reset();
         }
-    }, [taskInfo, setValue, onProjectChange, reset]);
+    }, [taskData, isUserViewingATask, setValue, updateListAndStatusFieldsOfProject, reset]);
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         const taskData = {
@@ -222,7 +218,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             {...field}
                                             onChange={(e) => {
                                                 field.onChange(e.target.value);
-                                                onProjectChange(+e.target.value);
+                                                updateListAndStatusFieldsOfProject(+e.target.value);
                                             }}
                                         >
                                             {projects?.map((project) => (
@@ -273,9 +269,9 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             variant="standard"
                                             {...field}
                                         >
-                                            {statuses?.map((status) => (
-                                                <MenuItem key={status.id} value={status.label}>
-                                                    {status.label}
+                                            {statuses?.map((status, index) => (
+                                                <MenuItem key={index} value={status.title}>
+                                                    {status.title}
                                                 </MenuItem>
                                             ))}
                                         </TextField>
