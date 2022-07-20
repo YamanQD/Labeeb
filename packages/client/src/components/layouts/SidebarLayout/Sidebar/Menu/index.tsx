@@ -1,16 +1,16 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
-import { useStore } from "src/core/infrastructure/store";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import ProjectItem from "./ProjectItem";
 import ProjectListItem from "./ProjectListItem";
 
 const SidebarMenu = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { projectId, listId } = useParams();
     const { data: projects, isLoading } = useGetProjects();
-
-    const setTaskListToView = useStore((state) => state.setTaskListToView);
 
     return (
         <Box
@@ -19,7 +19,7 @@ const SidebarMenu = () => {
             }}
         >
             <Typography variant="h4" sx={{ textTransform: "uppercase", mb: 2 }}>
-                {t("sidebar.projects", { ns: "app"})}
+                {t("sidebar.projects", { ns: "app" })}
             </Typography>
             {isLoading ? (
                 "Loading projects..."
@@ -30,12 +30,8 @@ const SidebarMenu = () => {
                             <ProjectItem
                                 id={project.id}
                                 title={project.title}
-                                onClick={() =>
-                                    setTaskListToView({
-                                        projectId: project.id,
-                                        listId: null,
-                                    })
-                                }
+                                onClick={() => navigate(`/projects/${project.id}`)}
+                                isActive={Number(projectId) === project.id}
                             >
                                 {project.lists?.map((list) => (
                                     <ProjectListItem
@@ -43,11 +39,9 @@ const SidebarMenu = () => {
                                         id={list.id}
                                         title={list.title}
                                         badge={list.tasksCount}
+                                        isActive={Number(listId) === list.id}
                                         onClick={() =>
-                                            setTaskListToView({
-                                                projectId: null,
-                                                listId: list.id,
-                                            })
+                                            navigate(`/projects/${project.id}/lists/${list.id}`)
                                         }
                                     />
                                 ))}

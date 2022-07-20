@@ -1,13 +1,12 @@
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { useStore } from "src/core/infrastructure/store";
-
 interface SidebarListItemProps {
     id: number;
     badge?: string | number;
     title: string;
     onClick: () => void;
+    isActive: boolean;
 }
 
 const ProjectListeItemButton = styled(Button)(
@@ -24,10 +23,7 @@ const ProjectListeItemButton = styled(Button)(
     `
 );
 
-const ProjectListItem = ({ id, onClick, title, badge = 5 }: SidebarListItemProps) => {
-    const currentListId = useStore((state) => state.currentListId);
-    const isActive = id === currentListId;
-    
+const ProjectListItem = ({ id, onClick, title, badge = 5, isActive = false}: SidebarListItemProps) => {
     return (
         <ProjectListeItemButton onClick={onClick} className={isActive ? "active" : ""}>
             {title}

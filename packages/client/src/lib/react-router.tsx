@@ -42,7 +42,9 @@ export const ApplicationRoutes = () => {
         <>
             <Routes>
                 <Route path="/" element={<SidebarLayout />}>
-                    <Route path="" element={<Tasks />} />
+                    <Route path="projects" element={<Tasks />} />
+                    <Route path="projects/:projectId" element={<Tasks />} />
+                    <Route path="projects/:projectId/lists/:listId" element={<Tasks />} />
                 </Route>
 
                 <Route path="/login" element={<Login />} />

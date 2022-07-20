@@ -4,11 +4,11 @@ import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import { styled } from "@mui/material/styles";
 import { MouseEvent, ReactNode, useState } from "react";
-import { useStore } from "src/core/infrastructure/store";
 
 interface ProjectItemProps {
     id: number;
     children: ReactNode;
+    isActive: boolean;
     open?: boolean;
     title: string;
     onClick: () => void;
@@ -41,10 +41,14 @@ const ProjectItemButton = styled(Button)(
     `
 );
 
-const ProjectItem = ({ children, id, open = false, title, onClick }: ProjectItemProps) => {
-    const currentProjectId = useStore((state) => state.currentProjectId);
-    const isActive = id === currentProjectId;
-
+const ProjectItem = ({
+    children,
+    id,
+    open = false,
+    title,
+    onClick,
+    isActive = false,
+}: ProjectItemProps) => {
     const [isMenuExpanded, setIsMenuExpanded] = useState(open);
 
     const toggleMenu = (event: MouseEvent) => {

@@ -1,24 +1,23 @@
 import Box from "@mui/material/Box";
+import { useParams } from "react-router-dom";
 import SuspenseLoader from "src/components/SuspenseLoader";
-import { useStore } from "src/core/infrastructure/store";
 import { useGetTaskLists } from "../../application/getTaskLists";
 import AddTaskContainer from "../components/AddTaskContainer";
 import TaskList from "../components/TaskList";
 
 const Tasks = () => {
-    const currentProjectId = useStore((state) => state.currentProjectId);
-    const currentListId = useStore((state) => state.currentListId);
+    const { projectId, listId } = useParams();
 
     // One of these two must be truthy, otherwise the query is disabled
-    const isQueryEnabled = (!!currentProjectId || !!currentListId);
+    const isQueryEnabled = !!projectId || !!listId;
 
     const {
         data: taskLists,
         isLoading,
         isError,
     } = useGetTaskLists({
-        projectId: currentProjectId,
-        listId: currentListId,
+        projectId,
+        listId,
         queryOptions: {
             enabled: isQueryEnabled,
         },

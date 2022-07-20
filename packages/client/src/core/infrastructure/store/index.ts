@@ -13,13 +13,6 @@ export const useStore = create<IStore>()((set, get) => ({
     isTaskModalOpen: false,
     user: getInitialUser(),
 
-    setTaskListToView({ projectId, listId }) {
-        set(() => ({
-            currentListId: listId,
-            currentProjectId: projectId,
-        }));
-    },
-
     toggleTaskModal(value) {
         set(() => ({
             isTaskModalOpen: value ? value : !get().isTaskModalOpen,
