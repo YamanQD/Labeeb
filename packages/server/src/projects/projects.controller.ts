@@ -17,7 +17,7 @@ export class ProjectsController {
 	}
 
 	@Get(':id/tasks')
-	async findProjectTasks(@Param('id') id: number): Promise<any> {
+	async findProjectTasks(@Param('id') id: number): Promise<Project> {
 		return await this.projectsService.findProjectTasks(id);
 	}
 
@@ -44,7 +44,7 @@ export class ProjectsController {
 
 	@Post(':id/statuses')
 	@HttpCode(HttpStatus.CREATED)
-	async addStatus(@Param('id') id: number, @Body() body: { title: string }): Promise<any> {
+	async addStatus(@Param('id') id: number, @Body() body: { title: string }): Promise<void> {
 		return await this.projectsService.addStatus(id, body.title);
 	}
 

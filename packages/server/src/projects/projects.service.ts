@@ -16,7 +16,7 @@ export class ProjectsService {
 		private readonly userRepository: Repository<User>,
 		@InjectRepository(Status)
 		private readonly statusRepository: Repository<Status>,
-	) {}
+	) { }
 
 	async findAll(): Promise<Project[]> {
 		return await this.projectRepository.find({
@@ -24,7 +24,7 @@ export class ProjectsService {
 		});
 	}
 
-	async findProjectTasks(id: number): Promise<any> {
+	async findProjectTasks(id: number): Promise<Project> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['statuses', 'lists', 'lists.tasks', 'lists.tasks.status'],
@@ -98,7 +98,7 @@ export class ProjectsService {
 		return;
 	}
 
-	async addStatus(id: number, status: string): Promise<any> {
+	async addStatus(id: number, status: string): Promise<void> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['statuses'],

@@ -32,7 +32,7 @@ export class TasksService {
 		return task;
 	}
 
-	async create(body: CreateTaskDto, userId: any): Promise<Task> {
+	async create(body: CreateTaskDto, userId: number): Promise<Task> {
 		const list = await this.listRepository.findOne({
 			where: { id: body.listId },
 		});
