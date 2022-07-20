@@ -5,7 +5,7 @@ import Collapse from "@mui/material/Collapse";
 import { styled } from "@mui/material/styles";
 import { MouseEvent, ReactNode, useState } from "react";
 
-interface ProjectItemProps {
+interface MenuItemProps {
     id: number;
     children: ReactNode;
     isActive: boolean;
@@ -14,7 +14,7 @@ interface ProjectItemProps {
     onClick: () => void;
 }
 
-const ProjectTitle = styled("span")(
+const MenuItemTitle = styled("span")(
     ({ theme }) => `
         &:hover {
             border-bottom: 1px dashed ${theme.palette.primary.main};
@@ -22,7 +22,7 @@ const ProjectTitle = styled("span")(
     `
 );
 
-const ProjectItemButton = styled(Button)(
+const MenuItemButton = styled(Button)(
     ({ theme }) => `
         color: ${theme.sidebar.menuItemColor};
         background-color: ${theme.sidebar.menuItemBg};
@@ -41,14 +41,14 @@ const ProjectItemButton = styled(Button)(
     `
 );
 
-const ProjectItem = ({
+const MenuItem = ({
     children,
     id,
     open = false,
     title,
     onClick,
     isActive = false,
-}: ProjectItemProps) => {
+}: MenuItemProps) => {
     const [isMenuExpanded, setIsMenuExpanded] = useState(open);
 
     const toggleMenu = (event: MouseEvent) => {
@@ -58,7 +58,7 @@ const ProjectItem = ({
 
     return (
         <div>
-            <ProjectItemButton
+            <MenuItemButton
                 className={isActive ? "active" : ""}
                 onClick={onClick}
                 endIcon={
@@ -69,8 +69,8 @@ const ProjectItem = ({
                     )
                 }
             >
-                <ProjectTitle>{title}</ProjectTitle>
-            </ProjectItemButton>
+                <MenuItemTitle>{title}</MenuItemTitle>
+            </MenuItemButton>
             <Collapse style={{ width: "100%" }} in={isMenuExpanded}>
                 {children}
             </Collapse>
@@ -78,4 +78,4 @@ const ProjectItem = ({
     );
 };
 
-export default ProjectItem;
+export default MenuItem;

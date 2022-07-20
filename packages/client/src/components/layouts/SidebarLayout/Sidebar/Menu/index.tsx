@@ -3,8 +3,8 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjects } from "src/features/projects/application/getProjects";
-import ProjectItem from "./ProjectItem";
-import ProjectListItem from "./ProjectListItem";
+import MenuItem from "./MenuItem";
+import MenuItemChild from "./MenuItemChild";
 
 const SidebarMenu = () => {
     const { t } = useTranslation();
@@ -27,14 +27,14 @@ const SidebarMenu = () => {
                 <>
                     {projects?.map((project) => (
                         <Box sx={{ mb: 1 }} key={project.id}>
-                            <ProjectItem
+                            <MenuItem
                                 id={project.id}
                                 title={project.title}
                                 onClick={() => navigate(`/projects/${project.id}`)}
                                 isActive={Number(projectId) === project.id}
                             >
                                 {project.lists?.map((list) => (
-                                    <ProjectListItem
+                                    <MenuItemChild
                                         key={list.id}
                                         id={list.id}
                                         title={list.title}
@@ -45,7 +45,7 @@ const SidebarMenu = () => {
                                         }
                                     />
                                 ))}
-                            </ProjectItem>
+                            </MenuItem>
                         </Box>
                     ))}
                 </>

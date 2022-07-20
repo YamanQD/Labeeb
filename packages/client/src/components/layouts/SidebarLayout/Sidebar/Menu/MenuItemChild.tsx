@@ -1,7 +1,8 @@
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-interface SidebarListItemProps {
+
+interface MenuItemChildProps {
     id: number;
     badge?: string | number;
     title: string;
@@ -9,7 +10,7 @@ interface SidebarListItemProps {
     isActive: boolean;
 }
 
-const ProjectListeItemButton = styled(Button)(
+const MenuItemChildButton = styled(Button)(
     ({ theme }) => `
         justify-content: space-between;
         width: 100%;
@@ -23,13 +24,13 @@ const ProjectListeItemButton = styled(Button)(
     `
 );
 
-const ProjectListItem = ({ id, onClick, title, badge = 5, isActive = false}: SidebarListItemProps) => {
+const MenuItemChild = ({ id, onClick, title, badge = 5, isActive = false }: MenuItemChildProps) => {
     return (
-        <ProjectListeItemButton onClick={onClick} className={isActive ? "active" : ""}>
+        <MenuItemChildButton onClick={onClick} className={isActive ? "active" : ""}>
             {title}
-            {badge && <Badge color="primary" badgeContent={badge} sx={{right: "8px"}} />}
-        </ProjectListeItemButton>
+            {badge && <Badge color="primary" badgeContent={badge} sx={{ right: "8px" }} />}
+        </MenuItemChildButton>
     );
 };
 
-export default ProjectListItem;
+export default MenuItemChild;
