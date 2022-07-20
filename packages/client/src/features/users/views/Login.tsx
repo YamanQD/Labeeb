@@ -1,8 +1,7 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, Navigate } from "react-router-dom";
-import { APIError } from "src/core/infrastructure/interfaces/IhttpClient";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useStore } from "src/core/infrastructure/store";
 import { useLogin } from "../application/login";
 
@@ -33,13 +32,13 @@ const Login = () => {
                 onSuccess(responseData) {
                     setUserInfo(responseData);
                     navigate("/");
-                }
-            },
+                },
+            }
         );
     };
 
     // Redirect logged in users to /
-    if (user) return <Navigate to="/" />
+    if (user) return <Navigate to="/" />;
     return (
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <TextField

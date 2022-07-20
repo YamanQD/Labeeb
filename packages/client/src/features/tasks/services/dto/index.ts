@@ -23,6 +23,7 @@ export interface TaskGroupDTO {
 export interface TaskListDTO {
     id: number;
     title: string;
+    tasksCount: number;
     taskGroups: TaskGroupDTO[];
 }
 

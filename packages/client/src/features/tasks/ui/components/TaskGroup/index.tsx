@@ -1,22 +1,24 @@
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TaskGroupDTO } from "../../../services";
 import Task from "../Task";
 import styles from "./task-group.module.css";
 import TaskGroupTitle from "./TaskGroupTitle";
 
 const TaskGroupColumns = () => {
+    const { t } = useTranslation();
     return (
         <Grid item xs={6} className={styles.columnContainer}>
             <Grid container>
                 <Grid item xs={4} className={styles.column}>
-                    Assignee
+                    {t("tasks.assignees", { ns: "app" })}
                 </Grid>
                 <Grid item xs={4} className={styles.column}>
-                    Priority
+                    {t("tasks.priority", { ns: "app" })}
                 </Grid>
                 <Grid item xs={4} className={styles.column}>
-                    Deadline
+                    {t("tasks.deadline", { ns: "app" })}
                 </Grid>
             </Grid>
         </Grid>

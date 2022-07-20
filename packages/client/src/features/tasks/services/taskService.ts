@@ -15,9 +15,8 @@ export class TasksService {
         return TaskMapper.taskDetailsToDTO(task);
     }
 
-    public async editTask(taskId: number, editedTask: EditTaskDTO): Promise<TaskDetailsDTO> {
-        const task = await this.tasksRepository.editTask(taskId, editedTask);
-        return TaskMapper.taskDetailsToDTO(task);
+    public async editTask(taskId: number, editedTask: EditTaskDTO): Promise<void> {
+        await this.tasksRepository.editTask(taskId, editedTask);
     }
 
     public async deleteTask(taskId: number): Promise<void> {
@@ -33,6 +32,4 @@ export class TasksService {
         const taskList = await this.tasksRepository.getTaskList(listId);
         return TaskMapper.taskListToDTO(taskList);
     }
-
-    
 }

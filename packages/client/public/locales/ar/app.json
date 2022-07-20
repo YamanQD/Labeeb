@@ -12,7 +12,8 @@
 		"delete_task": "حذف المهمة",
 		"single_task": "المهمة",
 		"project": "المشروع",
-		"list": "القائمة"
+		"list": "القائمة",
+		"assignees": "الموكلون"
 	},
 
 	"sidebar": {
