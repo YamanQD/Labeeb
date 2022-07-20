@@ -5,7 +5,7 @@ interface IProjectStatus {
 export interface IProjectList {
     id: number;
     title: string;
-    tasksCount: number;
+    taskCount: number;
 }
 
 export interface IProject {

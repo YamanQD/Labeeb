@@ -38,7 +38,7 @@ const SidebarMenu = () => {
                                         key={list.id}
                                         id={list.id}
                                         title={list.title}
-                                        badge={list.tasksCount}
+                                        badge={list.taskCount}
                                         isActive={Number(listId) === list.id}
                                         onClick={() =>
                                             navigate(`/projects/${project.id}/lists/${list.id}`)

@@ -5,7 +5,7 @@ interface ProjectStatusDTO {
 export interface ProjectListDTO {
     id: number;
     title: string;
-    tasksCount: number;
+    taskCount: number;
 }
 
 export interface ProjectDTO {
