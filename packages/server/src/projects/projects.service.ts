@@ -37,10 +37,8 @@ export class ProjectsService {
 		if (!project) {
 			throw new NotFoundException('Project not found');
 		}
-		return {
-			...project,
-			lists: project.lists.map((l) => ({ ...l, taskCount: l.tasks.length }))
-		};
+
+		return project;
 	}
 
 	async findProjectStatuses(id: number): Promise<Status[]> {
