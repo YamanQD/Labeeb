@@ -18,10 +18,15 @@ export class ProjectsService {
 		private readonly statusRepository: Repository<Status>,
 	) { }
 
-	async findAll(): Promise<Project[]> {
-		return await this.projectRepository.find({
-			relations: { lists: true, statuses: true },
+	async findAll(): Promise<any> {
+		const projects = await this.projectRepository.find({
+			relations: ['lists', 'lists.tasks', 'statuses'],
 		});
+
+		return projects.map((project) => ({
+			...project,
+			lists: project.lists.map((l) => ({ id: l.id, title: l.title, taskCount: l.tasks.length }))
+		}));
 	}
 
 	async findProjectTasks(id: number): Promise<Project> {
@@ -32,7 +37,10 @@ export class ProjectsService {
 		if (!project) {
 			throw new NotFoundException('Project not found');
 		}
-		return project;
+		return {
+			...project,
+			lists: project.lists.map((l) => ({ ...l, taskCount: l.tasks.length }))
+		};
 	}
 
 	async findProjectStatuses(id: number): Promise<Status[]> {

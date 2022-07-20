@@ -12,7 +12,7 @@ export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) { }
 
 	@Get()
-	async findAll(): Promise<Project[]> {
+	async findAll(): Promise<any> {
 		return await this.projectsService.findAll();
 	}
 
