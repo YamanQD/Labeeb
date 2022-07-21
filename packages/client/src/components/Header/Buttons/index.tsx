@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import LanguageToggle from "./LanguageToggle";
-import HeaderNotifications from "./Notifications";
 import ThemeToggle from "./ThemeToggle";
 
 const HeaderButtons = () => {

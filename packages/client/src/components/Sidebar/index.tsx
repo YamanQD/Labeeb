@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import Logo from "src/components/Logo";
 import { SidebarContext } from "src/contexts/SidebarContext";
-import LogoutButton from "./LogoutButton";
-import SidebarMenu from "./Menu";
+import { WrapperProps } from "src/utils/wrapperProps";
+import LogoutButton from "../Buttons/LogoutButton";
 
 const SidebarWrapper = styled(Box)(
     ({ theme }) => `
@@ -34,7 +34,7 @@ const TopSection = styled(Box)(
 `
 );
 
-const Sidebar = () => {
+const Sidebar = ({ children: menu }: WrapperProps) => {
     const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
 
     return (
@@ -51,7 +51,7 @@ const Sidebar = () => {
                     <TopSection>
                         <Logo />
                     </TopSection>
-                    <SidebarMenu />
+                    {menu}
                     <LogoutButton />
                 </SidebarWrapper>
             </Box>
@@ -75,7 +75,7 @@ const Sidebar = () => {
                         <TopSection>
                             <Logo />
                         </TopSection>
-                        <SidebarMenu />
+                        {menu}
                     </SidebarWrapper>
                 </Drawer>
             </Box>

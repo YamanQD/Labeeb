@@ -3,10 +3,10 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjects } from "src/features/projects/application/getProjects";
-import MenuItem from "./MenuItem";
-import MenuItemChild from "./MenuItemChild";
+import MenuItem from "../../Sidebar/MenuItem";
+import MenuItemChild from "../../Sidebar/MenuItemChild";
 
-const SidebarMenu = () => {
+const ClientSidebarMenu = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { projectId, listId } = useParams();
@@ -54,4 +54,4 @@ const SidebarMenu = () => {
     );
 };
 
-export default SidebarMenu;
+export default ClientSidebarMenu;
