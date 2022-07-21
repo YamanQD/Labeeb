@@ -7,7 +7,7 @@ import {
 import { RequestHelper } from "./requestHelper";
 export class HTTPClient implements IHTTPClient {
     private errorListeners: ErrorListener[] = [];
-    private baseURL = "";
+    private baseURL = "http://localhost:4000";
 
     private requestHelper = new RequestHelper(this.baseURL);
     private static instance: HTTPClient;

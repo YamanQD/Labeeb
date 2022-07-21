@@ -13,7 +13,6 @@ i18n.use(HttpBackend)
 			escapeValue: false,
 		},
 		backend: {
-			// TODO: Should we keep this static or use env files?
-			loadPath: "http://localhost:3000/locales/{{lng}}/{{ns}}.json",
+			loadPath: "/locales/{{lng}}/{{ns}}.json",
 		},
 	});
