@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "yarn workspaces foreach run build",
-    "frontend": "yarn workspace client start",
+    "frontend": "yarn workspace client dev",
     "backend": "yarn workspace server start-dev"
   },
   "devDependencies": {
