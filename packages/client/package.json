@@ -36,7 +36,8 @@
         "build": "tsc && vite build",
         "preview": "vite preview",
         "mock:server": "json-server --watch ./mock-server/index.js --port 5000",
-        "prettify": "prettier . --write"
+        "prettify": "prettier . --write",
+        "types": "tsc --watch --noEmit"
     },
     "browserslist": {
         "production": [
