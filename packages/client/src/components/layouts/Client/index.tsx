@@ -28,7 +28,7 @@ const ClientLayout = () => {
             >
                 <Header />
 
-                <Box sx={{ overflow: "auto", flex: "1 1 auto" }}>
+                <Box sx={{ overflow: "auto", flex: "1 1 auto", p: 4 }}>
                     <Outlet />
                 </Box>
             </Box>

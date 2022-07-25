@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { useGetTaskLists } from "../../application/getTaskLists";
@@ -31,14 +30,12 @@ const Tasks = () => {
     else if (!isQueryEnabled) content = <p>Please select a project from the sidebar.</p>;
     else
         content = (
-            <Box sx={{ p: 4 }}>
-                <>
-                    {taskLists?.map((list) => (
-                        // Task list -> Task group (tasks that belong to the same status) -> single task
-                        <TaskList key={list.id} {...list} />
-                    ))}
-                </>
-            </Box>
+            <>
+                {taskLists?.map((list) => (
+                    // Task list -> Task group (tasks that belong to the same status) -> single task
+                    <TaskList key={list.id} {...list} />
+                ))}
+            </>
         );
 
     return (
