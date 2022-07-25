@@ -15,7 +15,7 @@ const LogoutButton = () => {
 
     return (
         <Button
-            sx={{ mt: "auto", mb: 2, mx: 2 }}
+            sx={{ mb: 2, mx: 2 }}
             variant="contained"
             onClick={logout}
         >

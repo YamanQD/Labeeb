@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import LogoutButton from "src/components/Buttons/LogoutButton";
+import SwitchLayoutButton from "src/components/Buttons/SwitchLayout";
 import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import AdminSidebarMenu from "./Menu";
@@ -7,9 +9,15 @@ import AdminSidebarMenu from "./Menu";
 const AdminLayout = () => {
     return (
         <>
-            <Sidebar>
-                <AdminSidebarMenu />
-            </Sidebar>
+            <Sidebar
+                menu={<AdminSidebarMenu />}
+                buttons={
+                    <>
+                        <SwitchLayoutButton route="/">Go to client</SwitchLayoutButton>
+                        <LogoutButton />
+                    </>
+                }
+            ></Sidebar>
             <Box
                 sx={{
                     display: "flex",

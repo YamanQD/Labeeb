@@ -28,7 +28,6 @@ const ClientSidebarMenu = () => {
                     {projects?.map((project) => (
                         <Box sx={{ mb: 1 }} key={project.id}>
                             <MenuItem
-                                id={project.id}
                                 title={project.title}
                                 onClick={() => navigate(`/projects/${project.id}`)}
                                 isActive={Number(projectId) === project.id}

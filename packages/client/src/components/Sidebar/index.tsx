@@ -1,12 +1,8 @@
-import { Box, Drawer } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useContext } from "react";
+import { ReactNode } from "react";
 import Logo from "src/components/Logo";
-import { SidebarContext } from "src/contexts/SidebarContext";
-import { WrapperProps } from "src/utils/wrapperProps";
-import LogoutButton from "../Buttons/LogoutButton";
 
-const SidebarWrapper = styled(Box)(
+const SidebarWrapper = styled("div")(
     ({ theme }) => `
 		display: flex;
 		flex-direction: column;
@@ -24,7 +20,7 @@ const SidebarWrapper = styled(Box)(
 `
 );
 
-const TopSection = styled(Box)(
+const TopSection = styled("div")(
     ({ theme }) => `
         display: flex;
         height: 88px;
@@ -34,52 +30,31 @@ const TopSection = styled(Box)(
 `
 );
 
-const Sidebar = ({ children: menu }: WrapperProps) => {
-    const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
+const ButtonsContainer = styled("div")(
+    ({ theme }) => `
+        display: flex;
+        flex-direction: column;
 
+        margin-top: auto;
+    `
+);
+
+interface SidebarProps {
+    menu: ReactNode;
+    buttons: ReactNode;
+}
+
+const Sidebar = ({ menu, buttons }: SidebarProps) => {
     return (
-        <>
-            <Box
-                sx={{
-                    display: {
-                        lg: "block",
-                        xs: "none",
-                    },
-                }}
-            >
-                <SidebarWrapper>
-                    <TopSection>
-                        <Logo />
-                    </TopSection>
-                    {menu}
-                    <LogoutButton />
-                </SidebarWrapper>
-            </Box>
-
-            <Box
-                sx={{
-                    display: {
-                        lg: "none",
-                        xs: "none",
-                    },
-                }}
-            >
-                <Drawer
-                    anchor="left"
-                    open={isSidebarVisible}
-                    onClose={toggleSidebar}
-                    variant="temporary"
-                    elevation={9}
-                >
-                    <SidebarWrapper>
-                        <TopSection>
-                            <Logo />
-                        </TopSection>
-                        {menu}
-                    </SidebarWrapper>
-                </Drawer>
-            </Box>
-        </>
+        <div>
+            <SidebarWrapper>
+                <TopSection>
+                    <Logo />
+                </TopSection>
+                {menu}
+                <ButtonsContainer>{buttons}</ButtonsContainer>
+            </SidebarWrapper>
+        </div>
     );
 };
 

@@ -6,9 +6,8 @@ import { styled } from "@mui/material/styles";
 import { MouseEvent, ReactNode, useState } from "react";
 
 interface MenuItemProps {
-    id: number;
-    children: ReactNode;
-    isActive: boolean;
+    children?: ReactNode;
+    isActive?: boolean;
     open?: boolean;
     title: string;
     onClick: () => void;
@@ -41,9 +40,13 @@ const MenuItemButton = styled(Button)(
     `
 );
 
+const EndIcon = ({ isMenuExpanded = false, onClick = (event: MouseEvent) => {} }) => {
+    if (isMenuExpanded) return <ExpandLessTwoToneIcon style={{ fontSize: 24 }} onClick={onClick} />;
+    return <ExpandMoreTwoToneIcon style={{ fontSize: 24 }} onClick={onClick} />;
+};
+
 const MenuItem = ({
     children,
-    id,
     open = false,
     title,
     onClick,
@@ -62,11 +65,9 @@ const MenuItem = ({
                 className={isActive ? "active" : ""}
                 onClick={onClick}
                 endIcon={
-                    isMenuExpanded ? (
-                        <ExpandLessTwoToneIcon style={{ fontSize: 24 }} onClick={toggleMenu} />
-                    ) : (
-                        <ExpandMoreTwoToneIcon style={{ fontSize: 24 }} onClick={toggleMenu} />
-                    )
+                    children ? (
+                        <EndIcon isMenuExpanded={isMenuExpanded} onClick={toggleMenu} />
+                    ) : null
                 }
             >
                 <MenuItemTitle>{title}</MenuItemTitle>

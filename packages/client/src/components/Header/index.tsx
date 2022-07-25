@@ -1,9 +1,5 @@
-import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
-import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useContext } from "react";
-import { SidebarContext } from "src/contexts/SidebarContext";
 import HeaderButtons from "./Buttons";
 
 const HeaderWrapper = styled(Box)(
@@ -23,26 +19,10 @@ const HeaderWrapper = styled(Box)(
 );
 
 const Header = () => {
-    const { isSidebarVisible, toggleSidebar } = useContext(SidebarContext);
-
     return (
         <HeaderWrapper>
             <Box display="flex" alignItems="center" ml="auto">
                 <HeaderButtons />
-                <Box
-                    sx={{
-                        display: {
-                            lg: "none",
-                            xs: "block",
-                        },
-                    }}
-                >
-                    <Tooltip arrow title="Toggle Menu">
-                        <IconButton color="primary" onClick={toggleSidebar}>
-                            {!isSidebarVisible ? <MenuTwoToneIcon /> : <CloseTwoToneIcon />}
-                        </IconButton>
-                    </Tooltip>
-                </Box>
             </Box>
         </HeaderWrapper>
     );

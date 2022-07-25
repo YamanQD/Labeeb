@@ -15,10 +15,13 @@ const Loader = (Component: React.FC) => (props: any) =>
         </Suspense>
     );
 
-// Pages
+
 const Tasks = Loader(lazy(() => import("src/features/tasks/ui/views/Tasks")));
 const Status404 = Loader(lazy(() => import("src/pages/404")));
 const Login = Loader(lazy(() => import("src/features/users/views/Login")));
+
+// Admin pages
+const UsersManagement = Loader(lazy(() => import("src/features/users/views/admin/Users")));
 
 const RedirectIfUnauthorized = () => {
     const navigate = useNavigate();
@@ -49,7 +52,7 @@ export const ApplicationRoutes = () => {
                 </Route>
 
                 <Route path="/admin" element={<AdminLayout />}>
-                    <Route path="users" />
+                    <Route path="users" element={<UsersManagement />} />
                     <Route path="projects" />
                 </Route>
 
