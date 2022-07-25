@@ -18,7 +18,7 @@ import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { useEditTask } from "src/features/tasks/application/editTask";
-import { ETaskPriority, taskPriorities } from "src/features/tasks/domain/task";
+import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/domain/task";
 import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
@@ -97,7 +97,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     useEffect(() => {
         if (isUserViewingATask) {
-            const { title, status, priority, description, projectId, listId } = taskData;
+            const { title, status, priority, description, projectId, listId, deadline } = taskData;
             setValue("projectId", projectId);
             // It's important to udpate these fields before assigning their default values.
             updateListAndStatusFieldsOfProject(projectId);
@@ -105,6 +105,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             setValue("title", title);
             setValue("status", status);
             setValue("priority", priority);
+            setValue("deadline", formatDate(deadline));
             setValue("description", description ?? "");
             setValue("listId", listId);
         } else {
@@ -114,12 +115,9 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         const taskData = {
-            projectId: +data.projectId,
+            ...data,
+            projectId: +data.projectId, // Convert these two to numbers before sending them
             listId: +data.listId,
-            priority: data.priority,
-            status: data.status,
-            title: data.title,
-            description: data.description,
         };
 
         if (taskId) {
@@ -155,7 +153,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
             <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
                 <span>{taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}</span>
-                <DeleteTaskButton onConfirmation={deleteTask} />
+                {isUserViewingATask && <DeleteTaskButton onConfirmation={deleteTask} />}
             </DialogTitle>
             <DialogContent>
                 <form noValidate>

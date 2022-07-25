@@ -42,6 +42,7 @@ export interface ITask {
     id: number;
     title: string;
     description?: string;
+    deadline: string;
     status: {
         title: string;
     };
@@ -53,3 +54,8 @@ export interface ITaskList {
     title: string;
     tasks: ITask[];
 }
+
+/**
+ * Converts a JavaScript date object to a string with the format "YYYY-MM-DD"
+ */
+export const formatDate = (date: Date): string => date.toISOString().slice(0, 10);

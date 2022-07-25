@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useCallback } from "react";
 import { useStore } from "src/core/infrastructure/store";
+import { formatDate } from "../../domain/task";
 import { TaskDTO } from "../../services";
 
 const TaskContainer = styled(Paper)(
@@ -28,7 +29,7 @@ const TaskStatus = styled("div")(
     `
 );
 
-const Task = ({ id, title = "default", status, priority }: TaskDTO) => {
+const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) => {
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
     const toggleTaskModal = useStore((state) => state.toggleTaskModal);
 
@@ -54,7 +55,7 @@ const Task = ({ id, title = "default", status, priority }: TaskDTO) => {
                 </Grid>
 
                 <Grid item xs={2}>
-                    Hasan Mothaffar
+                    {formatDate(deadline)}
                 </Grid>
             </Grid>
         </TaskContainer>

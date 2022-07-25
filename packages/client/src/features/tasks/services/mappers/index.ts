@@ -12,16 +12,18 @@ export class TaskMapper {
     static taskToDTO(task: ITask): TaskDTO {
         return {
             ...task,
+            deadline: new Date(task.deadline),
             status: task.status.title,
         };
     }
 
     static taskDetailsToDTO(taskDetails: ITaskDetails): TaskDetailsDTO {
-        const { id, title, description, priority } = taskDetails;
+        const { id, title, description, priority, deadline } = taskDetails;
         return {
             id,
             title,
             description,
+            deadline: new Date(deadline),
             priority,
             status: taskDetails.status.title,
             projectId: taskDetails.list.project.id,
