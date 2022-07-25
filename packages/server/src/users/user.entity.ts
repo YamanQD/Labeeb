@@ -1,4 +1,4 @@
-import { Role } from '../enums/role.enum';
+import { Role } from '@labeeb/core';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { Project } from 'src/projects/project.entity';
 

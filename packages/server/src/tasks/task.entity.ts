@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Priority } from 'src/enums/priority.enum';
+import { Priority } from '@labeeb/core';
 import { List } from 'src/lists/list.entity';
 import { Status } from 'src/projects/status.entity';
 

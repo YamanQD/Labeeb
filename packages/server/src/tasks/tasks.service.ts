@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
-import { Priority } from 'src/enums/priority.enum';
+import { Priority } from '@labeeb/core';
 import { Status } from 'src/projects/status.entity';
 
 @Injectable()

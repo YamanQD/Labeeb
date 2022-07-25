@@ -1,4 +1,4 @@
-import { Role } from "src/enums/role.enum";
+import { Role } from '@labeeb/core';
 
 export class UserWithoutPassword {
 	/**

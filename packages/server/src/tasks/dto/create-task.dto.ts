@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsDate, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
-import { Priority } from 'src/enums/priority.enum';
+import { Priority } from '@labeeb/core';
 
 export class CreateTaskDto {
 	@IsNotEmpty()
