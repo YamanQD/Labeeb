@@ -1,13 +1,13 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { IUserRepository } from "../domain/IuserRepository";
-import { IUser } from "../domain/user";
+import { ILoginResponse } from "../domain/user";
 import { UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
 
-    async login({ email, password }: UserCredentialsDTO): Promise<IUser> {
-        const response = await this.httpClient.request<IUser>({
+    async login({ email, password }: UserCredentialsDTO): Promise<ILoginResponse> {
+        const response = await this.httpClient.request<ILoginResponse>({
             path: "/auth/login",
             method: "POST",
             body: {
