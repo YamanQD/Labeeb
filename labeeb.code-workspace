@@ -11,6 +11,10 @@
     {
       "name": "backend (server)",
       "path": "packages/server"
+    },
+    {
+      "name": "core",
+      "path": "packages/core"
     }
   ],
   "settings": {
