@@ -5,6 +5,10 @@
       "path": "."
     },
     {
+      "name": "shared (core)",
+      "path": "packages/core"
+    },
+    {
       "name": "frontend (client)",
       "path": "packages/client"
     },
@@ -12,23 +16,16 @@
       "name": "backend (server)",
       "path": "packages/server"
     },
-    {
-      "name": "core",
-      "path": "packages/core"
-    }
   ],
   "settings": {
     "typescript.tsdk": ".yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
-
     // This doesn't work because the path that you have to provide is relative to the 
     // workspace directory.
     // "eslint.nodePath": ".yarn/sdks",
-
     // This works because it's an absolute path
     // "eslint.nodePath": "D:/my-projects/Labeeb/.yarn/sdks",
-
     // This too works: Check out https://github.com/microsoft/vscode-eslint/issues/1225
     // and https://github.com/microsoft/vscode-eslint/issues/1201 for more info.
     "eslint.nodePath": "../../.yarn/sdks",
