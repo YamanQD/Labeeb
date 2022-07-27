@@ -1,5 +1,3 @@
-// Shared logic/types go here
-
 export enum Priority {
 	NONE = 'none',
 	LOW = 'low',
