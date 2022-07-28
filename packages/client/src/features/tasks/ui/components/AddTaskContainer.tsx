@@ -1,19 +1,8 @@
 import AddIcon from "@mui/icons-material/Add";
-import { styled } from "@mui/material/styles";
+import Fab from "@mui/material/Fab";
 import { useCallback } from "react";
-import CreateResourceButton from "src/components/Buttons/CreateResourceButton";
 import { useStore } from "src/core/infrastructure/store";
 import TaskModal from "./TaskModal";
-
-const AddTaskButtonContainer = styled("div")`
-    display: flex;
-    position: fixed;
-
-    bottom: 3%;
-    right: 3%;
-    align-items: center;
-`;
-
 
 const AddTaskContainer = ({ disabled = false }) => {
     const isModalOpen = useStore((state) => state.isTaskModalOpen);
@@ -28,11 +17,15 @@ const AddTaskContainer = ({ disabled = false }) => {
 
     return (
         <>
-            <AddTaskButtonContainer>
-                <CreateResourceButton onClick={openModal} disabled={disabled}>
-                    <AddIcon />
-                </CreateResourceButton>
-            </AddTaskButtonContainer>
+            <Fab
+                color="primary"
+                size="medium"
+                onClick={openModal}
+                disabled={disabled}
+                sx={{ position: "fixed", bottom: "5%", right: "3%" }}
+            >
+                <AddIcon />
+            </Fab>
             <TaskModal open={isModalOpen} closeModal={closeModal} />
         </>
     );
