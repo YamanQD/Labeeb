@@ -18,6 +18,10 @@ export default defineConfig({
   },
 
   optimizeDeps: {
-    include: ['@labeeb/core']
+    include: ['@labeeb/core'],
+
+    // Important: https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-force
+    // Without this, vite won't pick up updates to the linked packages above (commonjs)
+    force: true
   }
 })
