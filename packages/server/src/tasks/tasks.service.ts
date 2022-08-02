@@ -8,6 +8,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
 import { Priority } from '@labeeb/core';
 import { Status } from 'src/projects/status.entity';
+import { Tag } from 'src/projects/tags.entity';
 
 @Injectable()
 export class TasksService {
@@ -18,6 +19,8 @@ export class TasksService {
 		private readonly listRepository: Repository<List>,
 		@InjectRepository(Status)
 		private readonly statusRepository: Repository<Status>,
+		@InjectRepository(Tag)
+		private readonly tagRepository: Repository<Tag>,
 	) { }
 
 	async findAll(): Promise<Task[]> {
@@ -45,11 +48,23 @@ export class TasksService {
 			throw new NotFoundException('Status not found, please add status to project first');
 		}
 
+		let tags: Tag[] = [];
+		if (body.tags) {
+			for (const tag of body.tags) {
+				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
+				if (!tagEntity) {
+					throw new NotFoundException('Tag not found, please add tag to project first');
+				}
+				tags.push(tagEntity);
+			}
+		}
+
 		const task = this.taskRepository.create({
 			created_by: userId,
 			createdAt: new Date(),
 			list: list,
 			status: status,
+			tags: tags,
 			deadline: body.deadline,
 			priority: body.priority,
 			title: body.title,
@@ -83,12 +98,24 @@ export class TasksService {
 			}
 		}
 
+		let tags: Tag[] = [];
+		if (body.tags) {
+			for (const tag of body.tags) {
+				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
+				if (!tagEntity) {
+					throw new NotFoundException('Tag not found, please add tag to project first');
+				}
+				tags.push(tagEntity);
+			}
+		}
+
 		task.title = body.title ?? task.title;
 		task.description = body.description ?? task.description;
 		task.priority = body.priority ?? task.priority;
 		task.deadline = body.deadline ?? task.deadline;
 		task.list = body.listId ? list : task.list;
 		task.status = body.status ? status : task.status;
+		task.tags = body.tags ? tags : task.tags;
 
 		return await this.taskRepository.save(task);
 	}
