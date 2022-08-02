@@ -145,7 +145,7 @@ export class TasksService {
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
 				status: statuses[Math.floor(Math.random() * 10 % 3)],
-				tags: [tags[Math.floor(Math.random() * 10 % 3)], tags[Math.floor(Math.random() * 10 % 3)]],
+				tags: [tags[Math.floor(Math.random() * 10 % 9)], tags[Math.floor(Math.random() * 10 % 9)]],
 			};
 			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
