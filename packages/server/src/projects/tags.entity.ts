@@ -10,6 +10,6 @@ export class Tag {
 	@ManyToMany(() => Project, { nullable: true })
 	projects: Project[];
 
-	@OneToMany(() => Task, (task) => task.tags)
+	@ManyToMany(() => Task, { nullable: true })
 	tasks: Task[];
 }
