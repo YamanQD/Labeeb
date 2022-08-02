@@ -199,6 +199,22 @@ export class ProjectsService {
 			]);
 		}
 
+		const allTags = await this.tagRepository.find();
+		if (allTags.length === 0) {
+			await this.tagRepository.save([
+				{ title: 'Backend' },
+				{ title: 'Frontend' },
+				{ title: 'Mobile' },
+				{ title: 'Web' },
+				{ title: 'Database' },
+				{ title: 'Devops' },
+				{ title: 'Testing' },
+				{ title: 'Design' },
+				{ title: 'Other' },
+			]);
+		}
+
+
 		await new Promise((r) => setTimeout(r, 200));
 
 		const allProjects = await this.projectRepository.find();
