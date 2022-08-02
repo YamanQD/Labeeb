@@ -209,15 +209,18 @@ export class ProjectsService {
 				title: 'Satellite Simulator',
 				userIds: [1, 2],
 				statuses: ['Todo', 'In Progress', 'Done'],
+				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 			{
 				title: 'E-Commerce App',
 				userIds: [3, 6, 1],
 				statuses: ['Todo', 'In Progress', 'Done'],
+				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 			{
 				title: 'Banking App',
 				statuses: ['Todo', 'In Progress', 'Done'],
+				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 		];
 
@@ -228,9 +231,15 @@ export class ProjectsService {
 				statuses.push(status);
 			});
 
+			const tags: Tag[] = [];
+			await project.tags?.forEach(async (t) => {
+				const tag = await this.tagRepository.findOneBy({ title: t });
+				tags.push(tag);
+			});
+
 			await new Promise((r) => setTimeout(r, 200));
 
-			const newProject = this.projectRepository.create({ ...project, statuses });
+			const newProject = this.projectRepository.create({ ...project, statuses, tags });
 			if (project.userIds && project.userIds.length > 0) {
 				const users = await this.userRepository.findBy({ id: In(project.userIds) });
 				newProject.users = users;

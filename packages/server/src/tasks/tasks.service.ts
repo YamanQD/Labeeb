@@ -105,6 +105,7 @@ export class TasksService {
 	async seed() {
 		const priorities = [Priority.HIGH, Priority.MEDIUM, Priority.LOW, Priority.NONE];
 		const statuses = ["Todo", "In Progress", "Done"];
+		const tags = ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'];
 
 		const allTasks = await this.taskRepository.find();
 		if (allTasks.length > 0) return;
@@ -117,6 +118,7 @@ export class TasksService {
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
 				status: statuses[Math.floor(Math.random() * 10 % 3)],
+				tag: tags[Math.floor(Math.random() * 10 % 3)],
 			};
 			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
 		}
