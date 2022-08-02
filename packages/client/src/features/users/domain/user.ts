@@ -1,9 +1,11 @@
-export interface IUser {
-    id: number;
-    name: string;
+export interface ILoginResponse {
+    access_token: string;
 }
 
-export interface IUserCredentials {
-    email: string;
-    password: string;
+export interface IUser {
+    exp: number;
+    iat: number;
+    role: string;
+    sub: number;
+    username: string;
 }

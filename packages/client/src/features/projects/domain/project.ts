@@ -1,17 +1,16 @@
 interface IProjectStatus {
-    id: number;
-    label: string;
+    title: string;
 }
 
 export interface IProjectList {
     id: number;
-    name: string;
-    tasksCount: number;
+    title: string;
+    taskCount: number;
 }
 
 export interface IProject {
     id: number;
-    name: string;
+    title: string;
     lists: IProjectList[];
     statuses: IProjectStatus[];
 }

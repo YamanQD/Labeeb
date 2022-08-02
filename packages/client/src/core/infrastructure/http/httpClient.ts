@@ -1,55 +1,59 @@
-import { IHTTPClient, IRequestOptions } from "../interfaces/IhttpClient";
-
+import {
+    APIError,
+    IHTTPClient,
+    IRequestOptions,
+    type ErrorListener,
+} from "../interfaces/IhttpClient";
+import { RequestHelper } from "./requestHelper";
 export class HTTPClient implements IHTTPClient {
-    constructor(private baseURL: string = "") {}
+    private errorListeners: ErrorListener[] = [];
+    private baseURL = "http://localhost:4000";
 
-    async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
+    private requestHelper = new RequestHelper(this.baseURL);
+    private static instance: HTTPClient;
+
+    private constructor() {}
+
+    public static getInstance() {
+        if (!this.instance) this.instance = new HTTPClient();
+        return this.instance;
+    }
+
+    public async request<ResponseType>(options: IRequestOptions): Promise<ResponseType> {
         const { path, method = "GET", params = {}, body = undefined, headers = {} } = options;
 
-        const requestPath = this.constructRequestPath(path, params);
-        const requestHeaders = this.constructRequestHeaders(headers);
+        const requestPath = this.requestHelper.getRequestPath(path, params);
+        const requestHeaders = this.requestHelper.getRequestHeaders(headers);
 
         const response = await fetch(requestPath, {
             method,
-            body,
+            body: JSON.stringify(body),
             headers: requestHeaders,
         });
 
-        const parsedResponse = options.parser
-            ? options.parser<ResponseType>(response)
-            : await this.parser<ResponseType>(response);
+        const json = await this.requestHelper.responseToJSON(response);
+      
 
-        // TODO: Handle errors
+        if (!response.ok) {
+            const error: APIError = {
+                message: json.message,
+                status: response.status,
+            };
+
+            this.errorListeners.forEach((callback) => callback(error));
+            throw error;
+        }
+
+        const parsedResponse = options.parser ? options.parser<ResponseType>(json) : json;
         return parsedResponse;
     }
 
-    private async parser<ResponseType>(data: Response): Promise<ResponseType> {
-        return await data.json();
-    }
+    public subscribeToError(listener: ErrorListener): () => void {
+        this.errorListeners.push(listener);
 
-    private constructRequestPath(originalPath: string, params: Object): string {
-        const queryParameters = this.constructQueryParameters(params);
-        return `${this.baseURL}${originalPath}?${queryParameters}`;
-    }
-
-    private constructQueryParameters(params: Object): URLSearchParams {
-        const parameters: Record<string, string> = {};
-
-        for (const [key, value] of Object.entries(params)) {
-            if (value == undefined || value == null) continue;
-            parameters[key] = value;
-        }
-
-        return new URLSearchParams(parameters);
-    }
-
-    private constructRequestHeaders(headers: Record<string, string>): Record<string, string> {
-        const accessToken = localStorage.getItem('token');
-        if (accessToken) return {
-            'Authorization': `Bearer ${accessToken}`,
-            ...headers
+        // Unsubscribe function
+        return () => {
+            this.errorListeners = this.errorListeners.filter((func) => func != listener);
         };
-
-        return headers;
     }
 }

@@ -5,19 +5,23 @@
       "path": "."
     },
     {
+      "name": "shared (core)",
+      "path": "packages/core"
+    },
+    {
       "name": "frontend (client)",
       "path": "packages/client"
     },
     {
       "name": "backend (server)",
       "path": "packages/server"
-    }
+    },
   ],
   "settings": {
     "typescript.tsdk": ".yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
-
+    
     // This doesn't work because the path that you have to provide is relative to the 
     // workspace directory.
     // "eslint.nodePath": ".yarn/sdks",

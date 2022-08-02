@@ -1,14 +1,36 @@
 import create from "zustand";
 import { IStore } from "../interfaces/IStore";
 
-export const useStore = create<IStore>()((set) => ({
-    currentProjectId: undefined,
-    currentListId: undefined,
+const getInitialUser = () => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+};
 
-    setTaskListToView({ projectId, listId }) {
+export const useStore = create<IStore>()((set, get) => ({
+    currentProjectId: null,
+    currentListId: null,
+    currentTaskId: null,
+    isTaskModalOpen: false,
+    user: getInitialUser(),
+
+    toggleTaskModal(value) {
         set(() => ({
-            currentListId: listId,
-            currentProjectId: projectId,
+            isTaskModalOpen: value ? value : !get().isTaskModalOpen,
         }));
     },
+
+    setUserInfo(user) {
+        set(() => ({
+            user,
+        }));
+
+        if (user) localStorage.setItem("user", JSON.stringify(user));
+        else localStorage.removeItem("user");
+    },
+
+    setCurrentTaskId(id) {
+        set(() => ({
+            currentTaskId: id
+        }))
+    }
 }));

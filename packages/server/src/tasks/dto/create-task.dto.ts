@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsDate, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
-import { Priority } from 'src/enums/priority.enum';
+import { Priority } from '@labeeb/core';
 
 export class CreateTaskDto {
 	@IsNotEmpty()
@@ -9,6 +9,12 @@ export class CreateTaskDto {
 
 	@IsNotEmpty()
 	listId: number;
+
+	@IsNotEmpty()
+	status: string;
+
+	@IsOptional()
+	tags?: string[];
 
 	@IsOptional()
 	description?: string;

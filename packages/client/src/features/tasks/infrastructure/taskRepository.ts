@@ -1,33 +1,62 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
-import { ITasksRepository, TaskListFilters } from "../domain/ItaskRepository";
-import { ITask, ITaskList } from "../domain/task";
-import { CreateTaskDTO } from "../services";
+import { ITasksRepository } from "../domain/ItaskRepository";
+import { ITask, ITaskDetails, ITaskList } from "../domain/task";
+import { CreateTaskDTO, EditTaskDTO } from "../services";
 
 export class TasksRepository implements ITasksRepository {
     constructor(private httpClient: IHTTPClient) {}
 
-    public getTask(id: number): Promise<ITask> {
-        throw new Error("Method not implemented.");
-    }
-
-    public async getTaskLists(filters: TaskListFilters): Promise<ITaskList[]> {
-        const { projectId, listId } = filters;
-        const path = listId
-            ? `/projects/${projectId}/groups/${listId}`
-            : `/projects/${projectId}/groups`;
-
-        const response = await this.httpClient.request<ITaskList[]>({
-            path,
+    public async createTask(task: CreateTaskDTO): Promise<ITask> {
+        const response = await this.httpClient.request<ITask>({
+            path: `/tasks`,
+            body: task,
+            method: "POST",
         });
 
         return response;
     }
 
-    public async createTask(task: CreateTaskDTO): Promise<ITask> {
-        const response = await this.httpClient.request<ITask>({
-            path: `/projects/${task.projectId}/groups/${task.listId}`,
-            body: task,
-            method: "POST",
+    public async getTask(id: number): Promise<ITaskDetails> {
+        const response = await this.httpClient.request<ITaskDetails>({
+            path: `/tasks/${id}`,
+        });
+
+        return response;
+    }
+
+    public async editTask(id: number, editedTask: EditTaskDTO): Promise<ITaskDetails> {
+        const response = await this.httpClient.request<ITaskDetails>({
+            path: `/tasks/${id}`,
+            method: "PATCH",
+            body: editedTask
+        });
+
+        return response;   
+    }
+
+    public async deleteTask(id: number) {
+        const response = await this.httpClient.request<Promise<void>>({
+            path: `/tasks/${id}`,
+            method: "DELETE",
+        });
+
+        return response;
+    }
+
+    public async getTaskListsForProject(projectId: number): Promise<ITaskList[]> {
+        const response = await this.httpClient.request<ITaskList[]>({
+            path: `/projects/${projectId}/tasks`,
+            parser(data) {
+                return data.lists;
+            },
+        });
+
+        return response;
+    }
+
+    public async getTaskList(listId: number): Promise<ITaskList> {
+        const response = await this.httpClient.request<ITaskList>({
+            path: `/lists/${listId}`,
         });
 
         return response;

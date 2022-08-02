@@ -8,9 +8,9 @@ export class List {
 	id: number;
 
 	@Column()
-	name: string;
+	title: string;
 
-	@ManyToOne(() => Project, (project) => project.lists)
+	@ManyToOne(() => Project, (project) => project.lists, { onDelete: 'CASCADE' })
 	project: Project;
 
 	@OneToMany(() => Task, (task) => task.list)

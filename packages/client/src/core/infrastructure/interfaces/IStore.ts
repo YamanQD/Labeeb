@@ -1,20 +1,15 @@
-interface TaskListInfo {
-    projectId: number | undefined;
-    listId: number | undefined;
-}
+import { UserDTO } from "src/features/users/services/dto";
 
 export interface IStore {
-    /**
-     * The project that the user is currently navigating.
-     */
-    currentProjectId: number | undefined;
-    /**
-     * The project list that the user is currently navigating.
-     */
-    currentListId: number | undefined;
+    isTaskModalOpen: boolean;
+    toggleTaskModal: (value?: boolean) => void;
 
     /**
-     * Sets which task list the user should be seeing in the tasks view.
+     * The ID of task that the user is currently viewing/editing/deleting.
      */
-    setTaskListToView: (taskListInfo: TaskListInfo) => void;
+    currentTaskId: number | null;
+    setCurrentTaskId: (id: number | null) => void;
+
+    user: UserDTO | null;
+    setUserInfo: (info: UserDTO | null) => void;
 }

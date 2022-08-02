@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": "./",
-        "target": "es5",
+        "target": "ESNext",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -16,7 +16,10 @@
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "noUncheckedIndexedAccess": true
+        "noUncheckedIndexedAccess": true,
+        "useDefineForClassFields": true,
+        "composite": true
+
     },
-    "include": ["src"]
+    "include": ["src", "vite.config.ts"]
 }
