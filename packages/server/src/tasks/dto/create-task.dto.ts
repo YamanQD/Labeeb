@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsDate, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import { Priority } from '@labeeb/core';
+import { Optional } from '@nestjs/common';
 
 export class CreateTaskDto {
 	@IsNotEmpty()
@@ -12,6 +13,9 @@ export class CreateTaskDto {
 
 	@IsNotEmpty()
 	status: string;
+
+	@Optional()
+	tag: string;
 
 	@IsOptional()
 	description?: string;
