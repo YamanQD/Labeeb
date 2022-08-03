@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { Priority } from '@labeeb/core';
 import { List } from 'src/lists/list.entity';
 import { Status } from 'src/projects/status.entity';
+import { Tag } from 'src/projects/tags.entity';
 
 @Entity()
 export class Task {
@@ -22,6 +23,10 @@ export class Task {
 
 	@ManyToOne(() => Status, (status) => status.tasks, { eager: true })
 	status: Status;
+
+	@ManyToMany(() => Tag, { nullable: true })
+	@JoinTable({ name: 'task_tags', inverseJoinColumn: { name: 'title' } })
+	tags: Tag[];
 
 	@ManyToOne(() => List, (list) => list.tasks, { onDelete: 'CASCADE' })
 	list: List;

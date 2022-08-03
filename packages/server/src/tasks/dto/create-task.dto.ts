@@ -14,6 +14,9 @@ export class CreateTaskDto {
 	status: string;
 
 	@IsOptional()
+	tags?: string[];
+
+	@IsOptional()
 	description?: string;
 
 	@IsOptional()

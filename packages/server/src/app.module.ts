@@ -15,7 +15,9 @@ import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/project.entity';
 import { List } from './lists/list.entity';
 import { ListsModule } from './lists/lists.module';
+import { MailService } from './mail.service';
 import { Status } from './projects/status.entity';
+import { Tag } from './projects/tags.entity';
 
 @Module({
 	imports: [
@@ -32,7 +34,7 @@ import { Status } from './projects/status.entity';
 					username: configService.get<string>('DATABASE_USERNAME'),
 					password: configService.get<string>('DATABASE_PASSWORD'),
 					database: configService.get<string>('DATABASE_NAME'),
-					entities: [User, Task, Project, List, Status],
+					entities: [User, Task, Project, List, Status, Tag],
 					synchronize: true, //! DO NOT USE IN PRODUCTION
 				};
 			},
@@ -45,6 +47,7 @@ import { Status } from './projects/status.entity';
 	controllers: [AppController],
 	providers: [
 		AppService,
+		MailService,
 		{
 			provide: APP_GUARD,
 			useClass: JwtAuthGuard,

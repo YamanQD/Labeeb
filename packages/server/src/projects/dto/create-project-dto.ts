@@ -9,4 +9,7 @@ export class CreateProjectDto {
 
 	@IsOptional()
 	statuses?: string[];
+
+	@IsOptional()
+	tags?: string[];
 }

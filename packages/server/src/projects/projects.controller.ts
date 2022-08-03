@@ -5,6 +5,7 @@ import { UpdateProjectDto } from './dto/update-project-dto';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
 import { Status } from './status.entity';
+import { Tag } from './tags.entity';
 
 @ApiTags('projects')
 @Controller('projects')
@@ -24,6 +25,11 @@ export class ProjectsController {
 	@Get(':id/statuses')
 	async findProjectStatuses(@Param('id') id: number): Promise<Status[]> {
 		return await this.projectsService.findProjectStatuses(id);
+	}
+
+	@Get(':id/tags')
+	async findProjectTags(@Param('id') id: number): Promise<Tag[]> {
+		return await this.projectsService.findProjectTags(id);
 	}
 
 	@Post()
@@ -52,5 +58,17 @@ export class ProjectsController {
 	@HttpCode(HttpStatus.NO_CONTENT)
 	async removeStatus(@Param('id') id: number, @Param('title') title: string) {
 		return await this.projectsService.removeStatus(id, title);
+	}
+
+	@Post(':id/tags')
+	@HttpCode(HttpStatus.CREATED)
+	async addTag(@Param('id') id: number, @Body() body: { title: string }): Promise<void> {
+		return await this.projectsService.addTag(id, body.title);
+	}
+
+	@Delete(':id/tags/:title')
+	@HttpCode(HttpStatus.NO_CONTENT)
+	async removeTag(@Param('id') id: number, @Param('title') title: string) {
+		return await this.projectsService.removeTag(id, title);
 	}
 }
