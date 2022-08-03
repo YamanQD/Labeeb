@@ -1,3 +1,5 @@
+import { Role } from "@labeeb/core";
+
 export interface ILoginResponse {
     access_token: string;
 }
@@ -5,7 +7,7 @@ export interface ILoginResponse {
 export interface IUser {
     exp: number;
     iat: number;
-    role: string;
+    role: Role;
     sub: number;
     username: string;
 }

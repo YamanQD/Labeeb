@@ -1,3 +1,4 @@
+import { Role } from "@labeeb/core";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
@@ -67,9 +68,10 @@ const Login = () => {
                 ...data,
             },
             {
-                onSuccess(responseData) {
-                    setUserInfo(responseData);
-                    navigate("/");
+                onSuccess(userInfo) {
+                    setUserInfo(userInfo);
+                    if (userInfo.role === Role.ADMIN) navigate("/admin");
+                    else navigate("/");
                 },
             }
         );
@@ -152,6 +154,7 @@ const Login = () => {
                         fullWidth
                         margin="normal"
                         label="Password"
+                        type="password"
                         variant="standard"
                         {...register("password", {
                             required: "Please enter your password",
