@@ -1,0 +1,17 @@
+@keyframes hoverAnimation {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(20px);
+    }
+}
+
+.hoverUp {
+    animation: hoverAnimation 4s infinite alternate ease-in;
+}
+
+.hoverDown {
+    animation: hoverAnimation 4s infinite alternate-reverse ease-in;
+}
