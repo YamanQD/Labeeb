@@ -3,6 +3,7 @@ import { Priority } from '@labeeb/core';
 import { List } from 'src/lists/list.entity';
 import { Status } from 'src/projects/status.entity';
 import { Tag } from 'src/projects/tags.entity';
+import { User } from 'src/users/user.entity';
 
 @Entity()
 export class Task {
@@ -27,6 +28,10 @@ export class Task {
 	@ManyToMany(() => Tag, { nullable: true })
 	@JoinTable({ name: 'task_tags', inverseJoinColumn: { name: 'title' } })
 	tags: Tag[];
+
+	@ManyToMany(() => User, { nullable: true, eager: true })
+	@JoinTable({ name: 'task_assignees', inverseJoinColumn: { name: 'email' } })
+	assignees: User[];
 
 	@ManyToOne(() => List, (list) => list.tasks, { onDelete: 'CASCADE' })
 	list: List;
