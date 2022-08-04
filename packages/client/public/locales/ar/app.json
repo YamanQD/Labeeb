@@ -17,6 +17,7 @@
 	},
 
 	"sidebar": {
-		"projects": "المشاريع"
+		"projects": "المشاريع",
+		"management": "الإدارة"
 	}
 }

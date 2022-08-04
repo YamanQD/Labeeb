@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
 import LogoutButton from "src/components/Buttons/LogoutButton";
 import SwitchLayoutButton from "src/components/Buttons/SwitchLayout";
@@ -7,13 +8,14 @@ import Sidebar from "../../Sidebar";
 import AdminSidebarMenu from "./Menu";
 
 const AdminLayout = () => {
+    const { t } = useTranslation();
     return (
         <>
             <Sidebar
                 menu={<AdminSidebarMenu />}
                 buttons={
                     <>
-                        <SwitchLayoutButton route="/">Go to client</SwitchLayoutButton>
+                        <SwitchLayoutButton route="/">{t("actions.switch_to_client", { ns: "common"})}</SwitchLayoutButton>
                         <LogoutButton />
                     </>
                 }

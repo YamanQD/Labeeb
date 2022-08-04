@@ -8,6 +8,8 @@
         "logout": "Logout",
         "add": "Add",
         "edit": "Edit",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "switch_to_admin": "Switch to admin panel",
+        "switch_to_client": "Switch to client"
     }
 }

@@ -17,6 +17,7 @@
 	},
 	
 	"sidebar": {
-		"projects": "Projects"
+		"projects": "Projects",
+		"management": "Management"
 	}
 }
