@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
+import LanguageToggle from "src/components/Buttons/LanguageToggle";
 import { useStore } from "src/core/infrastructure/store";
 import { useLogin } from "../application/login";
 import styles from "./login.module.css";
@@ -42,6 +43,14 @@ const RightContainer = styled("div")(
     text-align: center;
     flex-direction: column;
     justify-content: center;
+    `
+);
+
+const LanguageToggleContainer = styled("div")(
+    ({ theme }) => `
+    position: fixed;
+    bottom: 3%;
+    right: 3%;
     `
 );
 
@@ -180,6 +189,10 @@ const Login = () => {
                         {isLoading && <CircularProgress size={32} sx={{ color: "white", ml: 3 }} />}
                     </Button>
                 </form>
+
+                <LanguageToggleContainer>
+                    <LanguageToggle />
+                </LanguageToggleContainer>
             </RightContainer>
         </LoginPageContainer>
     );
