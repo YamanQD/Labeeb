@@ -3,12 +3,15 @@ import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
 import LogoutButton from "src/components/Buttons/LogoutButton";
 import SwitchLayoutButton from "src/components/Buttons/SwitchLayout";
+import { useStore } from "src/core/infrastructure/store";
+import { canUserAccessAdminPanel } from "src/features/users/domain/user";
 import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import ClientSidebarMenu from "./Menu";
 
 const ClientLayout = () => {
     const { t } = useTranslation();
+    const user = useStore((state) => state.user);
 
     return (
         <>
@@ -16,9 +19,11 @@ const ClientLayout = () => {
                 menu={<ClientSidebarMenu />}
                 buttons={
                     <>
-                        <SwitchLayoutButton route="/admin">
-                            {t("actions.switch_to_admin", { ns: "common" })}
-                        </SwitchLayoutButton>
+                        {canUserAccessAdminPanel(user) && (
+                            <SwitchLayoutButton route="/admin">
+                                {t("actions.switch_to_admin", { ns: "common" })}
+                            </SwitchLayoutButton>
+                        )}
                         <LogoutButton />
                     </>
                 }

@@ -11,3 +11,9 @@ export interface IUser {
     sub: number;
     username: string;
 }
+
+export const canUserAccessAdminPanel = (user: Pick<IUser, "role"> | null) => {
+    if (!user) return false;
+
+    return user.role === Role.ADMIN;
+};
