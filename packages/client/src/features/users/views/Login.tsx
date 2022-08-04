@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useStore } from "src/core/infrastructure/store";
 import { useLogin } from "../application/login";
@@ -50,6 +51,7 @@ interface FormFields {
 }
 
 const Login = () => {
+    const { t } = useTranslation();
     const { mutate, error, isLoading } = useLogin();
     const navigate = useNavigate();
 
@@ -91,7 +93,7 @@ const Login = () => {
                     pb={4}
                     mb={8}
                 >
-                    Organize your tasks <br /> with Labeeb
+                    {t("login.heading")} <br /> {t("login.with_labeeb")}
                 </Typography>
 
                 <svg
@@ -136,13 +138,13 @@ const Login = () => {
                 </svg>
             </LeftContainer>
             <RightContainer>
-                <Typography variant="h1">Log In</Typography>
+                <Typography variant="h1">{t("login.title")}</Typography>
                 <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         autoFocus
                         fullWidth
                         margin="normal"
-                        label="Email"
+                        label={t("login.email")}
                         variant="standard"
                         placeholder="ahmad@gmail.com"
                         error={!!errors.email}
@@ -153,7 +155,7 @@ const Login = () => {
                     <TextField
                         fullWidth
                         margin="normal"
-                        label="Password"
+                        label={t("login.password")}
                         type="password"
                         variant="standard"
                         {...register("password", {
@@ -174,7 +176,7 @@ const Login = () => {
                             background: "linear-gradient(135deg, #6B73FF 0%, #000DFF 100%)",
                         }}
                     >
-                        Start Labeebing!
+                        {t("login.start")}
                         {isLoading && <CircularProgress size={32} sx={{ color: "white", ml: 3 }} />}
                     </Button>
                 </form>
