@@ -41,6 +41,7 @@ export class TasksService {
 	async create(body: CreateTaskDto, userId: number): Promise<Task> {
 		const list = await this.listRepository.findOne({
 			where: { id: body.listId },
+			relations: ["project"]
 		});
 		if (!list) {
 			throw new NotFoundException('List not found');
@@ -66,16 +67,17 @@ export class TasksService {
 		if (body.assignees) {
 			for (const assignee of body.assignees) {
 				const userEntity = await this.userRepository.findOne({
-					where: {
-						projects: {
-							id: list.project.id
-						},
-						id: assignee
-					}
+					where: { id: assignee },
+					relations: ["projects"],
 				});
+
 				if (!userEntity) {
+					throw new NotFoundException('Assignee not found');
+				}
+				if (userEntity.projects.filter((p) => p.id === list.project.id).length === 0) {
 					throw new NotFoundException('Assignee not found in project users');
 				}
+
 				assignees.push(userEntity);
 			}
 		}
