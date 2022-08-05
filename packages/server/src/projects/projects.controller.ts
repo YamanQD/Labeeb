@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from 'src/users/user.entity';
+import { UserWithoutPassword } from 'src/users/user.types';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
 import { Project } from './project.entity';
@@ -34,7 +34,7 @@ export class ProjectsController {
 	}
 
 	@Get(':id/users')
-	async findProjectUsers(@Param('id') id: number): Promise<User[]> {
+	async findProjectUsers(@Param('id') id: number): Promise<UserWithoutPassword[]> {
 		return await this.projectsService.findProjectUsers(id);
 	}
 

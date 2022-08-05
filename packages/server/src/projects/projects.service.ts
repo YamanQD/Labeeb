@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
+import { UserWithoutPassword } from 'src/users/user.types';
 import { In, Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
@@ -56,7 +57,7 @@ export class ProjectsService {
 		return project.statuses;
 	}
 
-	async findProjectUsers(id: number): Promise<User[]> {
+	async findProjectUsers(id: number): Promise<UserWithoutPassword[]> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['users'],
@@ -65,7 +66,10 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		return project.users;
+		return project.users.map((u) => {
+			delete u.password;
+			return u;
+		});
 	}
 
 	async findProjectTags(id: number): Promise<Status[]> {
