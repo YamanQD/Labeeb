@@ -99,7 +99,7 @@ export class TasksService {
 	}
 
 	async update(id: number, body: UpdateTaskDto): Promise<Task> {
-		const task = await this.taskRepository.findOne({ where: { id } });
+		const task = await this.taskRepository.findOne({ where: { id }, relations: ["list", "list.project"] });
 		if (!task) {
 			throw new NotFoundException('Task not found');
 		}
@@ -133,6 +133,25 @@ export class TasksService {
 			}
 		}
 
+		let assignees: User[] = [];
+		if (body.assignees) {
+			for (const assignee of body.assignees) {
+				const userEntity = await this.userRepository.findOne({
+					where: { id: assignee },
+					relations: ["projects"],
+				});
+
+				if (!userEntity) {
+					throw new NotFoundException('Assignee not found');
+				}
+				if (userEntity.projects.filter((p) => p.id === task.list.project.id).length === 0) {
+					throw new NotFoundException('Assignee not found in project users');
+				}
+
+				assignees.push(userEntity);
+			}
+		}
+
 		task.title = body.title ?? task.title;
 		task.description = body.description ?? task.description;
 		task.priority = body.priority ?? task.priority;
@@ -140,6 +159,7 @@ export class TasksService {
 		task.list = body.listId ? list : task.list;
 		task.status = body.status ? status : task.status;
 		task.tags = body.tags ? tags : task.tags;
+		task.assignees = body.assignees ? assignees : task.assignees;
 
 		return await this.taskRepository.save(task);
 	}
