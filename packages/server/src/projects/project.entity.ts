@@ -23,7 +23,7 @@ export class Project {
 	@JoinTable({ name: 'project_tags', inverseJoinColumn: { name: 'title' } })
 	tags: Tag[];
 
-	@ManyToMany(() => User, { nullable: true })
+	@ManyToMany(() => User, user => user.projects, { nullable: true })
 	@JoinTable({ name: 'project_user' })
 	users: User[];
 }

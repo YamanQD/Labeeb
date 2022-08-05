@@ -14,13 +14,13 @@ export class User {
 	@Column({ unique: true })
 	email: string;
 
-	@Column()
+	@Column({ select: false })
 	password: string;
 
 	@Column('enum', { enum: Role, default: Role.USER })
 	role: Role;
 
-	@ManyToMany(() => Project, { nullable: true })
+	@ManyToMany(() => Project, project => project.users, { nullable: true })
 	projects: Project[];
 
 	@ManyToMany(() => Task, { nullable: true })
