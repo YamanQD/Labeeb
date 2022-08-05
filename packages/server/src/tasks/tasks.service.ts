@@ -9,6 +9,7 @@ import { Task } from './task.entity';
 import { Priority } from '@labeeb/core';
 import { Status } from 'src/projects/status.entity';
 import { Tag } from 'src/projects/tags.entity';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -21,6 +22,8 @@ export class TasksService {
 		private readonly statusRepository: Repository<Status>,
 		@InjectRepository(Tag)
 		private readonly tagRepository: Repository<Tag>,
+		@InjectRepository(User)
+		private readonly userRepository: Repository<User>,
 	) { }
 
 	async findAll(): Promise<Task[]> {
@@ -59,12 +62,31 @@ export class TasksService {
 			}
 		}
 
+		let assignees: User[] = [];
+		if (body.assignees) {
+			for (const assignee of body.assignees) {
+				const userEntity = await this.userRepository.findOne({
+					where: {
+						projects: {
+							id: list.project.id
+						},
+						id: assignee
+					}
+				});
+				if (!userEntity) {
+					throw new NotFoundException('Assignee not found in project users');
+				}
+				assignees.push(userEntity);
+			}
+		}
+
 		const task = this.taskRepository.create({
 			created_by: userId,
 			createdAt: new Date(),
 			list: list,
 			status: status,
 			tags: tags,
+			assignees: assignees,
 			deadline: body.deadline,
 			priority: body.priority,
 			title: body.title,
