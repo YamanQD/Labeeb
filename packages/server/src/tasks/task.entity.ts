@@ -36,8 +36,8 @@ export class Task {
 	@ManyToOne(() => List, (list) => list.tasks, { onDelete: 'CASCADE' })
 	list: List;
 
-	@Column()
-	created_by: number;
+	@ManyToOne(() => User, (user) => user.tasks, { eager: true })
+	owner: User;
 
 	@Column()
 	createdAt: Date;

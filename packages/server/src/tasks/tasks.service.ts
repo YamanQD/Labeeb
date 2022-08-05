@@ -47,6 +47,10 @@ export class TasksService {
 			throw new NotFoundException('List not found');
 		}
 
+		const owner = await this.userRepository.findOne({
+			where: { id: userId },
+		});
+
 		const status = await this.statusRepository.findOne({ where: { title: body.status } });
 		if (!status) {
 			throw new NotFoundException('Status not found, please add status to project first');
@@ -83,8 +87,8 @@ export class TasksService {
 		}
 
 		const task = this.taskRepository.create({
-			created_by: userId,
 			createdAt: new Date(),
+			owner: owner,
 			list: list,
 			status: status,
 			tags: tags,

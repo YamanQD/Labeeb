@@ -1,5 +1,5 @@
 import { Role } from '@labeeb/core';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 import { Project } from 'src/projects/project.entity';
 import { Task } from 'src/tasks/task.entity';
 
@@ -22,6 +22,9 @@ export class User {
 
 	@ManyToMany(() => Project, project => project.users, { nullable: true })
 	projects: Project[];
+
+	@OneToMany(() => Task, (task) => task.owner)
+	tasks: Task[];
 
 	@ManyToMany(() => Task, { nullable: true })
 	assignedTasks: Task[];
