@@ -10,7 +10,7 @@ const LogoutButton = () => {
 
     const logout = () => {
         setUserInfo(null);
-        navigate("/logout");
+        navigate("/login");
     }
 
     return (

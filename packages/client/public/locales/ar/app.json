@@ -17,6 +17,16 @@
 	},
 
 	"sidebar": {
-		"projects": "المشاريع"
+		"projects": "المشاريع",
+		"management": "الإدارة"
+	},
+
+	"login": {
+		"heading": "نسق مهامك",
+		"with_labeeb": "مع لبيب",
+		"title": "تسجيل الدخول",
+		"email": "البريد الإلكتروني",
+		"password": "كلمة السر",
+		"start": "ابدأ الآن!"
 	}
 }

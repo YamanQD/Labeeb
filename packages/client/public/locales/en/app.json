@@ -17,6 +17,16 @@
 	},
 	
 	"sidebar": {
-		"projects": "Projects"
+		"projects": "Projects",
+		"management": "Management"
+	},
+
+	"login": {
+		"heading": "Organize your tasks",
+		"with_labeeb": "with Labeeb",
+		"title": "Log In",
+		"email": "Email",
+		"password": "Password",
+		"start": "Start Labeebing!"
 	}
 }

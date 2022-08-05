@@ -1,3 +1,5 @@
+import { Role } from "@labeeb/core";
+
 export interface ILoginResponse {
     access_token: string;
 }
@@ -5,7 +7,13 @@ export interface ILoginResponse {
 export interface IUser {
     exp: number;
     iat: number;
-    role: string;
+    role: Role;
     sub: number;
     username: string;
 }
+
+export const canUserAccessAdminPanel = (user: Pick<IUser, "role"> | null) => {
+    if (!user) return false;
+
+    return user.role === Role.ADMIN;
+};

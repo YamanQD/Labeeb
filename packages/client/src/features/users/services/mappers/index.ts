@@ -6,6 +6,7 @@ export class UserMapper {
         return {
             id: user.sub,
             name: user.username,
+            role: user.role,
             access_token
         }
     }
