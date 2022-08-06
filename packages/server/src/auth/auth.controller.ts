@@ -3,6 +3,7 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { User } from 'src/users/user.entity';
 import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register-dto';
 import { LocalAuthGuard } from './local-auth.guard';
 import { Public } from './public.decorator';
 
@@ -17,8 +18,8 @@ export class AuthController {
 	 */
 	@Public()
 	@Post('register')
-	async register(@Body() user: User) {
-		return this.authService.register(user);
+	async register(@Body() body: RegisterDto) {
+		return this.authService.register(body);
 	}
 
 	/**

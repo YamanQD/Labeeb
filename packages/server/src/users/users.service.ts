@@ -8,6 +8,7 @@ import {
 	Pagination,
 	IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import { RegisterDto } from 'src/auth/dto/register-dto';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +21,7 @@ export class UsersService {
 		return paginate<User>(this.usersRepository, options);
 	}
 
-	async create(user: User) {
+	async create(user: RegisterDto) {
 		const newUser = this.usersRepository.create(user);
 		return await this.usersRepository.save(newUser);
 	}
