@@ -39,7 +39,7 @@
         "preview": "vite preview",
         "mock:server": "json-server --watch ./mock-server/index.js --port 5000",
         "prettify": "prettier . --write",
-        "types": "tsc --watch --noEmit"
+        "check-types": "tsc --watch --noEmit"
     },
     "browserslist": {
         "production": [
