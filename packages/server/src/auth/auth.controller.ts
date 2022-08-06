@@ -10,7 +10,7 @@ import { Public } from './public.decorator';
 @ApiSecurity({})
 @Controller('auth')
 export class AuthController {
-	constructor(private authService: AuthService) {}
+	constructor(private authService: AuthService) { }
 
 	/**
 	 * Create a new user.
