@@ -1,9 +1,11 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+
 import AdminLayout from "src/components/layouts/Admin";
 import ClientLayout from "src/components/layouts/Client";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { HTTPClient } from "src/core/infrastructure/http/httpClient";
+
 import ProtectedRoute from "./ProtectedRoute";
 
 const httpClient = HTTPClient.getInstance();
