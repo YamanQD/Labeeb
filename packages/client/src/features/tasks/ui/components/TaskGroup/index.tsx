@@ -12,13 +12,13 @@ const TaskGroupColumns = () => {
         <Grid item xs={6} className={styles.columnContainer}>
             <Grid container>
                 <Grid item xs={4} className={styles.column}>
-                    {t("tasks.assignees", { ns: "app" })}
+                    {t("tasks.assignees")}
                 </Grid>
                 <Grid item xs={4} className={styles.column}>
-                    {t("tasks.priority", { ns: "app" })}
+                    {t("tasks.priority")}
                 </Grid>
                 <Grid item xs={4} className={styles.column}>
-                    {t("tasks.deadline", { ns: "app" })}
+                    {t("tasks.deadline")}
                 </Grid>
             </Grid>
         </Grid>
