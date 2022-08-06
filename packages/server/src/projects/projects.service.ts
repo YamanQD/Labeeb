@@ -123,6 +123,24 @@ export class ProjectsService {
 			const users = await this.userRepository.findBy({ id: In(project.userIds) });
 			updatedProject.users = users;
 		}
+		if (project.statuses && project.statuses.length > 0) {
+			updatedProject.statuses = updatedProject.statuses ?? [];
+			for (const status of project.statuses) {
+				const statusEntity = await this.statusRepository.findOneBy({ title: status });
+				statusEntity ?
+					updatedProject.statuses.push(statusEntity) :
+					updatedProject.statuses.push(await this.statusRepository.save({ title: status }));
+			}
+		}
+		if (project.tags && project.tags.length > 0) {
+			updatedProject.tags = updatedProject.tags ?? [];
+			for (const tag of project.tags) {
+				const tagEntity = await this.tagRepository.findOneBy({ title: tag });
+				tagEntity ?
+					updatedProject.tags.push(tagEntity) :
+					updatedProject.tags.push(await this.tagRepository.save({ title: tag }));
+			}
+		}
 
 		updatedProject.title = project.title ?? updatedProject.title;
 		updatedProject.finalStatus = project.finalStatus ?? updatedProject.finalStatus;
