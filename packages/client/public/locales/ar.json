@@ -1,46 +1,42 @@
 {
     "lang": {
-		"en": "الإنكليزية",
-		"ar": "العربية"
-	},
-
-	"actions": {
-		"logout": "تسجيل الخروج",
-		"add": "أضف",
-		"edit": "تعديل",
-		"cancel": "إلغاء",
-		"switch_to_admin": "الذهاب للوحة التحكم",
-		"switch_to_client": "الذهاب للتطبيق الرئيسي"
-	},
-
+        "en": "الإنكليزية",
+        "ar": "العربية"
+    },
+    "actions": {
+        "logout": "تسجيل الخروج",
+        "add": "أضف",
+        "edit": "تعديل",
+        "cancel": "إلغاء",
+        "switch_to_admin": "الذهاب للوحة التحكم",
+        "switch_to_client": "الذهاب للتطبيق الرئيسي"
+    },
     "tasks": {
-		"name": "المهمات",
-		"remaining": "مبروك، يوجد لديك مليون تاسك. أنت مبرمج فاشل",
-		"title": "العنوان",
-		"description": "الشرح",
-		"deadline": "موعد التسليم",
-		"status": "الحالة",
-		"priority": "الأولوية",
-		"add_task": "أضف مهمة جديدة",
-		"edit_task": "تعديل المهمة",
-		"delete_task": "حذف المهمة",
-		"single_task": "المهمة",
-		"project": "المشروع",
-		"list": "القائمة",
-		"assignees": "الموكلون"
-	},
-
-	"sidebar": {
-		"projects": "المشاريع",
-		"management": "الإدارة"
-	},
-
-	"login": {
-		"heading": "نسق مهامك",
-		"with_labeeb": "مع لبيب",
-		"title": "تسجيل الدخول",
-		"email": "البريد الإلكتروني",
-		"password": "كلمة السر",
-		"start": "ابدأ الآن!"
-	}
+        "name": "المهمات",
+        "remaining": "مبروك، يوجد لديك مليون تاسك. أنت مبرمج فاشل",
+        "title": "العنوان",
+        "description": "الشرح",
+        "deadline": "موعد التسليم",
+        "status": "الحالة",
+        "priority": "الأولوية",
+        "add_task": "أضف مهمة جديدة",
+        "edit_task": "تعديل المهمة",
+        "delete_task": "حذف المهمة",
+        "single_task": "المهمة",
+        "project": "المشروع",
+        "list": "القائمة",
+        "assignees": "الموكلون"
+    },
+    "sidebar": {
+        "projects": "المشاريع",
+        "management": "الإدارة"
+    },
+    "login": {
+        "heading": "نسق مهامك",
+        "with_labeeb": "مع لبيب",
+        "title": "تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة السر",
+        "start": "ابدأ الآن!"
+    }
 }
