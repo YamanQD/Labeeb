@@ -50,7 +50,9 @@
         "with_labeeb": "with Labeeb",
         "title": "Log In",
         "email": "Email",
+        "email_required": "Please enter your email",
         "password": "Password",
+        "password_required": "Please enter your password",
         "start": "Start Labeebing!"
     }
 }
