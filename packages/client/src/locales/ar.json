@@ -10,7 +10,9 @@
         "confirm": "نعم",
         "cancel": "إلغاء",
         "switch_to_admin": "الذهاب للوحة التحكم",
-        "switch_to_client": "الذهاب للتطبيق الرئيسي"
+        "switch_to_client": "الذهاب للتطبيق الرئيسي",
+        "switch_language": "تبديل اللغة",
+        "switch_theme": "تبديل الألوان"
     },
     "tasks": {
         "name": "المهمات",

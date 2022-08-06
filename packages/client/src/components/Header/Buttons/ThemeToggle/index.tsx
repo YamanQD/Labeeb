@@ -2,12 +2,15 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { IconButton, Tooltip } from "@mui/material";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { ThemeContext } from "src/theme/ThemeProvider";
 
 const ThemeToggle = () => {
+	const { t } = useTranslation();
 	const { toggleTheme, theme } = useContext(ThemeContext);
+
 	return (
-		<Tooltip arrow title="Switch theme">
+		<Tooltip arrow title={t("actions.switch_theme")}>
 			<IconButton
 				color="primary"
 				onClick={() => {

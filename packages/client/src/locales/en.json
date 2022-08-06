@@ -10,7 +10,9 @@
         "confirm": "Yes",
         "cancel": "Cancel",
         "switch_to_admin": "Switch to admin panel",
-        "switch_to_client": "Switch to client"
+        "switch_to_client": "Switch to client",
+        "switch_language": "Switch language",
+        "switch_theme": "Switch theme"
     },
     "tasks": {
         "name": "Tasks",

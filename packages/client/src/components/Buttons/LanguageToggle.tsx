@@ -12,7 +12,7 @@ const LanguageToggle = () => {
     const language = t(`lang.${locale}`);
 
     return (
-        <Tooltip arrow title="Switch language">
+        <Tooltip arrow title={t("actions.switch_language")}>
             <Button
                 color="primary"
                 onClick={() => {
