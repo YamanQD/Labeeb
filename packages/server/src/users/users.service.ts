@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from '@labeeb/core';
 import { Repository } from 'typeorm';
@@ -22,8 +22,14 @@ export class UsersService {
 	}
 
 	async create(user: RegisterDto) {
-		const newUser = this.usersRepository.create(user);
-		return await this.usersRepository.save(newUser);
+		if (await this.findByUsername(user.username)) {
+			throw new BadRequestException(['Username already exists']);
+		}
+		if (await this.findByEmail(user.email)) {
+			throw new BadRequestException(['Email already exists']);
+		}
+
+		return await this.usersRepository.save(user);
 	}
 
 	async findByUsername(username: string) {
