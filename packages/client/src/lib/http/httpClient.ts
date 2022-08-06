@@ -3,7 +3,7 @@ import {
     IHTTPClient,
     IRequestOptions,
     type ErrorListener,
-} from "../interfaces/IhttpClient";
+} from "./IhttpClient";
 import { RequestHelper } from "./requestHelper";
 export class HTTPClient implements IHTTPClient {
     private errorListeners: ErrorListener[] = [];

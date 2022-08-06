@@ -1,13 +1,17 @@
-import { IUser } from "../../domain/user";
-import { UserDTO } from "../dto";
+import { IUser, IUserProfile } from "../../domain/user";
+import { UserDTO, UserProfileDTO } from "../dto";
 
 export class UserMapper {
-    static userToDTO(user: IUser, access_token: string): UserDTO {
+    static userProfileToDTO(user: IUserProfile, access_token: string): UserProfileDTO {
         return {
             id: user.sub,
             name: user.username,
             role: user.role,
-            access_token
-        }
+            access_token,
+        };
+    }
+
+    static userToDTO(user: IUser): UserDTO {
+        return user;
     }
 }

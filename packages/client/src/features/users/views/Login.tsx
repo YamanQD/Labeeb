@@ -1,19 +1,15 @@
-import { Role } from "@labeeb/core";
-
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
-
 import LanguageToggle from "src/components/Buttons/LanguageToggle";
-import { useStore } from "src/core/infrastructure/store";
+import { useStore } from "src/lib/store";
 import { useLogin } from "../application/login";
-
+import { canUserAccessAdminPanel } from "../domain/user";
 import styles from "./login.module.css";
 
 const LoginPageContainer = styled("div")(
@@ -68,8 +64,7 @@ const Login = () => {
     const { mutate, error, isLoading } = useLogin();
     const navigate = useNavigate();
 
-    const user = useStore((state) => state.user);
-    const setUserInfo = useStore((state) => state.setUserInfo);
+    const userProfile = useStore((state) => state.userProfile);
 
     const {
         register,
@@ -83,9 +78,8 @@ const Login = () => {
                 ...data,
             },
             {
-                onSuccess(userInfo) {
-                    setUserInfo(userInfo);
-                    if (userInfo.role === Role.ADMIN) navigate("/admin");
+                onSuccess(userProfile) {
+                    if (canUserAccessAdminPanel(userProfile)) navigate("/admin");
                     else navigate("/");
                 },
             }
@@ -93,7 +87,7 @@ const Login = () => {
     };
 
     // Redirect logged in users to /
-    if (user) return <Navigate to="/" />;
+    if (userProfile) return <Navigate to="/" />;
 
     return (
         <LoginPageContainer>

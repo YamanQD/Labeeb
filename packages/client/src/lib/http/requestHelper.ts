@@ -15,7 +15,7 @@ export class RequestHelper {
     }
 
     public getRequestHeaders(headers: Record<string, string>): Record<string, string> {
-        const user = useStore.getState().user;
+        const user = useStore.getState().userProfile;
         const accessToken = user?.access_token;
 
         return {

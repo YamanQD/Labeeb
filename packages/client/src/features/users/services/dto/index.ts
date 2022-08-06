@@ -9,6 +9,12 @@ export interface UserDTO {
     id: number;
     name: string;
     role: Role;
+}
+
+export interface UserProfileDTO {
+    id: number;
+    name: string;
+    role: Role;
     access_token: string;
 }
 

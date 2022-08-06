@@ -1,4 +1,4 @@
-import { HTTPClient } from "src/core/infrastructure/http/httpClient";
+import { HTTPClient } from "src/lib/http/httpClient";
 import { UserRepository } from "../infrastructure/userRepository";
 import { UserService } from "./userService";
 

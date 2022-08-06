@@ -10,6 +10,22 @@ export interface APIError {
     status: number;
 }
 
+export interface PaginatedResponse<T> {
+    items: T;
+    meta: {
+        totalItems: number;
+        itemCount: number;
+        itemsPerPage: number;
+        totalPages: number;
+        currentPage: number;
+    };
+}
+
+export interface PaginatedRequestOptions {
+    page?: number;
+    limit?: number;
+}
+
 export type ErrorListener = (error: APIError) => void;
 
 export interface IRequestOptions {

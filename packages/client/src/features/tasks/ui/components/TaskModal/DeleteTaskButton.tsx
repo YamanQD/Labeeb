@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 
 const ConfirmationButtonsContainer = styled("div")(
     ({ theme }) => `

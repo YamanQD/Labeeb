@@ -1,7 +1,7 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
+import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
 import { IUserRepository } from "../domain/IuserRepository";
-import { ILoginResponse } from "../domain/user";
-import { UserCredentialsDTO } from "../services/dto";
+import { ILoginResponse, IUser } from "../domain/user";
+import { CreateUserDTO, UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -11,7 +11,7 @@ export class UserRepository implements IUserRepository {
             path: "/auth/login",
             method: "POST",
             body: {
-                username: email,
+                email,
                 password,
             },
         });
@@ -19,7 +19,37 @@ export class UserRepository implements IUserRepository {
         return response;
     }
 
-    async logout() {
-        return Promise.resolve(true);
+    async register(user: CreateUserDTO): Promise<void> {
+        const response = await this.httpClient.request<Promise<void>>({
+            path: "/auth/register",
+            method: "POST",
+            body: user,
+        });
+
+        return response;
+    }
+
+    public async getUsers({ page = 1 }): Promise<PaginatedResponse<IUser[]>> {
+        const response = await this.httpClient.request<Promise<PaginatedResponse<IUser[]>>>({
+            path: "/users",
+            method: "GET",
+            params: {
+                page
+            }
+        });
+
+        return response;
+    }
+
+    public async getUser(id: number): Promise<void> {
+        const response = await this.httpClient.request<Promise<void>>({
+            path: "/users",
+            method: "GET",
+            params: {
+                user_id: id,
+            },
+        });
+
+        return response;
     }
 }
