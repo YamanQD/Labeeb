@@ -12,6 +12,9 @@ export class Project {
 	@Column()
 	title: string;
 
+	@Column()
+	finalStatus: string;
+
 	@OneToMany(() => List, (list) => list.project)
 	lists: List[];
 
