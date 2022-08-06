@@ -1,4 +1,4 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/IHTTPClient";
+import { IHTTPClient } from "src/core/infrastructure/interfaces/IHTTPPClient";
 import { IProject } from "../domain/project";
 
 export class ProjectRepository {

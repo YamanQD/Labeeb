@@ -1,4 +1,4 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/IHTTPClient";
+import { IHTTPClient } from "src/core/infrastructure/interfaces/IHTTPPClient";
 import { IUserRepository } from "../domain/IuserRepository";
 import { ILoginResponse } from "../domain/user";
 import { UserCredentialsDTO } from "../services/dto";
