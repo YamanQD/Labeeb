@@ -1,4 +1,4 @@
-import { UserDTO } from "src/features/users/services/dto";
+import { UserProfileDTO } from "src/features/users/services/dto";
 
 export interface IStore {
     isTaskModalOpen: boolean;
@@ -10,6 +10,6 @@ export interface IStore {
     currentTaskId: number | null;
     setCurrentTaskId: (id: number | null) => void;
 
-    user: UserDTO | null;
-    setUserInfo: (info: UserDTO | null) => void;
+    userProfile: UserProfileDTO | null;
+    setUserProfile: (info: UserProfileDTO | null) => void;
 }

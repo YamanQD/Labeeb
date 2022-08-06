@@ -1,7 +1,8 @@
-import { UserCredentialsDTO } from "../services/dto";
+import { CreateUserDTO, UserCredentialsDTO } from "../services/dto";
 import { ILoginResponse } from "./user";
 
 export interface IUserRepository {
     login(credentials: UserCredentialsDTO): Promise<ILoginResponse>;
-    logout(): Promise<boolean>;
+    register(user: CreateUserDTO): Promise<void>;
+    getUser(id: number): Promise<void>;
 }

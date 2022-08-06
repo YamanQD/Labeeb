@@ -5,21 +5,17 @@ import { useStore } from "src/core/infrastructure/store";
 
 const LogoutButton = () => {
     const { t } = useTranslation();
-    const setUserInfo = useStore((state) => state.setUserInfo);
+    const setUserInfo = useStore((state) => state.setUserProfile);
     const navigate = useNavigate();
 
     const logout = () => {
         setUserInfo(null);
         navigate("/login");
-    }
+    };
 
     return (
-        <Button
-            sx={{ mb: 2, mx: 2 }}
-            variant="contained"
-            onClick={logout}
-        >
-            {t("actions.logout", { ns: "common"})}
+        <Button sx={{ mb: 2, mx: 2 }} variant="contained" onClick={logout}>
+            {t("actions.logout", { ns: "common" })}
         </Button>
     );
 };

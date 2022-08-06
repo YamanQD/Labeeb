@@ -1,4 +1,5 @@
 import { Role } from "@labeeb/core";
+import { permissions } from "./permissions";
 
 export interface ILoginResponse {
     access_token: string;
@@ -15,5 +16,5 @@ export interface IUser {
 export const canUserAccessAdminPanel = (user: Pick<IUser, "role"> | null) => {
     if (!user) return false;
 
-    return user.role === Role.ADMIN;
+    return permissions.ADMINS_ONLY.includes(user.role);
 };

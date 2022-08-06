@@ -11,7 +11,7 @@ export const useStore = create<IStore>()((set, get) => ({
     currentListId: null,
     currentTaskId: null,
     isTaskModalOpen: false,
-    user: getInitialUser(),
+    userProfile: getInitialUser(),
 
     toggleTaskModal(value) {
         set(() => ({
@@ -19,9 +19,9 @@ export const useStore = create<IStore>()((set, get) => ({
         }));
     },
 
-    setUserInfo(user) {
+    setUserProfile(user) {
         set(() => ({
-            user,
+            userProfile: user,
         }));
 
         if (user) localStorage.setItem("user", JSON.stringify(user));
@@ -30,7 +30,7 @@ export const useStore = create<IStore>()((set, get) => ({
 
     setCurrentTaskId(id) {
         set(() => ({
-            currentTaskId: id
-        }))
-    }
+            currentTaskId: id,
+        }));
+    },
 }));

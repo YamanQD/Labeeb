@@ -1,7 +1,7 @@
 import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { IUserRepository } from "../domain/IuserRepository";
 import { ILoginResponse } from "../domain/user";
-import { UserCredentialsDTO } from "../services/dto";
+import { CreateUserDTO, UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -19,7 +19,25 @@ export class UserRepository implements IUserRepository {
         return response;
     }
 
-    async logout() {
-        return Promise.resolve(true);
+    async register(user: CreateUserDTO): Promise<void> {
+        const response = await this.httpClient.request<Promise<void>>({
+            path: "/auth/register",
+            method: "POST",
+            body: user,
+        });
+
+        return response;
+    }
+
+    public async getUser(id: number): Promise<void> {
+        const response = await this.httpClient.request<Promise<void>>({
+            path: "/users",
+            method: "GET",
+            params: {
+                user_id: id,
+            },
+        });
+
+        return response;
     }
 }

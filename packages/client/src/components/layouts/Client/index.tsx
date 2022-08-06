@@ -11,7 +11,7 @@ import ClientSidebarMenu from "./Menu";
 
 const ClientLayout = () => {
     const { t } = useTranslation();
-    const user = useStore((state) => state.user);
+    const user = useStore((state) => state.userProfile);
 
     return (
         <>
