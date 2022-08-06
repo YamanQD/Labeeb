@@ -33,7 +33,7 @@ export class TasksService {
 	async findOne(id: number): Promise<Task> {
 		const task = await this.taskRepository.findOne({ where: { id }, relations: ['list', 'list.project'] });
 		if (!task) {
-			throw new NotFoundException('Task not found');
+			throw new NotFoundException(['Task not found']);
 		}
 		return task;
 	}
@@ -44,7 +44,7 @@ export class TasksService {
 			relations: ["project"]
 		});
 		if (!list) {
-			throw new NotFoundException('List not found');
+			throw new NotFoundException(['List not found']);
 		}
 
 		const owner = await this.userRepository.findOne({
@@ -53,7 +53,7 @@ export class TasksService {
 
 		const status = await this.statusRepository.findOne({ where: { title: body.status } });
 		if (!status) {
-			throw new NotFoundException('Status not found, please add status to project first');
+			throw new NotFoundException(['Status not found, please add status to project first']);
 		}
 
 		let tags: Tag[] = [];
@@ -61,7 +61,7 @@ export class TasksService {
 			for (const tag of body.tags) {
 				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
 				if (!tagEntity) {
-					throw new NotFoundException('Tag not found, please add tag to project first');
+					throw new NotFoundException(['Tag not found, please add tag to project first']);
 				}
 				tags.push(tagEntity);
 			}
@@ -76,10 +76,10 @@ export class TasksService {
 				});
 
 				if (!userEntity) {
-					throw new NotFoundException('Assignee not found');
+					throw new NotFoundException(['Assignee not found']);
 				}
 				if (userEntity.projects.filter((p) => p.id === list.project.id).length === 0) {
-					throw new NotFoundException('Assignee not found in project users');
+					throw new NotFoundException(['Assignee not found in project users']);
 				}
 
 				assignees.push(userEntity);
@@ -105,7 +105,7 @@ export class TasksService {
 	async update(id: number, body: UpdateTaskDto): Promise<Task> {
 		const task = await this.taskRepository.findOne({ where: { id }, relations: ["list", "list.project"] });
 		if (!task) {
-			throw new NotFoundException('Task not found');
+			throw new NotFoundException(['Task not found']);
 		}
 
 		let list: List | undefined;
@@ -114,7 +114,7 @@ export class TasksService {
 				where: { id: body.listId },
 			});
 			if (!list) {
-				throw new NotFoundException('List not found');
+				throw new NotFoundException(['List not found']);
 			}
 		}
 
@@ -122,7 +122,7 @@ export class TasksService {
 		if (body.status) {
 			status = await this.statusRepository.findOne({ where: { title: body.status } });
 			if (!status) {
-				throw new NotFoundException('Status not found, please add status to project first');
+				throw new NotFoundException(['Status not found, please add status to project first']);
 			}
 		}
 
@@ -131,7 +131,7 @@ export class TasksService {
 			for (const tag of body.tags) {
 				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
 				if (!tagEntity) {
-					throw new NotFoundException('Tag not found, please add tag to project first');
+					throw new NotFoundException(['Tag not found, please add tag to project first']);
 				}
 				tags.push(tagEntity);
 			}
@@ -146,10 +146,10 @@ export class TasksService {
 				});
 
 				if (!userEntity) {
-					throw new NotFoundException('Assignee not found');
+					throw new NotFoundException(['Assignee not found']);
 				}
 				if (userEntity.projects.filter((p) => p.id === task.list.project.id).length === 0) {
-					throw new NotFoundException('Assignee not found in project users');
+					throw new NotFoundException(['Assignee not found in project users']);
 				}
 
 				assignees.push(userEntity);
@@ -171,7 +171,7 @@ export class TasksService {
 	async delete(id: number): Promise<void> {
 		const task = await this.taskRepository.findOne({ where: { id } });
 		if (!task) {
-			throw new NotFoundException('Task not found');
+			throw new NotFoundException(['Task not found']);
 		}
 		await this.taskRepository.remove(task);
 		return;

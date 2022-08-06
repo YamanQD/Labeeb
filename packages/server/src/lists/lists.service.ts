@@ -20,7 +20,7 @@ export class ListsService {
 			where: { id: list.projectId },
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		return await this.listRepository.save({ ...list, project });
@@ -32,7 +32,7 @@ export class ListsService {
 			relations: { tasks: true },
 		});
 		if (!list) {
-			throw new NotFoundException('List not found');
+			throw new NotFoundException(['List not found']);
 		}
 
 		return list;
@@ -47,7 +47,7 @@ export class ListsService {
 	async delete(id: number): Promise<void> {
 		const list = await this.findOne(id);
 		if (!list) {
-			throw new NotFoundException('List not found');
+			throw new NotFoundException(['List not found']);
 		}
 
 		await this.listRepository.remove(list);
