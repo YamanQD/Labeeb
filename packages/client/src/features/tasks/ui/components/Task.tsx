@@ -1,9 +1,12 @@
+import { useCallback } from "react";
+
 import { darken } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { useCallback } from "react";
+
 import { useStore } from "src/lib/store";
+
 import { formatDate } from "../../domain/task";
 import { TaskDTO } from "../../services";
 

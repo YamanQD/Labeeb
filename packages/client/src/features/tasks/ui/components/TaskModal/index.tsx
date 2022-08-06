@@ -1,3 +1,8 @@
+import { useCallback, useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -8,10 +13,7 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { useCallback, useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+
 import { useStore } from "src/lib/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
@@ -19,6 +21,7 @@ import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { useEditTask } from "src/features/tasks/application/editTask";
 import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/domain/task";
+
 import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
