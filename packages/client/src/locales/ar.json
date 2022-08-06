@@ -40,6 +40,11 @@
         "no_project_selected": "رجاءً اختار مشروع من القائمة الجانبيّة.",
         "loading_error": "حدث خطأ أثناء تحميل البيانات. رجاءً أعد تحديث المتصفح."
     },
+    "tasks_group": {
+        "title_one": "مهمة واحدة",
+        "title_two": "مهمتان",
+        "title_other": "{{count}} مهمات"
+    },
     "sidebar": {
         "projects": "المشاريع",
         "management": "الإدارة"

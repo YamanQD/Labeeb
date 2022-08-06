@@ -40,6 +40,10 @@
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
     },
+    "tasks_group": {
+        "title_one": "{{count}} task",
+        "title_other": "{{count}} tasks"
+    },
     "sidebar": {
         "loading": "Loading projects...",
         "projects": "Projects",
