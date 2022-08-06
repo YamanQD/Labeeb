@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from '@labeeb/core';
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import {
 	IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { RegisterDto } from 'src/auth/dto/register-dto';
+import { UpdateUserDto } from './dto/update-user-dto';
 
 @Injectable()
 export class UsersService {
@@ -32,6 +33,12 @@ export class UsersService {
 		return await this.usersRepository.save(user);
 	}
 
+	async findById(id: number, withPassword = false) {
+		return withPassword ?
+			await this.usersRepository.findOne({ where: { id }, select: ['password', 'username', 'id', 'role'] }) :
+			await this.usersRepository.findOne({ where: { id } });
+	}
+
 	async findByUsername(username: string) {
 		return await this.usersRepository.findOne({ where: { username } });
 	}
@@ -40,6 +47,38 @@ export class UsersService {
 		return withPassword ?
 			await this.usersRepository.findOne({ where: { email }, select: ['password', 'username', 'id', 'role'] }) :
 			await this.usersRepository.findOne({ where: { email } });
+	}
+
+	async update(id: number, body: UpdateUserDto) {
+		const user = await this.findById(id, true);
+		if (!user) {
+			throw new NotFoundException(['User not found']);
+		}
+
+		if (body.username) {
+			if (await this.findByUsername(body.username)) {
+				throw new BadRequestException(['Username already exists']);
+			}
+			user.username = body.username;
+		}
+		if (body.email) {
+			if (await this.findByEmail(body.email)) {
+				throw new BadRequestException(['Email already exists']);
+			}
+			user.email = body.email;
+		}
+		if (body.newPassword) {
+			if (!body.oldPassword) {
+				throw new BadRequestException(['Old password is required']);
+			}
+			if (body.oldPassword !== user.password) {
+				throw new BadRequestException(['Old password is incorrect']);
+			}
+			user.password = body.newPassword;
+		}
+		user.role = body.role ?? user.role;
+
+		return await this.usersRepository.save(user);
 	}
 
 	async seed() {
