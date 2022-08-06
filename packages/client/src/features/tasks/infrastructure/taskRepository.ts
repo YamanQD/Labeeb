@@ -1,4 +1,4 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/IHTTPPClient";
+import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
 import { ITasksRepository } from "../domain/ItaskRepository";
 import { ITask, ITaskDetails, ITaskList } from "../domain/task";
 import { CreateTaskDTO, EditTaskDTO } from "../services";
