@@ -38,7 +38,7 @@ export class UsersService {
 				username: 'admin',
 				password: 'admin',
 				email: 'admin@example.com',
-				role: Role.ADMIN,
+				role: Role.SO,
 			},
 			{
 				username: 'Yaman',
