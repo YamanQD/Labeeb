@@ -21,6 +21,11 @@ export interface PaginatedResponse<T> {
     };
 }
 
+export interface PaginatedRequestOptions {
+    page?: number;
+    limit?: number;
+}
+
 export type ErrorListener = (error: APIError) => void;
 
 export interface IRequestOptions {

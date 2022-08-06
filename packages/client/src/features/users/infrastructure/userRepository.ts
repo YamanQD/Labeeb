@@ -29,10 +29,13 @@ export class UserRepository implements IUserRepository {
         return response;
     }
 
-    public async getUsers(): Promise<PaginatedResponse<IUser[]>> {
+    public async getUsers({ page = 1 }): Promise<PaginatedResponse<IUser[]>> {
         const response = await this.httpClient.request<Promise<PaginatedResponse<IUser[]>>>({
             path: "/users",
             method: "GET",
+            params: {
+                page
+            }
         });
 
         return response;
