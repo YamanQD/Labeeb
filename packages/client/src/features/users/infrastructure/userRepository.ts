@@ -11,7 +11,7 @@ export class UserRepository implements IUserRepository {
             path: "/auth/login",
             method: "POST",
             body: {
-                username: email,
+                email,
                 password,
             },
         });
