@@ -50,19 +50,19 @@ export class UsersService {
 				username: 'Yaman',
 				password: 'Yaman',
 				email: 'yaman@example.com',
-				role: Role.USER,
+				role: Role.EMPLOYEE,
 			},
 			{
 				username: 'Hasan',
 				password: 'Hasan',
 				email: 'hasan@example.com',
-				role: Role.USER,
+				role: Role.EMPLOYEE,
 			},
 			{
 				username: 'rami',
 				password: 'rami',
 				email: 'rami@labeeb.com',
-				role: Role.USER,
+				role: Role.EMPLOYEE,
 			},
 		];
 
