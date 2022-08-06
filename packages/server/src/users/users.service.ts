@@ -58,6 +58,12 @@ export class UsersService {
 				email: 'hasan@example.com',
 				role: Role.USER,
 			},
+			{
+				username: 'rami',
+				password: 'rami',
+				email: 'rami@labeeb.com',
+				role: Role.USER,
+			},
 		];
 
 		await users.forEach(async (user) => {
