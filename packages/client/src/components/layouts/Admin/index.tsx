@@ -15,7 +15,7 @@ const AdminLayout = () => {
                 menu={<AdminSidebarMenu />}
                 buttons={
                     <>
-                        <SwitchLayoutButton route="/">{t("actions.switch_to_client", { ns: "common"})}</SwitchLayoutButton>
+                        <SwitchLayoutButton route="/">{t("actions.switch_to_client")}</SwitchLayoutButton>
                         <LogoutButton />
                     </>
                 }

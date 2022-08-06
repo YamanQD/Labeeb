@@ -310,11 +310,11 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                 {isLoading && (
                     <CircularProgress sx={{ mr: 2 }} size={20} disableShrink thickness={3} />
                 )}
-                <Button onClick={closeModal}>{t("actions.cancel", { ns: "common" })}</Button>
+                <Button onClick={closeModal}>{t("actions.cancel")}</Button>
                 <Button onClick={handleSubmit(onSubmit)}>
                     {taskId
-                        ? t("actions.edit", { ns: "common" })
-                        : t("actions.add", { ns: "common" })}
+                        ? t("actions.edit")
+                        : t("actions.add")}
                 </Button>
             </DialogActions>
         </Dialog>

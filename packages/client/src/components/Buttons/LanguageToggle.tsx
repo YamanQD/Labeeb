@@ -9,7 +9,7 @@ const LanguageToggle = () => {
 
     // This should be the opposite of the current language
     const locale = direction === "ltr" ? "ar" : "en";
-    const language = t(`lang.${locale}`, { ns: "common" });
+    const language = t(`lang.${locale}`);
 
     return (
         <Tooltip arrow title="Switch language">

@@ -7,12 +7,10 @@ i18n.use(HttpBackend)
     .init({
         lng: "en",
         fallbackLng: "en",
-        ns: ["app", "common"],
-        defaultNS: "app",
         interpolation: {
             escapeValue: false,
         },
         backend: {
-            loadPath: "/locales/{{lng}}/{{ns}}.json",
+            loadPath: "/locales/{{lng}}.json",
         },
     });
