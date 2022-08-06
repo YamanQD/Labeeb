@@ -1,5 +1,6 @@
-import { Controller, DefaultValuePipe, Get, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -18,5 +19,15 @@ export class UsersController {
 			limit,
 			route: '/users',
 		});
+	}
+
+	@Get('/:id')
+	async findOne(@Param('id') id: number): Promise<User> {
+		return await this.usersService.findById(id);
+	}
+
+	@Patch('/:id')
+	async update(@Param('id') id: number, @Body() body: UpdateUserDto): Promise<User> {
+		return await this.usersService.update(id, body);
 	}
 }

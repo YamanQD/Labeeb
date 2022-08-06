@@ -39,7 +39,7 @@ export class ProjectsService {
 			relations: ['statuses', 'tags', 'lists', 'lists.tasks', 'lists.tasks.status', 'lists.tasks.tags'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		return project;
@@ -51,7 +51,7 @@ export class ProjectsService {
 			relations: ['statuses'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		return project.statuses;
@@ -63,7 +63,7 @@ export class ProjectsService {
 			relations: ['users'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		return project.users.map((u) => {
@@ -78,7 +78,7 @@ export class ProjectsService {
 			relations: ['tags'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		return project.tags;
@@ -116,7 +116,7 @@ export class ProjectsService {
 			relations: ['users'],
 		});
 		if (!updatedProject) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		if (project.userIds && project.userIds.length > 0) {
@@ -151,7 +151,7 @@ export class ProjectsService {
 	async delete(id: number): Promise<void> {
 		const project = await this.projectRepository.findOne({ where: { id } });
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		await this.projectRepository.remove(project);
@@ -164,7 +164,7 @@ export class ProjectsService {
 			relations: ['statuses'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		const newStatus = await this.statusRepository.save({ title: status });
@@ -181,7 +181,7 @@ export class ProjectsService {
 			relations: ['statuses'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		project.statuses = project.statuses.filter((s) => s.title !== status);
@@ -196,7 +196,7 @@ export class ProjectsService {
 			relations: ['tags'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		const newTag = await this.tagRepository.save({ title: tag });
@@ -213,7 +213,7 @@ export class ProjectsService {
 			relations: ['tags'],
 		});
 		if (!project) {
-			throw new NotFoundException('Project not found');
+			throw new NotFoundException(['Project not found']);
 		}
 
 		project.tags = project.tags.filter((t) => t.title !== tag);

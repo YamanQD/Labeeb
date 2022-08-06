@@ -17,7 +17,7 @@ export class User {
 	@Column({ select: false })
 	password: string;
 
-	@Column('enum', { enum: Role, default: Role.USER })
+	@Column('enum', { enum: Role, default: Role.EMPLOYEE })
 	role: Role;
 
 	@ManyToMany(() => Project, project => project.users, { nullable: true })
