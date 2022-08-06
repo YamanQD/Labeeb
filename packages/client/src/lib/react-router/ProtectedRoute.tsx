@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useStore } from "src/core/infrastructure/store";
+import { useStore } from "src/lib/store";
 import { permissions } from "src/features/users/domain/permissions";
 
 interface ProtectedRouteProps {

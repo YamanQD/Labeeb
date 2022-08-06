@@ -1,6 +1,6 @@
-import { IHTTPClient } from "src/core/infrastructure/interfaces/IhttpClient";
+import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
 import { IUserRepository } from "../domain/IuserRepository";
-import { ILoginResponse } from "../domain/user";
+import { ILoginResponse, IUser } from "../domain/user";
 import { CreateUserDTO, UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
@@ -24,6 +24,15 @@ export class UserRepository implements IUserRepository {
             path: "/auth/register",
             method: "POST",
             body: user,
+        });
+
+        return response;
+    }
+
+    public async getUsers(): Promise<PaginatedResponse<IUser[]>> {
+        const response = await this.httpClient.request<Promise<PaginatedResponse<IUser[]>>>({
+            path: "/users",
+            method: "GET",
         });
 
         return response;

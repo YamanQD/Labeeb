@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useStore } from "src/core/infrastructure/store";
+import { useStore } from "src/lib/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";

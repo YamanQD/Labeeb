@@ -5,7 +5,7 @@ export interface ILoginResponse {
     access_token: string;
 }
 
-export interface IUser {
+export interface IUserProfile {
     exp: number;
     iat: number;
     role: Role;
@@ -13,7 +13,13 @@ export interface IUser {
     username: string;
 }
 
-export const canUserAccessAdminPanel = (user: Pick<IUser, "role"> | null) => {
+export interface IUser {
+    id: number;
+    name: string;
+    role: Role;
+}
+
+export const canUserAccessAdminPanel = (user: Pick<IUserProfile, "role"> | null) => {
     if (!user) return false;
 
     return permissions.ADMINS_ONLY.includes(user.role);

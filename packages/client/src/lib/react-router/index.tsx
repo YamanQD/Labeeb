@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import AdminLayout from "src/components/layouts/Admin";
 import ClientLayout from "src/components/layouts/Client";
 import SuspenseLoader from "src/components/SuspenseLoader";
-import { HTTPClient } from "src/core/infrastructure/http/httpClient";
+import { HTTPClient } from "src/lib/http/httpClient";
 
 import ProtectedRoute from "./ProtectedRoute";
 

@@ -3,7 +3,7 @@ import { Role } from "@labeeb/core";
 export const userRoles = [
     {
         id: 1,
-        title: Role.ADMIN,
+        title: Role.OM,
     },
 
     {

@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
 import LanguageToggle from "src/components/Buttons/LanguageToggle";
-import { useStore } from "src/core/infrastructure/store";
+import { useStore } from "src/lib/store";
 import { useLogin } from "../application/login";
 import { canUserAccessAdminPanel } from "../domain/user";
 import styles from "./login.module.css";

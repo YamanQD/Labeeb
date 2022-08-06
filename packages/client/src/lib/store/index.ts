@@ -1,5 +1,5 @@
 import create from "zustand";
-import { IStore } from "../interfaces/IStore";
+import { IStore } from "./IStore";
 
 const getInitialUser = () => {
     const user = localStorage.getItem("user");

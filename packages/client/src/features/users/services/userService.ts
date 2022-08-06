@@ -17,5 +17,9 @@ export class UserService {
         return await this.userRepository.register(user);
     }
 
+    public async getUsers() {
+        
+    }
+
     public async getUser(id: number) {}
 }

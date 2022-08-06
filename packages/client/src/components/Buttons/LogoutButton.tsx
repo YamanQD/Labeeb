@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useStore } from "src/core/infrastructure/store";
+import { useStore } from "src/lib/store";
 
 const LogoutButton = () => {
     const { t } = useTranslation();
