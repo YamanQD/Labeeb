@@ -16,7 +16,7 @@ export class AppService implements OnApplicationBootstrap {
 	) { }
 
 	async getProfile(user: User): Promise<UserWithoutPassword> {
-		const profile = await this.usersService.findOne(user.username);
+		const profile = await this.usersService.findByUsername(user.username);
 		delete profile.password;
 
 		return profile;

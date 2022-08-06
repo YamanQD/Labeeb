@@ -25,8 +25,14 @@ export class UsersService {
 		return await this.usersRepository.save(newUser);
 	}
 
-	async findOne(username: string) {
+	async findByUsername(username: string) {
 		return await this.usersRepository.findOne({ where: { username } });
+	}
+
+	async findByEmail(email: string, withPassword = false) {
+		return withPassword ?
+			await this.usersRepository.findOne({ where: { email }, select: ['password', 'username', 'id', 'role'] }) :
+			await this.usersRepository.findOne({ where: { email } });
 	}
 
 	async seed() {
