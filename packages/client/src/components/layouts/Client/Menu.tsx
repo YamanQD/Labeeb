@@ -22,7 +22,7 @@ const ClientSidebarMenu = () => {
                 {t("sidebar.projects")}
             </Typography>
             {isLoading ? (
-                "Loading projects..."
+                t("sidebar.loading")
             ) : (
                 <>
                     {projects?.map((project) => (
