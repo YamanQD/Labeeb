@@ -3,6 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from '@labeeb/core';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import {
+	paginate,
+	Pagination,
+	IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class UsersService {
@@ -10,6 +15,10 @@ export class UsersService {
 		@InjectRepository(User)
 		private usersRepository: Repository<User>,
 	) { }
+
+	async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
+		return paginate<User>(this.usersRepository, options);
+	}
 
 	async create(user: User) {
 		const newUser = this.usersRepository.create(user);
@@ -29,7 +38,7 @@ export class UsersService {
 				username: 'admin',
 				password: 'admin',
 				email: 'admin@example.com',
-				role: Role.ADMIN,
+				role: Role.SO,
 			},
 			{
 				username: 'Yaman',

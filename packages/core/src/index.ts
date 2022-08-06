@@ -7,5 +7,7 @@ export enum Priority {
 
 export enum Role {
 	USER = 'user',
-	ADMIN = 'admin',
+	OM = 'organization manager',
+	PM = 'project manager',
+	SO = 'system owner',
 }
