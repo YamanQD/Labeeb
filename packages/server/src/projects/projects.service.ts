@@ -119,14 +119,13 @@ export class ProjectsService {
 			throw new NotFoundException('Project not found');
 		}
 
-		if (project.title) {
-			updatedProject.title = project.title;
-		}
-
 		if (project.userIds && project.userIds.length > 0) {
 			const users = await this.userRepository.findBy({ id: In(project.userIds) });
 			updatedProject.users = users;
 		}
+
+		updatedProject.title = project.title ?? updatedProject.title;
+		updatedProject.finalStatus = project.finalStatus ?? updatedProject.finalStatus;
 
 		return await this.projectRepository.save(updatedProject);
 	}
@@ -241,17 +240,20 @@ export class ProjectsService {
 				title: 'Satellite Simulator',
 				userIds: [1, 2],
 				statuses: ['Todo', 'In Progress', 'Done'],
+				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 			{
 				title: 'E-Commerce App',
 				userIds: [3, 6, 1],
 				statuses: ['Todo', 'In Progress', 'Done'],
+				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 			{
 				title: 'Banking App',
 				statuses: ['Todo', 'In Progress', 'Done'],
+				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 		];

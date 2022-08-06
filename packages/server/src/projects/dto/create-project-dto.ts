@@ -7,8 +7,11 @@ export class CreateProjectDto {
 	@IsOptional()
 	userIds?: number[];
 
-	@IsOptional()
-	statuses?: string[];
+	@IsNotEmpty()
+	statuses: string[];
+
+	@IsNotEmpty()
+	finalStatus: string;
 
 	@IsOptional()
 	tags?: string[];
