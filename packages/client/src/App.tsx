@@ -1,13 +1,18 @@
 import { CssBaseline } from "@mui/material";
-import { QueryClientProvider } from "react-query";
+
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { queryClient } from "src/lib/react-query";
-import "./index.css";
-import "./lib/react-i18n";
+
 import { ApplicationRoutes } from "./lib/react-router";
 import ThemeProvider from "./theme/ThemeProvider";
+
+import "react-toastify/dist/ReactToastify.css";
+
+import "./index.css";
+import "./lib/react-i18n";
+
+const queryClient = new QueryClient();
 
 const App = () => {
     return (
