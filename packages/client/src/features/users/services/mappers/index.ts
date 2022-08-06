@@ -1,5 +1,5 @@
-import { IUserProfile } from "../../domain/user";
-import { UserProfileDTO } from "../dto";
+import { IUser, IUserProfile } from "../../domain/user";
+import { UserDTO, UserProfileDTO } from "../dto";
 
 export class UserMapper {
     static userProfileToDTO(user: IUserProfile, access_token: string): UserProfileDTO {
@@ -9,5 +9,9 @@ export class UserMapper {
             role: user.role,
             access_token,
         };
+    }
+
+    static userToDTO(user: IUser): UserDTO {
+        return user;
     }
 }
