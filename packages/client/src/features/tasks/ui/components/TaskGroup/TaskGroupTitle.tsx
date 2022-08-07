@@ -2,6 +2,7 @@ import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSha
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 import styles from "./task-group.module.css";
 
 const TitleButton = styled(Button)(
@@ -18,7 +19,8 @@ const TaskGroupTitle = ({
     isListExpanded = true,
     toggleListExpansion = () => {},
 }) => {
-    const tasksCountText = `${tasksCount} ${tasksCount > 1 ? "tasks" : "task"}`;
+    const { t } = useTranslation();
+
     return (
         <div className={styles.listTitleContainer} onClick={toggleListExpansion}>
             <div
@@ -34,7 +36,7 @@ const TaskGroupTitle = ({
                 <Typography variant="h4">{title}</Typography>
                 <span style={{ margin: "0 5px" }}>-</span>
                 <Typography variant="h4" component="span">
-                    {tasksCountText}
+                    {t("tasks_group.title", {count: tasksCount})}
                 </Typography>
             </TitleButton>
         </div>

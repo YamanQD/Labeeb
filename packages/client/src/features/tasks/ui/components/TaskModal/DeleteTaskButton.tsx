@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 
 const ConfirmationButtonsContainer = styled("div")(
     ({ theme }) => `
@@ -52,13 +53,13 @@ const DeleteTaskButton = ({ onConfirmation = () => {} }) => {
                 aria-describedby="modal-modal-description"
             >
                 <ModalBody>
-                    <h3>Are you sure you want to do this?</h3>
+                    <h3>{t("tasks.delete_confirmation")}</h3>
                     <ConfirmationButtonsContainer>
                         <Button onClick={onYes} variant="contained">
-                            Yes
+                            {t("actions.confirm")}
                         </Button>
                         <Button onClick={toggleModal} color="error" variant="contained">
-                            Cancel
+                            {t("actions.cancel")}
                         </Button>
                     </ConfirmationButtonsContainer>
                 </ModalBody>

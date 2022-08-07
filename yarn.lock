@@ -4018,7 +4018,6 @@ __metadata:
     eslint: ^8.14.0
     eslint-config-react-app: ^7.0.1
     i18next: ^21.6.16
-    i18next-http-backend: ^1.4.0
     miragejs: ^0.1.45
     prettier: ^2.6.2
     prop-types: ^15.8.1
@@ -4282,15 +4281,6 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
-  languageName: node
-  linkType: hard
-
-"cross-fetch@npm:3.1.5":
-  version: 3.1.5
-  resolution: "cross-fetch@npm:3.1.5"
-  dependencies:
-    node-fetch: 2.6.7
-  checksum: f6b8c6ee3ef993ace6277fd789c71b6acf1b504fd5f5c7128df4ef2f125a429e29cd62dc8c127523f04a5f2fa4771ed80e3f3d9695617f441425045f505cf3bb
   languageName: node
   linkType: hard
 
@@ -5956,15 +5946,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-http-backend@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "i18next-http-backend@npm:1.4.0"
-  dependencies:
-    cross-fetch: 3.1.5
-  checksum: bc10dca0fd1d566a5a4a4eab96ce76226f69c5b716951262e994bf069c0c5d18ea346dacd17d35aa6c5bee74221641f64839c84c1e01da9d75718ae34ce149a0
-  languageName: node
-  linkType: hard
-
 "i18next@npm:^21.6.16":
   version: 21.6.16
   resolution: "i18next@npm:21.6.16"
@@ -7285,7 +7266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.1":
+"node-fetch@npm:^2.6.1":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:

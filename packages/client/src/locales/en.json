@@ -1,0 +1,62 @@
+{
+    "lang": {
+        "en": "English",
+        "ar": "Arabic"
+    },
+    "actions": {
+        "logout": "Logout",
+        "add": "Add",
+        "edit": "Edit",
+        "confirm": "Yes",
+        "cancel": "Cancel",
+        "switch_to_admin": "Switch to admin panel",
+        "switch_to_client": "Switch to client",
+        "switch_language": "Switch language",
+        "switch_theme": "Switch theme"
+    },
+    "tasks": {
+        "name": "Tasks",
+        "remaining": "You have 99 remaining tasks",
+        "title": "Title",
+        "title_placeholder": "Fix bug #23",
+        "title_required": "Task title is required.",
+        "description": "Description",
+        "description_placeholder": "When the user clicks on the ...",
+        "deadline": "Deadline",
+        "status": "Status",
+        "priority": "Priority",
+        "add_task": "Add a new task",
+        "add_success": "Task added successfully!",
+        "edit_task": "Edit task",
+        "edit_success": "Task edited successfully!",
+        "delete_task": "Delete task",
+        "delete_confirmation": "Are you sure you want to do this?",
+        "delete_success": "Task deleted successfully!",
+        "single_task": "Task",
+        "project": "Project",
+        "list": "List",
+        "list_required": "Project list is required",
+        "assignees": "Assignees",
+        "no_project_selected": "Please select a project from the sidebar.",
+        "loading_error": "An error occurred while fetching data. Please refresh your browser."
+    },
+    "tasks_group": {
+        "title_one": "{{count}} task",
+        "title_other": "{{count}} tasks"
+    },
+    "sidebar": {
+        "loading": "Loading projects...",
+        "projects": "Projects",
+        "management": "Management"
+    },
+    "login": {
+        "heading": "Organize your tasks",
+        "with_labeeb": "with Labeeb",
+        "title": "Log In",
+        "email": "Email",
+        "email_required": "Please enter your email",
+        "password": "Password",
+        "password_required": "Please enter your password",
+        "start": "Start Labeebing!"
+    }
+}

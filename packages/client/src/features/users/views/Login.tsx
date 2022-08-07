@@ -156,7 +156,7 @@ const Login = () => {
                         placeholder="ahmad@gmail.com"
                         error={!!errors.email}
                         helperText={errors.email?.message ?? ""}
-                        {...register("email", { required: "Please enter your email" })}
+                        {...register("email", { required: t("login.email_required") })}
                     />
 
                     <TextField
@@ -166,7 +166,7 @@ const Login = () => {
                         type="password"
                         variant="standard"
                         {...register("password", {
-                            required: "Please enter your password",
+                            required: t("login.password_required"),
                         })}
                         error={!!errors.email}
                         helperText={errors.email?.message ?? ""}

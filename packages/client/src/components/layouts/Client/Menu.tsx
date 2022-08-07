@@ -19,10 +19,10 @@ const ClientSidebarMenu = () => {
             }}
         >
             <Typography variant="h4" sx={{ textTransform: "uppercase", mb: 2 }}>
-                {t("sidebar.projects", { ns: "app" })}
+                {t("sidebar.projects")}
             </Typography>
             {isLoading ? (
-                "Loading projects..."
+                t("sidebar.loading")
             ) : (
                 <>
                     {projects?.map((project) => (
