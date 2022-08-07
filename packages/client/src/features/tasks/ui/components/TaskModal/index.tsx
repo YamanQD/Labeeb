@@ -103,7 +103,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     useEffect(() => {
         if (isUserViewingATask) {
-            const { title, status, priority, description, projectId, listId, deadline } = taskData;
+            const { title, status, priority, description, projectId, listId, deadline, tags } = taskData;
             setValue("projectId", projectId);
             // It's important to update these fields before assigning their default values.
             updateListAndStatusFieldsOfProject(projectId);
@@ -111,6 +111,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             setValue("title", title);
             setValue("status", status);
             setValue("priority", priority);
+            setValue("tags", tags.map((tag) => tag.title));
             setValue("deadline", formatDate(deadline));
             setValue("description", description ?? "");
             setValue("listId", listId);
