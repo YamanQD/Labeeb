@@ -8,6 +8,6 @@ export const userRoles = [
 
     {
         id: 2,
-        title: Role.USER,
+        title: Role.EMPLOYEE,
     },
 ];
