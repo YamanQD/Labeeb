@@ -102,7 +102,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         if (isUserViewingATask) {
             const { title, status, priority, description, projectId, listId, deadline } = taskData;
             setValue("projectId", projectId);
-            // It's important to udpate these fields before assigning their default values.
+            // It's important to update these fields before assigning their default values.
             updateListAndStatusFieldsOfProject(projectId);
 
             setValue("title", title);
@@ -130,13 +130,13 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             });
 
             closeModal();
-            toast("Task edited successfully!", {
+            toast(t("tasks.edit_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
             });
         } else {
             await addTaskMutate(taskData);
             closeModal();
-            toast("Task added successfully!", {
+            toast(t("tasks.add_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
             });
         }
@@ -146,7 +146,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         if (taskId) {
             await deleteTaskMutate(taskId);
             closeModal();
-            toast("Task deleted successfully!", {
+            toast(t("tasks.delete_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
             });
         }
@@ -171,10 +171,10 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     margin="normal"
                                     label={t("tasks.title")}
                                     variant="standard"
-                                    placeholder="Fix bug #23"
+                                    placeholder={t("tasks.title_placeholder")}
                                     error={!!errors.title}
                                     helperText={errors.title?.message ?? ""}
-                                    {...register("title", { required: "Task title is required." })}
+                                    {...register("title", { required: t("tasks.title_required") })}
                                 />
 
                                 <TextField
@@ -183,7 +183,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     }}
                                     margin="normal"
                                     label={t("tasks.description")}
-                                    placeholder="When the user clicks on the ..."
+                                    placeholder={t("tasks.description_placeholder")}
                                     variant="standard"
                                     multiline
                                     rows={4}
@@ -221,7 +221,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     control={control}
                                     name="listId"
                                     rules={{
-                                        required: "Project list is required",
+                                        required: t("tasks.list_required"),
                                     }}
                                     render={({ field }) => (
                                         <TextField
@@ -310,11 +310,11 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                 {isLoading && (
                     <CircularProgress sx={{ mr: 2 }} size={20} disableShrink thickness={3} />
                 )}
-                <Button onClick={closeModal}>{t("actions.cancel", { ns: "common" })}</Button>
+                <Button onClick={closeModal}>{t("actions.cancel")}</Button>
                 <Button onClick={handleSubmit(onSubmit)}>
                     {taskId
-                        ? t("actions.edit", { ns: "common" })
-                        : t("actions.add", { ns: "common" })}
+                        ? t("actions.edit")
+                        : t("actions.add")}
                 </Button>
             </DialogActions>
         </Dialog>

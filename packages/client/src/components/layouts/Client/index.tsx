@@ -21,7 +21,7 @@ const ClientLayout = () => {
                     <>
                         {canUserAccessAdminPanel(user) && (
                             <SwitchLayoutButton route="/admin">
-                                {t("actions.switch_to_admin", { ns: "common" })}
+                                {t("actions.switch_to_admin")}
                             </SwitchLayoutButton>
                         )}
                         <LogoutButton />

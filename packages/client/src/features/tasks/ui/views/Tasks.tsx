@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { useGetTaskLists } from "../../application/getTaskLists";
@@ -5,6 +6,7 @@ import AddTaskContainer from "../components/AddTaskContainer";
 import TaskList from "../components/TaskList";
 
 const Tasks = () => {
+    const { t } = useTranslation();
     const { projectId, listId } = useParams();
 
     // One of these two must be truthy, otherwise the query is disabled
@@ -26,8 +28,8 @@ const Tasks = () => {
 
     if (isLoading) content = <SuspenseLoader />;
     else if (isError)
-        content = <p>An error occurred while fetching data. Please refresh your browser.</p>;
-    else if (!isQueryEnabled) content = <p>Please select a project from the sidebar.</p>;
+        content = <p>{t("tasks.loading_error")}</p>;
+    else if (!isQueryEnabled) content = <p>{t("tasks.no_project_selected")}</p>;
     else
         content = (
             <>

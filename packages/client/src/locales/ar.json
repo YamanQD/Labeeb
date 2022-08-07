@@ -1,0 +1,62 @@
+{
+    "lang": {
+        "en": "الإنكليزية",
+        "ar": "العربية"
+    },
+    "actions": {
+        "logout": "تسجيل الخروج",
+        "add": "أضف",
+        "edit": "تعديل",
+        "confirm": "نعم",
+        "cancel": "إلغاء",
+        "switch_to_admin": "الذهاب للوحة التحكم",
+        "switch_to_client": "الذهاب للتطبيق الرئيسي",
+        "switch_language": "تبديل اللغة",
+        "switch_theme": "تبديل الألوان"
+    },
+    "tasks": {
+        "name": "المهمات",
+        "remaining": "مبروك، يوجد لديك مليون تاسك. أنت مبرمج فاشل",
+        "title": "العنوان",
+        "title_placeholder": "حل المشكلة #23",
+        "title_required": "يجب ملئ العنوان.",
+        "description": "الشرح",
+        "description_placeholder": "عندما يضغط المستخدم على ...",
+        "deadline": "موعد التسليم",
+        "status": "الحالة",
+        "priority": "الأولوية",
+        "add_task": "أضف مهمة جديدة",
+        "add_success": "تم إضافة المهمة بنجاح!",
+        "edit_task": "تعديل المهمة",
+        "edit_success": "تم تعديل المهمة بنجاح!",
+        "delete_task": "حذف المهمة",
+        "delete_confirmation": "هل أنت متأكد من هذا؟",
+        "delete_success": "تم حذف المهمة بنجاح!",
+        "single_task": "المهمة",
+        "project": "المشروع",
+        "list": "القائمة",
+        "list_required": "يجب إختيار القائمة.",
+        "assignees": "الموكلون",
+        "no_project_selected": "رجاءً اختار مشروع من القائمة الجانبيّة.",
+        "loading_error": "حدث خطأ أثناء تحميل البيانات. رجاءً أعد تحديث المتصفح."
+    },
+    "tasks_group": {
+        "title_one": "مهمة واحدة",
+        "title_two": "مهمتان",
+        "title_other": "{{count}} مهمات"
+    },
+    "sidebar": {
+        "projects": "المشاريع",
+        "management": "الإدارة"
+    },
+    "login": {
+        "heading": "نسق مهامك",
+        "with_labeeb": "مع لبيب",
+        "title": "تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "email_required": "رجاءً أدخل بريدك الالكتروني",
+        "password": "كلمة السر",
+        "password_required": "رجاءً أدخل كلمة السر",
+        "start": "ابدأ الآن!"
+    }
+}
