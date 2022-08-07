@@ -25,7 +25,7 @@ export class Task {
 	@ManyToOne(() => Status, (status) => status.tasks, { eager: true })
 	status: Status;
 
-	@ManyToMany(() => Tag, { nullable: true })
+	@ManyToMany(() => Tag, { nullable: true, eager: true })
 	@JoinTable({ name: 'task_tags', inverseJoinColumn: { name: 'title' } })
 	tags: Tag[];
 
