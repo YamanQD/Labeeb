@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from "@mui/material";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -12,13 +13,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useStore } from "src/lib/store";
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";
 import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { useEditTask } from "src/features/tasks/application/editTask";
 import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/domain/task";
+import { useStore } from "src/lib/store";
 import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
@@ -27,6 +28,7 @@ interface FormFields {
     listId: number | string;
     projectId: number | string;
     status: string;
+    tags: string[];
     priority: ETaskPriority;
     deadline: string;
 }
@@ -57,6 +59,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const [selectedProjectInfo, setSelectedProjectInfo] = useState<ProjectDTO | undefined>();
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
+    const tags = selectedProjectInfo?.tags ?? [];
 
     const isLoading =
         isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
@@ -77,6 +80,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             projectId: "",
             listId: "",
             status: "",
+            tags: [""],
             priority: ETaskPriority.HIGH,
         },
     });
@@ -87,9 +91,11 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
             const lists = selectedProject?.lists ?? [];
             const statuses = selectedProject?.statuses ?? [];
+            const tags = selectedProject?.tags ?? [];
 
             setValue("listId", lists[0]?.id ?? "");
             setValue("status", statuses[0]?.title ?? "");
+            setValue("tags", [tags[0]?.title ?? ""]);
             setSelectedProjectInfo(selectedProject);
         },
         [projects, setValue]
@@ -149,8 +155,20 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         }
     };
 
+    const [personName, setPersonName] = useState<string[]>([]);
+
+    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+        const {
+            target: { value },
+        } = event;
+        setPersonName(
+            // On autofill we get a stringified value.
+            typeof value === "string" ? value.split(",") : value
+        );
+    };
+
     return (
-        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="lg">
+        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="xl">
             <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
                 <span>{taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}</span>
                 {isUserViewingATask && <DeleteTaskButton onConfirmation={deleteTask} />}
@@ -253,6 +271,29 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             {statuses?.map((status, index) => (
                                                 <MenuItem key={index} value={status.title}>
                                                     {status.title}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    )}
+                                />
+
+                                <Controller
+                                    control={control}
+                                    name="tags"
+                                    render={({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            margin="normal"
+                                            label="Tags"
+                                            select
+                                            variant="standard"
+                                            SelectProps={{
+                                                multiple: true,
+                                            }}
+                                        >
+                                            {tags.map((tag) => (
+                                                <MenuItem key={tag.title} value={tag.title}>
+                                                    {tag.title}
                                                 </MenuItem>
                                             ))}
                                         </TextField>

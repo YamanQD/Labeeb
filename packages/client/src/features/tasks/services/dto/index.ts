@@ -30,10 +30,10 @@ export interface TaskListDTO {
 
 export interface CreateTaskDTO {
     listId: number;
-
     title: string;
     description?: string;
     status: string;
+    tags: string[];
     priority: ETaskPriority;
 }
 
