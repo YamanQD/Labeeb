@@ -1,3 +1,4 @@
+import { UserMapper } from "src/features/users/services/mappers";
 import { ITask, ITaskDetails, ITaskList } from "../../domain/task";
 import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
 
@@ -18,7 +19,7 @@ export class TaskMapper {
     }
 
     static taskDetailsToDTO(taskDetails: ITaskDetails): TaskDetailsDTO {
-        const { id, title, description, priority, deadline, tags } = taskDetails;
+        const { id, title, description, priority, deadline, tags, createdAt, owner } = taskDetails;
         return {
             id,
             title,
@@ -29,6 +30,8 @@ export class TaskMapper {
             status: taskDetails.status.title,
             projectId: taskDetails.list.project.id,
             listId: taskDetails.list.id,
+            createdAt: new Date(createdAt),
+            owner: UserMapper.userToDTO(owner),
         };
     }
 

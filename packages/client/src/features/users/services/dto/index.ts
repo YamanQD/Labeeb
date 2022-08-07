@@ -7,19 +7,21 @@ export interface UserCredentialsDTO {
 
 export interface UserDTO {
     id: number;
-    name: string;
+    username: string;
+    email: string;
     role: Role;
 }
 
 export interface UserProfileDTO {
     id: number;
-    name: string;
+    username: string;
     role: Role;
     access_token: string;
 }
 
 export interface CreateUserDTO {
     username: string;
+    email: string;
     password: string;
-    role: Role
+    role: Role;
 }

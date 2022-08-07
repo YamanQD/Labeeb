@@ -1,3 +1,5 @@
+import { IUser } from "src/features/users/domain/user";
+
 export enum ETaskPriority {
     NONE = "none",
     LOW = "low",
@@ -40,6 +42,9 @@ export interface ITaskDetails extends ITask {
             title: string;
         };
     };
+
+    createdAt: string;
+    owner: IUser;
 }
 
 export interface ITask {

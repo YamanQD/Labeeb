@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from "@mui/material";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -103,7 +102,8 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
     useEffect(() => {
         if (isUserViewingATask) {
-            const { title, status, priority, description, projectId, listId, deadline, tags } = taskData;
+            const { title, status, priority, description, projectId, listId, deadline, tags } =
+                taskData;
             setValue("projectId", projectId);
             // It's important to update these fields before assigning their default values.
             updateListAndStatusFieldsOfProject(projectId);
@@ -111,7 +111,10 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             setValue("title", title);
             setValue("status", status);
             setValue("priority", priority);
-            setValue("tags", tags.map((tag) => tag.title));
+            setValue(
+                "tags",
+                tags.map((tag) => tag.title)
+            );
             setValue("deadline", formatDate(deadline));
             setValue("description", description ?? "");
             setValue("listId", listId);
@@ -156,23 +159,22 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         }
     };
 
-    const [personName, setPersonName] = useState<string[]>([]);
-
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
-
     return (
         <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="xl">
-            <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
-                <span>{taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}</span>
-                {isUserViewingATask && <DeleteTaskButton onConfirmation={deleteTask} />}
+            <DialogTitle>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span>
+                        {taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}
+                    </span>
+                    {isUserViewingATask && <DeleteTaskButton onConfirmation={deleteTask} />}
+                </div>
+
+                {isUserViewingATask && (
+                    <div>
+                        <div>Task created by {taskData.owner.username}</div>
+                        <div>At {formatDate(taskData.createdAt)} </div>
+                    </div>
+                )}
             </DialogTitle>
             <DialogContent>
                 <form noValidate>
