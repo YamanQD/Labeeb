@@ -251,7 +251,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             helperText={errors.listId?.message}
                                             {...field}
                                         >
-                                            {lists?.map((list) => (
+                                            {lists.map((list) => (
                                                 <MenuItem key={list.id} value={list.id}>
                                                     {list.title}
                                                 </MenuItem>
@@ -285,7 +285,6 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     name="tags"
                                     render={({ field }) => (
                                         <TextField
-                                            {...field}
                                             margin="normal"
                                             label="Tags"
                                             select
@@ -293,6 +292,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             SelectProps={{
                                                 multiple: true,
                                             }}
+                                            {...field}
                                         >
                                             {tags.map((tag) => (
                                                 <MenuItem key={tag.title} value={tag.title}>
@@ -353,9 +353,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                 )}
                 <Button onClick={closeModal}>{t("actions.cancel")}</Button>
                 <Button onClick={handleSubmit(onSubmit)}>
-                    {taskId
-                        ? t("actions.edit", { ns: "common" })
-                        : t("actions.add", { ns: "common" })}
+                    {taskId ? t("actions.edit") : t("actions.add")}
                 </Button>
             </DialogActions>
         </Dialog>
