@@ -1,3 +1,8 @@
+import { useCallback, useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -8,10 +13,7 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { useCallback, useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+
 import { useGetProjects } from "src/features/projects/application/getProjects";
 import { ProjectDTO } from "src/features/projects/services/dto";
 import { useAddTask, useGetTask } from "src/features/tasks/application";
@@ -19,6 +21,7 @@ import { useDeleteTask } from "src/features/tasks/application/deleteTask";
 import { useEditTask } from "src/features/tasks/application/editTask";
 import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/domain/task";
 import { useStore } from "src/lib/store";
+
 import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
@@ -160,7 +163,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     };
 
     return (
-        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="xl">
+        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="md">
             <DialogTitle>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span>
@@ -179,7 +182,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             <DialogContent>
                 <form noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={5}>
+                        <Grid item xs={8}>
                             <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
                                 <TextField
                                     InputLabelProps={{
@@ -233,7 +236,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                 />
                             </Stack>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <Stack style={{ justifyContent: "space-between", height: "100%" }}>
                                 <Controller
                                     control={control}
