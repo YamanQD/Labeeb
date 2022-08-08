@@ -1,24 +1,34 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useDeleteUser } from "../../application/admin/deleteUser";
 import { useGetUsers } from "../../application/admin/getUsers";
 import { UserDTO } from "../../services/dto";
 
 const DeleteUserButton = ({ id }: { id: number }) => {
-    const { mutate } = useDeleteUser();
+    const { mutate, isLoading } = useDeleteUser();
     const deleteUser = () => {
-        // mutate(id);
-        console.log(id);
+        mutate(id, {
+            onSuccess() {
+                toast("User deleted successfully!", {
+                    position: toast.POSITION.BOTTOM_LEFT,
+                });
+            },
+        });
     };
 
     return (
         <Button color="secondary" variant="contained" size="small" onClick={deleteUser}>
-            Delete
+            {isLoading ? (
+                <CircularProgress disableShrink size={24} sx={{ color: "#fff" }} />
+            ) : (
+                "Delete"
+            )}
         </Button>
     );
 };
@@ -73,7 +83,6 @@ const Users = () => {
 
     const [page, setPage] = useState(1);
     const [rows, setRows] = useState<GridRowsProp<UserDTO>>([]);
-    console.log(rows);
 
     const { data: users, isLoading } = useGetUsers({
         page,
