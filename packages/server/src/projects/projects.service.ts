@@ -126,10 +126,19 @@ export class ProjectsService {
 			throw new NotFoundException(['Project not found']);
 		}
 
+		let newUsers: User[] = [];
 		if (project.userIds && project.userIds.length > 0) {
 			const users = await this.userRepository.findBy({ id: In(project.userIds) });
+
+			for (const user of users) {
+				if (!updatedProject.users.find((u) => u.id == user.id)) {
+					newUsers.push(user);
+				}
+			}
+
 			updatedProject.users = users;
 		}
+
 		if (project.statuses && project.statuses.length > 0) {
 			updatedProject.statuses = updatedProject.statuses ?? [];
 			for (const status of project.statuses) {
@@ -151,6 +160,10 @@ export class ProjectsService {
 
 		updatedProject.title = project.title ?? updatedProject.title;
 		updatedProject.finalStatus = project.finalStatus ?? updatedProject.finalStatus;
+
+		for (const user of newUsers) {
+			await this.mailService.sendProjectNotification(user, updatedProject);
+		}
 
 		return await this.projectRepository.save(updatedProject);
 	}
