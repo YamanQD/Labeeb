@@ -42,7 +42,7 @@ export class MailService {
 		}
 	}
 
-	async sendRegisterMessage(user: User) {
+	async sendRegisteredNotification(user: User) {
 		await this.sendPlainMessage(
 			user.email,
 			'Welcome to Labeeb',
@@ -57,7 +57,7 @@ export class MailService {
 		);
 	}
 
-	async sendAssignMessage(user: User, task: Task) {
+	async sendAssignedNotification(user: User, task: Task) {
 		await this.sendPlainMessage(
 			user.email,
 			'You have been assigned a new task',

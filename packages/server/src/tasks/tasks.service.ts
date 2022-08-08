@@ -172,7 +172,7 @@ export class TasksService {
 		task.assignees = body.assignees ? assignees : task.assignees;
 
 		for (const assignee of newAssignees) {
-			await this.mailService.sendAssignMessage(assignee, task);
+			await this.mailService.sendAssignedNotification(assignee, task);
 		}
 
 		return await this.taskRepository.save(task);
