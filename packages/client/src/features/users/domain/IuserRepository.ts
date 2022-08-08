@@ -1,5 +1,6 @@
 import { PaginatedRequestOptions, PaginatedResponse } from "src/lib/http/IhttpClient";
-import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserDTO } from "../services/dto";
+
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../services/dto";
 import { ILoginResponse, IUser } from "./user";
 
 export interface IUserRepository {

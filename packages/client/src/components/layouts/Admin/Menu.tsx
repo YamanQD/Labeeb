@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+
 import MenuItem from "src/components/Sidebar/MenuItem";
-import { useTranslation } from "react-i18next";
 
 const AdminSidebarMenu = () => {
     const { t } = useTranslation();

@@ -1,4 +1,5 @@
 import { alpha, createTheme, darken, lighten } from "@mui/material";
+
 import { commonOptions } from "./common";
 
 const themeColors = {

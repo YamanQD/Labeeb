@@ -1,4 +1,5 @@
 import create from "zustand";
+
 import { IStore } from "./IStore";
 
 const getInitialUser = () => {

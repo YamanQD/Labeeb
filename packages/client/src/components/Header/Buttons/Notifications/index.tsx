@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+
 import NotificationsActiveTwoToneIcon from "@mui/icons-material/NotificationsActiveTwoTone";
 import {
 	alpha,
@@ -12,7 +14,6 @@ import {
 	Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useRef, useState } from "react";
 
 const NotificationsBadge = styled(Badge)(
 	({ theme }) => `

@@ -1,7 +1,9 @@
-import { Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
 import { ThemeContext } from "src/theme/ThemeProvider";
 
 const LogoWrapper = styled(Link)(

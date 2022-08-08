@@ -1,4 +1,5 @@
-import { useMutation } from "react-query"
+import { useMutation } from "react-query";
+
 import { userService } from "../../services";
 import { EditUserDTO } from "../../services/dto";
 

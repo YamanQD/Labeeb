@@ -1,6 +1,8 @@
-import { Button, Tooltip } from "@mui/material";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
+
+import { Button, Tooltip } from "@mui/material";
+
 import { ThemeContext } from "src/theme/ThemeProvider";
 
 const LanguageToggle = () => {

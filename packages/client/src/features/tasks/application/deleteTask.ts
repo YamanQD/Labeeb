@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
+
 import { tasksService } from "../services";
+
 export const useDeleteTask = () => {
     const queryClient = useQueryClient();
     const mutation = useMutation(
