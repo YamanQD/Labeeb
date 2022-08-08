@@ -2,6 +2,7 @@ import { Role } from '@labeeb/core';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 import { Project } from 'src/projects/project.entity';
 import { Task } from 'src/tasks/task.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('labeeb_user')
 export class User {
@@ -15,6 +16,7 @@ export class User {
 	email: string;
 
 	@Column({ select: false })
+	@Exclude()
 	password: string;
 
 	@Column('enum', { enum: Role, default: Role.EMPLOYEE })
