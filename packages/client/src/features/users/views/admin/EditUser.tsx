@@ -1,4 +1,9 @@
-import { Role } from "@labeeb/core";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,10 +12,9 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+
+import { Role } from "@labeeb/core";
+
 import { userRoles } from "src/features/users/application";
 import { useEditUser } from "../../application/admin/editUser";
 import { useGetUser } from "../../application/admin/getUser";
@@ -45,6 +49,8 @@ interface FormFields {
 }
 
 const EditUser = () => {
+    const { t } = useTranslation();
+
     const navigate = useNavigate();
     const { userId } = useParams();
     const { data: user, isLoading: isGetUserLoading } = useGetUser({ id: Number(userId) });
@@ -75,7 +81,7 @@ const EditUser = () => {
             },
             {
                 onSuccess() {
-                    toast("User edited successfully!", {
+                    toast(t("users.edit_success"), {
                         position: toast.POSITION.BOTTOM_LEFT,
                     });
                     navigate("/admin/users");
@@ -96,16 +102,16 @@ const EditUser = () => {
         <PageContainer>
             <FormContainer noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant="h2" mb={3}>
-                    Edit user {user?.id}
+                    {t("users.edit", {id: user?.id ?? 'null'})}
                 </Typography>
                 <Grid container>
                     <Grid item xs={5}>
                         <Stack>
                             <TextField
                                 variant="outlined"
-                                label="Name"
+                                label={t("users.name")}
                                 margin="normal"
-                                {...register("username", { required: "Username is required." })}
+                                {...register("username", { required: t("users.name_required") })}
                                 error={!!errors.username}
                                 helperText={errors.username?.message ?? ""}
                                 InputLabelProps={{
@@ -114,10 +120,10 @@ const EditUser = () => {
                             />
                             <TextField
                                 variant="outlined"
-                                label="Email"
+                                label={t("users.email")}
                                 margin="normal"
                                 type="email"
-                                {...register("email", { required: "Email is required." })}
+                                {...register("email", { required: t("users.email_required") })}
                                 error={!!errors.email}
                                 helperText={errors.email?.message ?? ""}
                                 InputLabelProps={{
@@ -127,13 +133,13 @@ const EditUser = () => {
 
                             <TextField
                                 variant="outlined"
-                                label="Old password"
+                                label={t("users.password_old")}
                                 margin="normal"
                                 type="password"
                                 {...register("oldPassword", {
                                     validate: (value) =>
                                         value === getValues().newPassword ||
-                                        "Passwords must match!",
+                                        t("users.password_unchanged"),
                                 })}
                                 error={!!errors.oldPassword}
                                 helperText={errors.oldPassword?.message ?? ""}
@@ -141,13 +147,13 @@ const EditUser = () => {
 
                             <TextField
                                 variant="outlined"
-                                label="New password"
+                                label={t("users.password_new")}
                                 margin="normal"
                                 type="password"
                                 {...register("newPassword", {
                                     validate: (value) =>
                                         value === getValues().oldPassword ||
-                                        "Passwords must match!",
+                                        t("users.password_unchanged"),
                                 })}
                                 error={!!errors.newPassword}
                                 helperText={errors.newPassword?.message ?? ""}
@@ -159,7 +165,7 @@ const EditUser = () => {
                                 render={({ field }) => (
                                     <TextField
                                         variant="outlined"
-                                        label="Role"
+                                        label={t("users.role")}
                                         margin="normal"
                                         select
                                         error={!!errors.role}
@@ -187,7 +193,7 @@ const EditUser = () => {
                         sx={{ ml: "auto" }}
                         disabled={isLoading}
                     >
-                        <span>Edit user</span>
+                        <span>{t("actions.edit")}</span>
                         {isLoading && (
                             <CircularProgress
                                 size={24}

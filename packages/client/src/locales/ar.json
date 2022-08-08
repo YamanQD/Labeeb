@@ -6,7 +6,9 @@
     "actions": {
         "logout": "تسجيل الخروج",
         "add": "أضف",
+        "create": "إنشاء",
         "edit": "تعديل",
+        "delete": "حذف",
         "confirm": "نعم",
         "cancel": "إلغاء",
         "switch_to_admin": "الذهاب للوحة التحكم",
@@ -45,9 +47,29 @@
         "title_two": "مهمتان",
         "title_other": "{{count}} مهمات"
     },
+    "users": {
+        "id": "الرقم",
+        "name": "اسم المستخدم",
+        "name_required": "يجب إدخال اسم المستخدم.",
+        "email": "البريد",
+        "email_required": "يجب إدخال البريد الالكتروني للمستخدم.",
+        "role": "الصلاحيات",
+        "add": "إنشاء حساب مستخدم جديد",
+        "add_success": "تم إضافة المستخدم بنجاح!",
+        "edit": "تعديل المستخدم #{{id}}",
+        "edit_success": "تم تعديل المستخدم بنجاح!",
+        "delete_success": "تم حذف المستخدم بنجاح!",
+        "password": "كلمة السر",
+        "password_required": "يجب إدخال كلمة السر.",
+        "password_old": "كلمة السر القديمة",
+        "password_new": "كلمة السر الجديدة",
+        "password_unchanged": "كلمة السر الجديد يجب ألّا تطابق القديمة!"
+    },
     "sidebar": {
+        "loading": "جاري تحميل المشاريع...",
         "projects": "المشاريع",
-        "management": "الإدارة"
+        "management": "الإدارة",
+        "users": "المستخدمون"
     },
     "login": {
         "heading": "نسق مهامك",

@@ -1,4 +1,8 @@
-import { Role } from "@labeeb/core";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,9 +11,9 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+
+import { Role } from "@labeeb/core";
+
 import { userRoles } from "src/features/users/application";
 import { useRegister } from "src/features/users/application/admin/register";
 
@@ -42,6 +46,8 @@ interface FormFields {
 }
 
 const CreateUser = () => {
+    const { t } = useTranslation();
+
     const navigate = useNavigate();
     const { mutate, isLoading } = useRegister();
 
@@ -62,7 +68,7 @@ const CreateUser = () => {
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         mutate(data, {
             onSuccess() {
-                toast("User added successfully!", {
+                toast(t("users.add_success"), {
                     position: toast.POSITION.BOTTOM_LEFT,
                 });
 
@@ -75,35 +81,35 @@ const CreateUser = () => {
         <PageContainer>
             <FormContainer noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant="h2" mb={3}>
-                    Create a new user
+                    {t("users.add")}
                 </Typography>
                 <Grid container>
                     <Grid item xs={5}>
                         <Stack>
                             <TextField
                                 variant="outlined"
-                                label="Name"
+                                label={t("users.name")}
                                 margin="normal"
-                                {...register("username", { required: "Username is required." })}
+                                {...register("username", { required: t("users.name_required") })}
                                 error={!!errors.username}
                                 helperText={errors.username?.message ?? ""}
                             />
                             <TextField
                                 variant="outlined"
-                                label="Email"
+                                label={t("users.email")}
                                 margin="normal"
                                 type="email"
-                                {...register("email", { required: "Email is required." })}
+                                {...register("email", { required: t("users.email_required") })}
                                 error={!!errors.email}
                                 helperText={errors.email?.message ?? ""}
                             />
 
                             <TextField
                                 variant="outlined"
-                                label="Password"
+                                label={t("users.password")}
                                 margin="normal"
                                 type="password"
-                                {...register("password", { required: "Password is required." })}
+                                {...register("password", { required: t("users.password_required")})}
                                 error={!!errors.password}
                                 helperText={errors.password?.message ?? ""}
                             />
@@ -114,7 +120,7 @@ const CreateUser = () => {
                                 render={({ field }) => (
                                     <TextField
                                         variant="outlined"
-                                        label="Role"
+                                        label={t("users.role")}
                                         margin="normal"
                                         select
                                         error={!!errors.role}
@@ -142,7 +148,7 @@ const CreateUser = () => {
                         sx={{ ml: "auto" }}
                         disabled={isLoading}
                     >
-                        <span>Create user</span>
+                        <span>{t("actions.create")}</span>
                         {isLoading && (
                             <CircularProgress
                                 size={24}
