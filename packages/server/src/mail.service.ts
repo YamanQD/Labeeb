@@ -47,14 +47,12 @@ export class MailService {
 		await this.sendPlainMessage(
 			user.email,
 			'Welcome to Labeeb',
-			`
-			Hello, ${user.username}!
-			A new Labeeb account has been created for you using this email.
-			You can login to the system using this email, and the password provided for you by your administrator.
-			Thank you for using Labeeb!
+			`Hello, ${user.username}!
+A new Labeeb account has been created for you using this email.
+You can login to the system using this email, and the password provided for you by your administrator.
+Thank you for using Labeeb!
 
-			Note: If you did not request this account, you can safely ignore this email.
-			`,
+Note: If you did not request this account, you can safely ignore this email.`,
 		);
 	}
 
@@ -62,13 +60,11 @@ export class MailService {
 		await this.sendPlainMessage(
 			user.email,
 			'You have been assigned a new task',
-			`
-			Hello, ${user.username}!
-			You have been assigned the task "${task.title}".
-			You can view the task details using the app.
+			`Hello, ${user.username}!
+You have been assigned the task "${task.title}".
+You can view the task details using the app.
 
-			Thank you for using Labeeb!
-			`,
+Thank you for using Labeeb!`,
 		);
 	}
 
@@ -76,13 +72,11 @@ export class MailService {
 		await this.sendPlainMessage(
 			user.email,
 			'You have been added to a new project',
-			`
-			Hello, ${user.username}!
-			You have been added to the project "${project.title}".
-			You can view the project details using the app.
-			
-			Thank you for using Labeeb!
-			`,
+			`Hello, ${user.username}!
+You have been added to the project "${project.title}".
+You can view the project details using the app.
+
+Thank you for using Labeeb!`,
 		);
 	}
 }
