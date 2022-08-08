@@ -1,4 +1,4 @@
-import { Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './user.entity';
@@ -29,5 +29,11 @@ export class UsersController {
 	@Patch('/:id')
 	async update(@Param('id') id: number, @Body() body: UpdateUserDto): Promise<User> {
 		return await this.usersService.update(id, body);
+	}
+
+	@Delete('/:id')
+	@HttpCode(HttpStatus.ACCEPTED)
+	async delete(@Param('id') id: number): Promise<void> {
+		await this.usersService.delete(id);
 	}
 }
