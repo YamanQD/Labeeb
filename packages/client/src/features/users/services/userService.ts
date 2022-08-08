@@ -1,5 +1,5 @@
 import { IUserRepository } from "../domain/IuserRepository";
-import { CreateUserDTO, UserCredentialsDTO, UserProfileDTO } from "./dto";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserProfileDTO } from "./dto";
 import { UserMapper } from "./mappers";
 import { decodeAccessTokens } from "./utils";
 
@@ -24,5 +24,11 @@ export class UserService {
         return users;
     }
 
-    public async getUser(id: number) {}
+    public async getUser(id: number) {
+        return this.userRepository.getUser(id);
+    }
+
+    public async editUser(user: EditUserDTO): Promise<void> {
+        return this.userRepository.editUser(user);
+    }
 }

@@ -7,11 +7,13 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userRoles } from "src/features/users/application";
-import { useRegister } from "src/features/users/application/admin/register";
+import { useEditUser } from "../../application/admin/editUser";
+import { useGetUser } from "../../application/admin/getUser";
 
 const PageContainer = styled("div")(
     ({ theme }) => `
@@ -38,44 +40,63 @@ interface FormFields {
     username: string;
     email: string;
     role: Role;
-    password: string;
+    oldPassword?: string;
+    newPassword?: string;
 }
 
-const CreateUser = () => {
+const EditUser = () => {
     const navigate = useNavigate();
-    const { mutate, isLoading } = useRegister();
+    const { userId } = useParams();
+    const { data: user, isLoading: isGetUserLoading } = useGetUser({ id: Number(userId) });
+    const { mutate, isLoading: isEditUserLoading } = useEditUser();
+
+    const isLoading = isGetUserLoading || isEditUserLoading;
 
     const {
         register,
         handleSubmit,
         control,
+        setValue,
         formState: { errors },
+        getValues,
     } = useForm<FormFields>({
         defaultValues: {
             username: "",
             email: "",
             role: Role.EMPLOYEE,
-            password: "",
         },
     });
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        mutate(data, {
-            onSuccess() {
-                toast("User added successfully!", {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                });
-
-                navigate("/admin/users");
+        mutate(
+            {
+                ...data,
+                id: Number(userId),
             },
-        });
+            {
+                onSuccess() {
+                    toast("User edited successfully!", {
+                        position: toast.POSITION.BOTTOM_LEFT,
+                    });
+                    navigate("/admin/users");
+                },
+            }
+        );
     };
+
+    useEffect(() => {
+        if (user) {
+            setValue("email", user.email);
+            setValue("username", user.username);
+            setValue("role", user.role);
+        }
+    }, [user, setValue]);
 
     return (
         <PageContainer>
             <FormContainer noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant="h2" mb={3}>
-                    Create a new user
+                    Edit user {user?.id}
                 </Typography>
                 <Grid container>
                     <Grid item xs={5}>
@@ -87,6 +108,9 @@ const CreateUser = () => {
                                 {...register("username", { required: "Username is required." })}
                                 error={!!errors.username}
                                 helperText={errors.username?.message ?? ""}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
                             />
                             <TextField
                                 variant="outlined"
@@ -96,16 +120,37 @@ const CreateUser = () => {
                                 {...register("email", { required: "Email is required." })}
                                 error={!!errors.email}
                                 helperText={errors.email?.message ?? ""}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
                             />
 
                             <TextField
                                 variant="outlined"
-                                label="Password"
+                                label="Old password"
                                 margin="normal"
                                 type="password"
-                                {...register("password", { required: "Password is required." })}
-                                error={!!errors.password}
-                                helperText={errors.password?.message ?? ""}
+                                {...register("oldPassword", {
+                                    validate: (value) =>
+                                        value === getValues().newPassword ||
+                                        "Passwords must match!",
+                                })}
+                                error={!!errors.oldPassword}
+                                helperText={errors.oldPassword?.message ?? ""}
+                            />
+
+                            <TextField
+                                variant="outlined"
+                                label="New password"
+                                margin="normal"
+                                type="password"
+                                {...register("newPassword", {
+                                    validate: (value) =>
+                                        value === getValues().oldPassword ||
+                                        "Passwords must match!",
+                                })}
+                                error={!!errors.newPassword}
+                                helperText={errors.newPassword?.message ?? ""}
                             />
 
                             <Controller
@@ -142,7 +187,7 @@ const CreateUser = () => {
                         sx={{ ml: "auto" }}
                         disabled={isLoading}
                     >
-                        <span>Create user</span>
+                        <span>Edit user</span>
                         {isLoading && (
                             <CircularProgress
                                 size={24}
@@ -156,4 +201,4 @@ const CreateUser = () => {
         </PageContainer>
     );
 };
-export default CreateUser;
+export default EditUser;

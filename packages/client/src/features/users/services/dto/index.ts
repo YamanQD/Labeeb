@@ -25,3 +25,9 @@ export interface CreateUserDTO {
     password: string;
     role: Role;
 }
+
+export interface EditUserDTO extends Partial<Omit<CreateUserDTO, "password">>{
+    id: number;
+    oldPassword?: string;
+    newPassword?: string;
+}

@@ -5,6 +5,7 @@ import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetUsers } from "../../application/admin/getUsers";
+import { UserDTO } from "../../services/dto";
 
 const columns: GridColDef[] = [
     {
@@ -23,14 +24,22 @@ const columns: GridColDef[] = [
 
 const Users = () => {
     const navigate = useNavigate();
-    const [page, setPage] = useState(1);
-    const [rows, setRows] = useState<GridRowsProp>([]);
 
-    const { data, isLoading } = useGetUsers({ page });
+    const [page, setPage] = useState(1);
+    const [rows, setRows] = useState<GridRowsProp<UserDTO>>([]);
+
+    const { data: users, isLoading } = useGetUsers({
+        page,
+        queryOptions: {
+            keepPreviousData: true,
+        },
+    });
 
     useEffect(() => {
-        if (data) setRows(data.items);
-    }, [data]);
+        if (users) {
+            setRows(users.items);
+        }
+    }, [users]);
 
     return (
         <>
@@ -42,9 +51,11 @@ const Users = () => {
                     onPageChange={(newPage) => setPage(newPage + 1)}
                     pageSize={10}
                     pagination
-                    rowCount={data?.meta.totalItems ?? 0}
+                    rowCount={users?.meta.totalItems}
                     loading={isLoading}
                     paginationMode="server"
+                    disableSelectionOnClick
+                    onRowClick={(params) => navigate(`/admin/users/edit/${params.row.id}`)}
                 />
             </Box>
             <Fab

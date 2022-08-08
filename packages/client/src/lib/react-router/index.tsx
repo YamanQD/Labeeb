@@ -1,11 +1,9 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-
 import AdminLayout from "src/components/layouts/Admin";
 import ClientLayout from "src/components/layouts/Client";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { HTTPClient } from "src/lib/http/httpClient";
-
 import ProtectedRoute from "./ProtectedRoute";
 
 const httpClient = HTTPClient.getInstance();
@@ -24,6 +22,9 @@ const Login = Loader(lazy(() => import("src/features/users/views/Login")));
 // Admin pages
 const Users = Loader(lazy(() => import("src/features/users/views/admin/Users")));
 const CreateUser = Loader(lazy(() => import("src/features/users/views/admin/CreateUser")));
+const EditUser = Loader(lazy(() => import("src/features/users/views/admin/EditUser")));
+
+const Projects = Loader(lazy(() => import("src/features/projects/views/admin/Projects")));
 
 const RedirectToLoginOnAPIError = () => {
     const navigate = useNavigate();
@@ -45,6 +46,7 @@ export const ApplicationRoutes = () => {
     return (
         <>
             <Routes>
+                {/* Client */}
                 <Route
                     path="/"
                     element={
@@ -58,6 +60,7 @@ export const ApplicationRoutes = () => {
                     <Route path="projects/:projectId/lists/:listId" element={<Tasks />} />
                 </Route>
 
+                {/* Admin` */}
                 <Route
                     path="/admin"
                     element={
@@ -82,7 +85,23 @@ export const ApplicationRoutes = () => {
                             </ProtectedRoute>
                         }
                     />
-                    <Route path="projects" />
+
+                    <Route
+                        path="users/edit/:userId"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <EditUser />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="projects"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <Projects />
+                            </ProtectedRoute>
+                        }
+                    />
                 </Route>
 
                 <Route path="/login" element={<Login />} />
