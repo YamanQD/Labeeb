@@ -101,6 +101,10 @@ export class TasksService {
 			description: body.description
 		});
 
+		for (const assignee of assignees) {
+			this.mailService.sendAssignedNotification(assignee, task);
+		}
+
 		return await this.taskRepository.save(task);
 	}
 
