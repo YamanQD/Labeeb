@@ -26,18 +26,7 @@ export class AuthService {
 
 	async register(body: RegisterDto) {
 		const user = await this.usersService.create(body);
-		await this.mailService.sendPlainMessage(
-			user.email,
-			'Welcome to Labeeb',
-			`
-			Hello, ${user.username}!
-			A new Labeeb account has been created for you using this email.
-			You can login to the system using this email, and the password provided for you by your administrator.
-			Thank you for using Labeeb!
-
-			Note: If you did not request this account, you can safely ignore this email.
-			`,
-		);
+		await this.mailService.sendRegisterMessage(user);
 		return user;
 	}
 

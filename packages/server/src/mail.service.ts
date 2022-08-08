@@ -2,6 +2,7 @@ import * as nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 import { Injectable, Logger } from '@nestjs/common';
+import { User } from './users/user.entity';
 
 @Injectable()
 export class MailService {
@@ -38,5 +39,20 @@ export class MailService {
 
 			return null;
 		}
+	}
+
+	async sendRegisterMessage(user: User) {
+		await this.sendPlainMessage(
+			user.email,
+			'Welcome to Labeeb',
+			`
+			Hello, ${user.username}!
+			A new Labeeb account has been created for you using this email.
+			You can login to the system using this email, and the password provided for you by your administrator.
+			Thank you for using Labeeb!
+
+			Note: If you did not request this account, you can safely ignore this email.
+			`,
+		);
 	}
 }
