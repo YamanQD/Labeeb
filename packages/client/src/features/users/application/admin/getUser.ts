@@ -8,8 +8,8 @@ interface UseGetUserProps {
 
 export const useGetUser = ({ id, queryOptions = {} }: UseGetUserProps) => {
     const fetchUser = async () => {
-        if (id) return userService.getUser(id)
+        if (id) return userService.getUser(id);
     };
-    
-    return useQuery(["users", id], fetchUser, queryOptions);
+
+    return useQuery(["users", { id }], fetchUser, queryOptions);
 };
