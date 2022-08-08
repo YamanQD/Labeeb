@@ -1,5 +1,7 @@
-import { styled } from "@mui/material/styles";
 import { ReactNode } from "react";
+
+import { styled } from "@mui/material/styles";
+
 import Logo from "src/components/Logo";
 
 const SidebarWrapper = styled("div")(

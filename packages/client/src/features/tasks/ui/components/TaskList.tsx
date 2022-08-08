@@ -1,7 +1,9 @@
+import { useState } from "react";
+
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+
 import { TaskListDTO } from "../../services";
 import TaskGroup from "./TaskGroup";
 import styles from "./TaskGroup/task-group.module.css";

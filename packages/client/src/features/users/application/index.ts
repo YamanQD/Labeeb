@@ -10,4 +10,9 @@ export const userRoles = [
         id: 2,
         title: Role.EMPLOYEE,
     },
+
+    {
+        id: 3,
+        title: Role.PM,
+    },
 ];

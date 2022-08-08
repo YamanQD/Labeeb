@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+
 import LanguageToggle from "../../Buttons/LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 

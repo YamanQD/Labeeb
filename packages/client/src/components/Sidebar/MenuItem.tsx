@@ -1,9 +1,10 @@
+import { MouseEvent, ReactNode, useState } from "react";
+
 import ExpandLessTwoToneIcon from "@mui/icons-material/ExpandLessTwoTone";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import { styled } from "@mui/material/styles";
-import { MouseEvent, ReactNode, useState } from "react";
 
 interface MenuItemProps {
     children?: ReactNode;

@@ -1,4 +1,5 @@
 import { Role } from "@labeeb/core";
+
 import { permissions } from "./permissions";
 
 export interface ILoginResponse {

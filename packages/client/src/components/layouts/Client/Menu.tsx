@@ -1,10 +1,13 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetProjects } from "src/features/projects/application/getProjects";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import MenuItem from "../../Sidebar/MenuItem";
 import MenuItemChild from "../../Sidebar/MenuItemChild";
+
+import { useGetProjects } from "src/features/projects/application/getProjects";
 
 const ClientSidebarMenu = () => {
     const { t } = useTranslation();

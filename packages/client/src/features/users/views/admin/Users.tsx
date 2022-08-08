@@ -1,36 +1,109 @@
+import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import AddIcon from "@mui/icons-material/Add";
+import { Button, CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useGetUsers } from "../../application/admin/getUsers";
 
-const columns: GridColDef[] = [
-    {
-        field: "id",
-        headerName: "ID",
-        width: 150,
-        type: "number",
-        flex: 0.5,
-        align: "left",
-        headerAlign: "left",
-    },
-    { field: "username", headerName: "Name", width: 150, type: "string", flex: 1 },
-    { field: "email", headerName: "Email", width: 150, type: "string", flex: 1, sortable: false },
-    { field: "role", headerName: "Role", width: 150, type: "string", flex: 1 },
-];
+import { useDeleteUser } from "../../application/admin/deleteUser";
+import { useGetUsers } from "../../application/admin/getUsers";
+import { UserDTO } from "../../services/dto";
+
+const DeleteUserButton = ({ id }: { id: number }) => {
+    const { t } = useTranslation();
+    const { mutate, isLoading } = useDeleteUser();
+
+    const deleteUser = () => {
+        mutate(id, {
+            onSuccess() {
+                toast(t("users.delete_success"), {
+                    position: toast.POSITION.BOTTOM_LEFT,
+                });
+            },
+        });
+    };
+
+    return (
+        <Button color="secondary" variant="contained" size="small" onClick={deleteUser}>
+            {isLoading ? (
+                <CircularProgress disableShrink size={24} sx={{ color: "#fff" }} />
+            ) : (
+                t("actions.delete")
+            )}
+        </Button>
+    );
+};
+
+const EditUserButton = ({ id }: { id: number }) => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+
+    return (
+        <Button
+            color="primary"
+            variant="contained"
+            size="small"
+            onClick={() => navigate(`/admin/users/edit/${id}`)}
+        >
+            {t("actions.edit")}
+        </Button>
+    );
+};
 
 const Users = () => {
-    const navigate = useNavigate();
-    const [page, setPage] = useState(1);
-    const [rows, setRows] = useState<GridRowsProp>([]);
+    const { t, i18n } = useTranslation();
 
-    const { data, isLoading } = useGetUsers({ page });
+    const columns: GridColDef[] = useMemo(() => [
+            {
+                field: "id",
+                headerName: t("users.id"),
+                width: 150,
+                type: "number",
+                flex: 0.5,
+                align: "left",
+                headerAlign: "left",
+            },
+            { field: "username", headerName: t("users.name"), width: 150, type: "string", flex: 1 },
+            { field: "email", headerName: t("users.email"), width: 150, type: "string", flex: 1, sortable: false },
+            { field: "role", headerName: t("users.role"), width: 150, type: "string", flex: 1 },
+            {
+                field: "delete",
+                headerName: "",
+                width: 150,
+                type: "string",
+                flex: 1,
+                sortable: false,
+                filterable: false,
+                renderCell: (props) => (
+                    <div style={{ display: "flex", gap: "15px" }}>
+                        <EditUserButton id={props.row.id} />
+                        <DeleteUserButton id={props.row.id} />
+                    </div>
+                ),
+            },
+        ], [i18n.resolvedLanguage]);
+
+    const navigate = useNavigate();
+
+    const [page, setPage] = useState(1);
+    const [rows, setRows] = useState<GridRowsProp<UserDTO>>([]);
+
+    const { data: users, isLoading } = useGetUsers({
+        page,
+        queryOptions: {
+            keepPreviousData: true,
+        },
+    });
 
     useEffect(() => {
-        if (data) setRows(data.items);
-    }, [data]);
+        if (users?.items) {
+            setRows(users.items);
+        }
+    }, [users]);
 
     return (
         <>
@@ -42,9 +115,10 @@ const Users = () => {
                     onPageChange={(newPage) => setPage(newPage + 1)}
                     pageSize={10}
                     pagination
-                    rowCount={data?.meta.totalItems ?? 0}
+                    rowCount={users?.meta.totalItems ?? 10}
                     loading={isLoading}
                     paginationMode="server"
+                    disableSelectionOnClick
                 />
             </Box>
             <Fab

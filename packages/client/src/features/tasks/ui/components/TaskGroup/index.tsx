@@ -1,10 +1,12 @@
-import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TaskGroupDTO } from "../../../services";
+
+import Grid from "@mui/material/Grid";
+
 import Task from "../Task";
 import styles from "./task-group.module.css";
 import TaskGroupTitle from "./TaskGroupTitle";
+import { TaskGroupDTO } from "../../../services";
 
 const TaskGroupColumns = () => {
     const { t } = useTranslation();

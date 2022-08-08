@@ -1,7 +1,8 @@
 import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
+
 import { IUserRepository } from "../domain/IuserRepository";
 import { ILoginResponse, IUser } from "../domain/user";
-import { CreateUserDTO, UserCredentialsDTO } from "../services/dto";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -34,22 +35,34 @@ export class UserRepository implements IUserRepository {
             path: "/users",
             method: "GET",
             params: {
-                page
-            }
+                page,
+            },
         });
 
         return response;
     }
 
-    public async getUser(id: number): Promise<void> {
-        const response = await this.httpClient.request<Promise<void>>({
-            path: "/users",
+    public async getUser(id: number): Promise<IUser> {
+        const response = await this.httpClient.request<Promise<IUser>>({
+            path: `/users/${id}`,
             method: "GET",
-            params: {
-                user_id: id,
-            },
         });
 
         return response;
+    }
+
+    public async editUser(user: EditUserDTO): Promise<void> {
+        await this.httpClient.request<Promise<void>>({
+            path: `/users/${user.id}`,
+            method: "PATCH",
+            body: user,
+        });
+    }
+
+    public async deleteUser(id: number): Promise<void> {
+        await this.httpClient.request<Promise<void>>({
+            path: `/users/${id}`,
+            method: "DELETE",
+        });
     }
 }

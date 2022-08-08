@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
+
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "react-i18next";
+
 import styles from "./task-group.module.css";
 
 const TitleButton = styled(Button)(

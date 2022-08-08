@@ -6,7 +6,9 @@
     "actions": {
         "logout": "Logout",
         "add": "Add",
+        "create": "Create",
         "edit": "Edit",
+        "delete": "Delete",
         "confirm": "Yes",
         "cancel": "Cancel",
         "switch_to_admin": "Switch to admin panel",
@@ -44,10 +46,29 @@
         "title_one": "{{count}} task",
         "title_other": "{{count}} tasks"
     },
+    "users": {
+        "id": "ID",
+        "name": "Username",
+        "name_required": "Username is required.",
+        "email": "Email",
+        "email_required": "Email is required.",
+        "role": "Role",
+        "add": "Create a new user",
+        "add_success": "User added successfully!",
+        "edit": "Edit user #{{id}}",
+        "edit_success": "User edited successfully!",
+        "delete_success": "User deleted successfully!",
+        "password": "Password",
+        "password_required": "Password is required.",
+        "password_old": "Old Password",
+        "password_new": "New Password",
+        "password_unchanged": "The new password matches the old one!"
+    },
     "sidebar": {
         "loading": "Loading projects...",
         "projects": "Projects",
-        "management": "Management"
+        "management": "Management",
+        "users": "Users"
     },
     "login": {
         "heading": "Organize your tasks",

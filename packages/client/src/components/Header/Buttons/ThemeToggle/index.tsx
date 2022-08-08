@@ -1,8 +1,10 @@
+import { useContext } from "react";
+import { useTranslation } from "react-i18next";
+
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { IconButton, Tooltip } from "@mui/material";
-import { useContext } from "react";
-import { useTranslation } from "react-i18next";
+
 import { ThemeContext } from "src/theme/ThemeProvider";
 
 const ThemeToggle = () => {

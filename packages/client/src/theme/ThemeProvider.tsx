@@ -1,9 +1,13 @@
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import rtlPlugin from "stylis-plugin-rtl";
+
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
+
 import { ThemeProvider as MUIThemeProvider } from "@mui/material";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+
 import { WrapperProps } from "src/utils/wrapperProps";
-import rtlPlugin from "stylis-plugin-rtl";
+
 import { themeCreator } from "./base";
 import { AvailableThemes } from "./schemes";
 

@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { userService } from "../../services";
 
 interface UseGetUsersProps {
@@ -11,5 +12,5 @@ export const useGetUsers = ({ page = 1, queryOptions = {} }: UseGetUsersProps = 
         return userService.getUsers(page);
     };
 
-    return useQuery(["users", page], fetchUsers, queryOptions);
+    return useQuery(["users", { page }], fetchUsers, queryOptions);
 };
