@@ -13,4 +13,5 @@ export interface ProjectDTO {
     title: string;
     lists: ProjectListDTO[];
     statuses: ProjectStatusDTO[];
+    tags: string[];
 }
