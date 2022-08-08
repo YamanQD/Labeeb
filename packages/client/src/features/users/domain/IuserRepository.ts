@@ -8,4 +8,5 @@ export interface IUserRepository {
     getUser(id: number): Promise<IUser>;
     getUsers(options: PaginatedRequestOptions): Promise<PaginatedResponse<IUser[]>>;
     editUser(user: EditUserDTO): Promise<void>;
+    deleteUser(id: number): Promise<void>;
 }

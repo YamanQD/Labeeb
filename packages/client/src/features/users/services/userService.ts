@@ -31,4 +31,8 @@ export class UserService {
     public async editUser(user: EditUserDTO): Promise<void> {
         return this.userRepository.editUser(user);
     }
+
+    public async deleteUser(id: number): Promise<void> {
+        return this.userRepository.deleteUser(id);
+    }
 }

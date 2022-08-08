@@ -1,7 +1,7 @@
 import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
 import { IUserRepository } from "../domain/IuserRepository";
 import { ILoginResponse, IUser } from "../domain/user";
-import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserDTO } from "../services/dto";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../services/dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -51,10 +51,17 @@ export class UserRepository implements IUserRepository {
     }
 
     public async editUser(user: EditUserDTO): Promise<void> {
-        const response = await this.httpClient.request<Promise<void>>({
+        await this.httpClient.request<Promise<void>>({
             path: `/users/${user.id}`,
             method: "PATCH",
             body: user,
+        });
+    }
+
+    public async deleteUser(id: number): Promise<void> {
+        await this.httpClient.request<Promise<void>>({
+            path: `/users/${id}`,
+            method: "DELETE",
         });
     }
 }
