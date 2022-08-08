@@ -22,7 +22,7 @@ export class User {
 	@Column('enum', { enum: Role, default: Role.EMPLOYEE })
 	role: Role;
 
-	@ManyToMany(() => Project, project => project.users, { nullable: true })
+	@ManyToMany(() => Project, project => project.users, { nullable: true, onDelete: 'CASCADE' })
 	projects: Project[];
 
 	@OneToMany(() => Task, (task) => task.owner)
