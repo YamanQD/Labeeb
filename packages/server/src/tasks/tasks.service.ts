@@ -10,6 +10,7 @@ import { Priority } from '@labeeb/core';
 import { Status } from 'src/projects/status.entity';
 import { Tag } from 'src/projects/tags.entity';
 import { User } from 'src/users/user.entity';
+import { MailService } from 'src/mail.service';
 
 @Injectable()
 export class TasksService {
@@ -24,6 +25,7 @@ export class TasksService {
 		private readonly tagRepository: Repository<Tag>,
 		@InjectRepository(User)
 		private readonly userRepository: Repository<User>,
+		private mailService: MailService,
 	) { }
 
 	async findAll(): Promise<Task[]> {
@@ -138,6 +140,7 @@ export class TasksService {
 		}
 
 		let assignees: User[] = [];
+		let newAssignees: User[] = [];
 		if (body.assignees) {
 			for (const assignee of body.assignees) {
 				const userEntity = await this.userRepository.findOne({
@@ -153,6 +156,9 @@ export class TasksService {
 				}
 
 				assignees.push(userEntity);
+				if (!task.assignees.find((a) => a.id == userEntity.id)) {
+					newAssignees.push(userEntity);
+				}
 			}
 		}
 
@@ -164,6 +170,10 @@ export class TasksService {
 		task.status = body.status ? status : task.status;
 		task.tags = body.tags ? tags : task.tags;
 		task.assignees = body.assignees ? assignees : task.assignees;
+
+		for (const assignee of newAssignees) {
+			await this.mailService.sendAssignMessage(assignee, task);
+		}
 
 		return await this.taskRepository.save(task);
 	}

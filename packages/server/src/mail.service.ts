@@ -3,6 +3,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from './users/user.entity';
+import { Task } from './tasks/task.entity';
 
 @Injectable()
 export class MailService {
@@ -52,6 +53,20 @@ export class MailService {
 			Thank you for using Labeeb!
 
 			Note: If you did not request this account, you can safely ignore this email.
+			`,
+		);
+	}
+
+	async sendAssignMessage(user: User, task: Task) {
+		await this.sendPlainMessage(
+			user.email,
+			'You have been assigned a new task',
+			`
+			Hello, ${user.username}!
+			You have been assigned the task "${task.title}".
+			You can view the task details using the app.
+
+			Thank you for using Labeeb!
 			`,
 		);
 	}
