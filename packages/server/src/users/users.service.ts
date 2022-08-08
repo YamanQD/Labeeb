@@ -86,6 +86,14 @@ export class UsersService {
 		return updatedUser;
 	}
 
+	async delete(id: number) {
+		const user = await this.findById(id);
+		if (!user) {
+			throw new NotFoundException(['User not found']);
+		}
+		return await this.usersRepository.delete(id);
+	}
+
 	async seed() {
 		const allUsers = await this.usersRepository.find();
 		if (allUsers.length > 0) return;
