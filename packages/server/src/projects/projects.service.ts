@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MailService } from 'src/mail.service';
 import { User } from 'src/users/user.entity';
 import { UserWithoutPassword } from 'src/users/user.types';
 import { In, Repository } from 'typeorm';
@@ -20,6 +21,7 @@ export class ProjectsService {
 		private readonly statusRepository: Repository<Status>,
 		@InjectRepository(Tag)
 		private readonly tagRepository: Repository<Tag>,
+		private mailService: MailService,
 	) { }
 
 	async findAll(): Promise<any> {
@@ -105,7 +107,12 @@ export class ProjectsService {
 		if (project.userIds && project.userIds.length > 0) {
 			const users = await this.userRepository.findBy({ id: In(project.userIds) });
 			newProject.users = users;
+
+			for (const user of users) {
+				await this.mailService.sendProjectNotification(user, newProject);
+			}
 		}
+
 
 		return await this.projectRepository.save(newProject);
 	}

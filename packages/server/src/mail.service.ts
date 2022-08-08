@@ -4,6 +4,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from './users/user.entity';
 import { Task } from './tasks/task.entity';
+import { Project } from './projects/project.entity';
 
 @Injectable()
 export class MailService {
@@ -66,6 +67,20 @@ export class MailService {
 			You have been assigned the task "${task.title}".
 			You can view the task details using the app.
 
+			Thank you for using Labeeb!
+			`,
+		);
+	}
+
+	async sendProjectNotification(user: User, project: Project) {
+		await this.sendPlainMessage(
+			user.email,
+			'You have been added to a new project',
+			`
+			Hello, ${user.username}!
+			You have been added to the project "${project.title}".
+			You can view the project details using the app.
+			
 			Thank you for using Labeeb!
 			`,
 		);
