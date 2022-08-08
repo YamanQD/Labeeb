@@ -43,7 +43,7 @@ export class MailService {
 		}
 	}
 
-	async sendRegisteredNotification(user: User) {
+	async sendWelcomeEmail(user: User) {
 		await this.sendPlainMessage(
 			user.email,
 			'Welcome to Labeeb',

@@ -26,7 +26,7 @@ export class AuthService {
 
 	async register(body: RegisterDto) {
 		const user = await this.usersService.create(body);
-		await this.mailService.sendRegisteredNotification(user);
+		await this.mailService.sendWelcomeEmail(user);
 		return user;
 	}
 
