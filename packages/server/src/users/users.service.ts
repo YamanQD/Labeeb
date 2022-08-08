@@ -78,7 +78,9 @@ export class UsersService {
 		}
 		user.role = body.role ?? user.role;
 
-		return await this.usersRepository.save(user);
+		const updatedUser = await this.usersRepository.save(user);
+		delete updatedUser.password;
+		return updatedUser;
 	}
 
 	async seed() {
