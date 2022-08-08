@@ -56,13 +56,16 @@ export class UsersService {
 		}
 
 		if (body.username) {
-			if (await this.findByUsername(body.username)) {
+			const foundUser = await this.findByUsername(body.username);
+			if (foundUser && foundUser.id != id) {
+				console.log(foundUser, id);
 				throw new BadRequestException(['Username already exists']);
 			}
 			user.username = body.username;
 		}
 		if (body.email) {
-			if (await this.findByEmail(body.email)) {
+			const foundUser = await this.findByEmail(body.email);
+			if (foundUser && foundUser.id != id) {
 				throw new BadRequestException(['Email already exists']);
 			}
 			user.email = body.email;
@@ -78,7 +81,9 @@ export class UsersService {
 		}
 		user.role = body.role ?? user.role;
 
-		return await this.usersRepository.save(user);
+		const updatedUser = await this.usersRepository.save(user);
+		delete updatedUser.password;
+		return updatedUser;
 	}
 
 	async seed() {
