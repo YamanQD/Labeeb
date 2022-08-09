@@ -1,5 +1,4 @@
 import { UserMapper } from "src/features/users/services/mappers";
-
 import { ITask, ITaskDetails, ITaskList } from "../../domain/task";
 import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
 
@@ -15,20 +14,21 @@ export class TaskMapper {
         return {
             ...task,
             deadline: new Date(task.deadline),
-            status: task.status.title,
         };
     }
 
     static taskDetailsToDTO(taskDetails: ITaskDetails): TaskDetailsDTO {
-        const { id, title, description, priority, deadline, tags, createdAt, owner } = taskDetails;
+        const { id, title, description, priority, deadline, tags, status, createdAt, owner } =
+            taskDetails;
         return {
             id,
             title,
             description,
             tags,
+            status,
             deadline: new Date(deadline),
             priority,
-            status: taskDetails.status.title,
+
             projectId: taskDetails.list.project.id,
             listId: taskDetails.list.id,
             createdAt: new Date(createdAt),
@@ -57,14 +57,16 @@ export class TaskMapper {
             const taskDTO = TaskMapper.taskToDTO(task);
 
             // Do we have a list that corresponds to the task's status?
-            const suitableTaskGroup = taskGroups.find((group) => group.status == taskDTO.status);
+            const suitableTaskGroup = taskGroups.find(
+                (group) => group.status == taskDTO.status.title
+            );
 
             // If so, push the task to the list
             if (suitableTaskGroup) suitableTaskGroup.tasks.push(taskDTO);
             // Else create a new list and push this task to it
             else {
                 taskGroups.push({
-                    status: taskDTO.status,
+                    status: taskDTO.status.title,
                     id: dummyId,
                     tasks: [taskDTO],
                 });

@@ -1,6 +1,4 @@
-interface IProjectStatus {
-    title: string;
-}
+import { ITaskStatus, ITaskTag } from "src/features/tasks/domain/task";
 
 export interface IProjectList {
     id: number;
@@ -12,5 +10,6 @@ export interface IProject {
     id: number;
     title: string;
     lists: IProjectList[];
-    statuses: IProjectStatus[];
+    statuses: ITaskStatus[];
+    tags: ITaskTag[];
 }

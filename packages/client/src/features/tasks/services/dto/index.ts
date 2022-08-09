@@ -1,10 +1,5 @@
 import { UserDTO } from "src/features/users/services/dto";
-
 import { ETaskPriority } from "../../domain/task";
-
-export interface TaskTagDTO {
-    title: string;
-}
 
 export interface TaskDetailsDTO extends TaskDTO {
     listId: number;
@@ -13,15 +8,23 @@ export interface TaskDetailsDTO extends TaskDTO {
     owner: UserDTO;
 }
 
+export interface TaskStatusDTO {
+    title: string;
+}
+
+export interface TaskTagDTO {
+    title: string;
+}
+
 export interface TaskDTO {
     id: number;
     title: string;
     description?: string;
     deadline: Date;
 
-    status: string;
-    priority: ETaskPriority;
+    status: TaskStatusDTO;
     tags: TaskTagDTO[];
+    priority: ETaskPriority;
 }
 
 export interface TaskGroupDTO {

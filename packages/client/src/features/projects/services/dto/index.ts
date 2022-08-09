@@ -1,6 +1,4 @@
-interface ProjectStatusDTO {
-    title: string;
-}
+import { TaskStatusDTO, TaskTagDTO } from "src/features/tasks/services";
 
 export interface ProjectListDTO {
     id: number;
@@ -12,6 +10,6 @@ export interface ProjectDTO {
     id: number;
     title: string;
     lists: ProjectListDTO[];
-    statuses: ProjectStatusDTO[];
-    tags: string[];
+    statuses: TaskStatusDTO[];
+    tags: TaskTagDTO[];
 }

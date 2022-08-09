@@ -7,10 +7,6 @@ export enum ETaskPriority {
     HIGH = "high",
 }
 
-export interface ITaskTag {
-    title: string;
-}
-
 export const taskPriorities = [
     {
         value: ETaskPriority.NONE,
@@ -47,14 +43,20 @@ export interface ITaskDetails extends ITask {
     owner: IUser;
 }
 
+export interface ITaskTag {
+    title: string;
+}
+
+export interface ITaskStatus {
+    title: string;
+}
+
 export interface ITask {
     id: number;
     title: string;
     description?: string;
     deadline: string;
-    status: {
-        title: string;
-    };
+    status: ITaskStatus;
     tags: ITaskTag[];
     priority: ETaskPriority;
 }
