@@ -5,6 +5,9 @@ export class CreateProjectDto {
 	title: string;
 
 	@IsOptional()
+	description?: string;
+
+	@IsOptional()
 	userIds?: number[];
 
 	@IsNotEmpty()

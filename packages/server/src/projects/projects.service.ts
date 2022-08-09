@@ -159,6 +159,7 @@ export class ProjectsService {
 		}
 
 		updatedProject.title = project.title ?? updatedProject.title;
+		updatedProject.description = project.description ?? updatedProject.description;
 		updatedProject.finalStatus = project.finalStatus ?? updatedProject.finalStatus;
 
 		for (const user of newUsers) {
@@ -283,6 +284,7 @@ export class ProjectsService {
 			},
 			{
 				title: 'E-Commerce App',
+				description: 'E-Commerce App for selling products',
 				userIds: [3, 6, 1],
 				statuses: ['Todo', 'In Progress', 'Done'],
 				finalStatus: "Done",

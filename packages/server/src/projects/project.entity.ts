@@ -12,6 +12,9 @@ export class Project {
 	@Column()
 	title: string;
 
+	@Column({ nullable: true })
+	description: string;
+
 	@Column()
 	finalStatus: string;
 
