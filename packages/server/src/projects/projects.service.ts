@@ -74,7 +74,7 @@ export class ProjectsService {
 		});
 	}
 
-	async findProjectTags(id: number): Promise<Status[]> {
+	async findProjectTags(id: number): Promise<Tag[]> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
 			relations: ['tags'],
@@ -89,8 +89,8 @@ export class ProjectsService {
 	async create(project: CreateProjectDto): Promise<Project> {
 		const statuses: Status[] = [];
 		project.statuses?.forEach(async (s) => {
-			const status = await this.statusRepository.findOneBy({ title: s });
-			statuses.push(status ?? (await this.statusRepository.save({ title: s })));
+			const status = await this.statusRepository.save({ title: s });
+			statuses.push(status);
 		});
 
 		const tags: Tag[] = [];
@@ -112,7 +112,6 @@ export class ProjectsService {
 				await this.mailService.sendProjectNotification(user, newProject);
 			}
 		}
-
 
 		return await this.projectRepository.save(newProject);
 	}
@@ -142,7 +141,7 @@ export class ProjectsService {
 		if (project.statuses && project.statuses.length > 0) {
 			updatedProject.statuses = updatedProject.statuses ?? [];
 			for (const status of project.statuses) {
-				const statusEntity = await this.statusRepository.findOneBy({ title: status });
+				const statusEntity = await this.statusRepository.findOneBy({ title: status, project: { id } });
 				statusEntity ?
 					updatedProject.statuses.push(statusEntity) :
 					updatedProject.statuses.push(await this.statusRepository.save({ title: status }));
@@ -244,15 +243,6 @@ export class ProjectsService {
 	}
 
 	async seed() {
-		const allStatuses = await this.statusRepository.find();
-		if (allStatuses.length === 0) {
-			await this.statusRepository.save([
-				{ title: 'Todo' },
-				{ title: 'In Progress' },
-				{ title: 'Done' },
-			]);
-		}
-
 		const allTags = await this.tagRepository.find();
 		if (allTags.length === 0) {
 			await this.tagRepository.save([
@@ -301,7 +291,7 @@ export class ProjectsService {
 		await projects.forEach(async (project) => {
 			const statuses: Status[] = [];
 			await project.statuses?.forEach(async (s) => {
-				const status = await this.statusRepository.findOneBy({ title: s });
+				const status = await this.statusRepository.save({ title: s });
 				statuses.push(status);
 			});
 

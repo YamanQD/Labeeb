@@ -1,14 +1,17 @@
 import { Task } from 'src/tasks/task.entity';
-import { Entity, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Project } from './project.entity';
 
 @Entity()
 export class Status {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
+	id: number;
+
+	@Column()
 	title: string;
 
-	@ManyToMany(() => Project, { nullable: true })
-	projects: Project[];
+	@ManyToOne(() => Project, (project) => project.statuses)
+	project: Project;
 
 	@OneToMany(() => Task, (task) => task.status)
 	tasks: Task[];
