@@ -11,7 +11,7 @@ export class CreateProjectDto {
 	userIds?: number[];
 
 	@IsNotEmpty()
-	statuses: string[];
+	statuses: { title: string, color: string }[];
 
 	@IsNotEmpty()
 	finalStatus: string;

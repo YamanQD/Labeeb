@@ -89,7 +89,7 @@ export class ProjectsService {
 	async create(project: CreateProjectDto): Promise<Project> {
 		const statuses: Status[] = [];
 		project.statuses?.forEach(async (s) => {
-			const status = await this.statusRepository.save({ title: s });
+			const status = await this.statusRepository.save(s);
 			statuses.push(status);
 		});
 
@@ -141,10 +141,10 @@ export class ProjectsService {
 		if (project.statuses && project.statuses.length > 0) {
 			updatedProject.statuses = updatedProject.statuses ?? [];
 			for (const status of project.statuses) {
-				const statusEntity = await this.statusRepository.findOneBy({ title: status, project: { id } });
+				const statusEntity = await this.statusRepository.findOneBy({ title: status.title, project: { id } });
 				statusEntity ?
 					updatedProject.statuses.push(statusEntity) :
-					updatedProject.statuses.push(await this.statusRepository.save({ title: status }));
+					updatedProject.statuses.push(await this.statusRepository.save(status));
 			}
 		}
 		if (project.tags && project.tags.length > 0) {
@@ -268,7 +268,11 @@ export class ProjectsService {
 			{
 				title: 'Satellite Simulator',
 				userIds: [1, 2],
-				statuses: ['Todo', 'In Progress', 'Done'],
+				statuses: [
+					{ title: 'Todo', color: 'c2daff' },
+					{ title: 'In Progress', color: 'ffe600' },
+					{ title: 'Done', color: '00ff2f' }
+				],
 				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
@@ -276,13 +280,21 @@ export class ProjectsService {
 				title: 'E-Commerce App',
 				description: 'E-Commerce App for selling products',
 				userIds: [3, 6, 1],
-				statuses: ['Todo', 'In Progress', 'Done'],
+				statuses: [
+					{ title: 'Todo', color: 'c2daff' },
+					{ title: 'In Progress', color: 'ffe600' },
+					{ title: 'Done', color: '00ff2f' }
+				],
 				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
 			{
 				title: 'Banking App',
-				statuses: ['Todo', 'In Progress', 'Done'],
+				statuses: [
+					{ title: 'Todo', color: 'c2daff' },
+					{ title: 'In Progress', color: 'ffe600' },
+					{ title: 'Done', color: '00ff2f' }
+				],
 				finalStatus: "Done",
 				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
 			},
@@ -291,7 +303,7 @@ export class ProjectsService {
 		await projects.forEach(async (project) => {
 			const statuses: Status[] = [];
 			await project.statuses?.forEach(async (s) => {
-				const status = await this.statusRepository.save({ title: s });
+				const status = await this.statusRepository.save(s);
 				statuses.push(status);
 			});
 

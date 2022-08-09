@@ -10,6 +10,9 @@ export class Status {
 	@Column()
 	title: string;
 
+	@Column()
+	color: string;
+
 	@ManyToOne(() => Project, (project) => project.statuses)
 	project: Project;
 
