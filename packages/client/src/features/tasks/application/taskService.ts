@@ -1,6 +1,6 @@
-import { ITasksRepository } from "../domain/ItaskRepository";
-import { CreateTaskDTO, EditTaskDTO, TaskDetailsDTO, TaskDTO, TaskListDTO } from "./dto";
-import { TaskMapper } from "./mappers";
+import { ITasksRepository } from "./ItaskRepository";
+import { CreateTaskDTO, EditTaskDTO, TaskDetailsDTO, TaskDTO, TaskListDTO } from "../types/task.dto";
+import { TaskMapper } from "./taskMapper";
 
 export class TasksService {
     constructor(private tasksRepository: ITasksRepository) {}

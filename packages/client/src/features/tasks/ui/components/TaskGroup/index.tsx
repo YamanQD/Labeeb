@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Task from "../Task";
 import styles from "./task-group.module.css";
 import TaskGroupTitle from "./TaskGroupTitle";
-import { TaskGroupDTO } from "../../../services";
+import { TaskGroupDTO } from "../../../application";
 
 const TaskGroupColumns = () => {
     const { t } = useTranslation();

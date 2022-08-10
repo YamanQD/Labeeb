@@ -4,7 +4,7 @@ import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSha
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import { TaskListDTO } from "../../services";
+import { TaskListDTO } from "../../application";
 import TaskGroup from "./TaskGroup";
 import styles from "./TaskGroup/task-group.module.css";
 

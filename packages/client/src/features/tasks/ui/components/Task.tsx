@@ -7,8 +7,8 @@ import { styled } from "@mui/material/styles";
 
 import { useStore } from "src/lib/store";
 
-import { formatDate } from "../../domain/task";
-import { TaskDTO } from "../../services";
+import { formatDate } from "../../types/task";
+import { TaskDTO } from "../../application";
 
 const TaskContainer = styled(Paper)(
     ({ theme }) => `

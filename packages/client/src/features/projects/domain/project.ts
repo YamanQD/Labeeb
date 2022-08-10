@@ -1,4 +1,4 @@
-import { ITaskStatus, ITaskTag } from "src/features/tasks/domain/task";
+import { ITaskStatus, ITaskTag } from "src/features/tasks/types/task";
 
 export interface IProjectList {
     id: number;

@@ -1,6 +1,6 @@
 import { UserMapper } from "src/features/users/services/mappers";
-import { ITask, ITaskDetails, ITaskList } from "../../domain/task";
-import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../dto";
+import { ITask, ITaskDetails, ITaskList } from "../types/task";
+import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../types/task.dto";
 
 const getTasksCountForList = (listTaskGroups: TaskGroupDTO[]) => {
     return listTaskGroups.reduce((previousTasksCount, newGroup) => {

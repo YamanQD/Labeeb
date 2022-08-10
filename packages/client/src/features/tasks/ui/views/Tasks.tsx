@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import SuspenseLoader from "src/components/SuspenseLoader";
 
-import { useGetTaskLists } from "../../application/getTaskLists";
+import { useGetTaskLists } from "../../api/getTaskLists";
 import AddTaskContainer from "../components/AddTaskContainer";
 import TaskList from "../components/TaskList";
 

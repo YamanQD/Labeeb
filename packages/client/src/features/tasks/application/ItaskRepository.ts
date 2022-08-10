@@ -1,5 +1,5 @@
-import { CreateTaskDTO, EditTaskDTO } from "../services";
-import { ITask, ITaskDetails, ITaskList } from "./task";
+import { CreateTaskDTO, EditTaskDTO } from ".";
+import { ITask, ITaskDetails, ITaskList } from "../types/task";
 
 export interface ITasksRepository {
     createTask(task: CreateTaskDTO): Promise<ITask>;

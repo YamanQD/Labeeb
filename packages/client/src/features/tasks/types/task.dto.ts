@@ -1,5 +1,5 @@
 import { UserDTO } from "src/features/users/services/dto";
-import { ETaskPriority } from "../../domain/task";
+import { ETaskPriority } from "./task";
 
 export interface TaskDetailsDTO extends TaskDTO {
     listId: number;

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { tasksService } from "../services";
+import { tasksService } from "../application";
 
 interface UseGetTaskListsProps {
     projectId: string | undefined;
