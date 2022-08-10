@@ -12,14 +12,16 @@ export class Project {
 	@Column()
 	title: string;
 
+	@Column({ nullable: true })
+	description: string;
+
 	@Column()
 	finalStatus: string;
 
 	@OneToMany(() => List, (list) => list.project)
 	lists: List[];
 
-	@ManyToMany(() => Status, { nullable: true })
-	@JoinTable({ name: 'project_status', inverseJoinColumn: { name: 'title' } })
+	@OneToMany(() => Status, (status) => status.project, { nullable: true })
 	statuses: Status[];
 
 	@ManyToMany(() => Tag, { nullable: true })

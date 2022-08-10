@@ -53,7 +53,7 @@ export class TasksService {
 			where: { id: userId },
 		});
 
-		const status = await this.statusRepository.findOne({ where: { title: body.status } });
+		const status = await this.statusRepository.findOne({ where: { title: body.status, project: list.project } });
 		if (!status) {
 			throw new NotFoundException(['Status not found, please add status to project first']);
 		}
@@ -118,6 +118,7 @@ export class TasksService {
 		if (body.listId) {
 			list = await this.listRepository.findOne({
 				where: { id: body.listId },
+				relations: ["project"]
 			});
 			if (!list) {
 				throw new NotFoundException(['List not found']);
@@ -126,7 +127,12 @@ export class TasksService {
 
 		let status: Status | undefined;
 		if (body.status) {
-			status = await this.statusRepository.findOne({ where: { title: body.status } });
+			status = await this.statusRepository.findOne({
+				where: {
+					title: body.status,
+					project: list?.project ?? task.list.project
+				}
+			});
 			if (!status) {
 				throw new NotFoundException(['Status not found, please add status to project first']);
 			}
