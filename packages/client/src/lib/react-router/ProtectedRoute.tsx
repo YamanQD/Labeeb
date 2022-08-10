@@ -27,7 +27,7 @@ const ProtectedRoute = ({ children, peopleWhoCanAccess = "ALL_USERS" }: Protecte
         position: toast.POSITION.BOTTOM_LEFT,
         type: "error",
     });
-    return <Navigate to="/" />;
+    return <Navigate to="/projects" />;
 };
 
 export default ProtectedRoute;

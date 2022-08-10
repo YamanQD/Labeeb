@@ -91,7 +91,7 @@ const Login = () => {
     };
 
     // Redirect logged in users to /
-    if (userProfile) return <Navigate to="/" />;
+    if (userProfile) return <Navigate to="/projects" />;
 
     return (
         <LoginPageContainer>
@@ -176,7 +176,7 @@ const Login = () => {
                         helperText={errors.email?.message ?? ""}
                     />
 
-                    <p>{error && error.message}</p>
+                    <p>{error && error.messages[0]}</p>
 
                     <Button
                         type="submit"
