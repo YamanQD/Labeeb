@@ -40,7 +40,7 @@ const ClientSidebarMenu = () => {
                                         key={list.id}
                                         id={list.id}
                                         title={list.title}
-                                        badge={list.taskCount}
+                                        badge={list.taskCount || ""}
                                         isActive={Number(listId) === list.id}
                                         onClick={() =>
                                             navigate(`/projects/${project.id}/lists/${list.id}`)
