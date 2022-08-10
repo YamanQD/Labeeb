@@ -1,14 +1,17 @@
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-
 import SuspenseLoader from "src/components/SuspenseLoader";
-
+import { ThemeContext } from "src/theme/ThemeProvider";
 import { useGetTaskLists } from "../../api/getTaskLists";
 import AddTaskContainer from "../components/AddTaskContainer";
 import TaskList from "../components/TaskList";
 
 const Tasks = () => {
     const { t } = useTranslation();
+    const { direction } = useContext(ThemeContext);
     const { projectId, listId } = useParams();
 
     // One of these two must be truthy, otherwise the query is disabled
@@ -29,9 +32,24 @@ const Tasks = () => {
     let content;
 
     if (isLoading) content = <SuspenseLoader />;
-    else if (isError)
-        content = <p>{t("tasks.loading_error")}</p>;
-    else if (!isQueryEnabled) content = <p>{t("tasks.no_project_selected")}</p>;
+    else if (isError) content = <p>{t("tasks.loading_error")}</p>;
+    else if (!isQueryEnabled)
+        content = (
+            <Stack>
+                <Typography variant="h2" component="h2" mb={10}>
+                    {t("tasks.no_project_selected")}
+                </Typography>
+                <img
+                    alt=""
+                    src="/static/images/projects/select_a_project.svg"
+                    style={{
+                        width: "50%",
+                        margin: "0 auto",
+                        transform: direction === "rtl" ? "rotateY(180deg)" : "",
+                    }}
+                />
+            </Stack>
+        );
     else
         content = (
             <>
