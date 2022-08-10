@@ -1,14 +1,11 @@
-import { useCallback } from "react";
-
+import ErrorIcon from "@mui/icons-material/Error";
 import { darken } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-
+import { useCallback } from "react";
 import { useStore } from "src/lib/store";
-
-import { formatDate } from "../../types/task";
-import { TaskDTO } from "../../application";
+import { formatDate, getDeadlineStatus, TaskDTO } from "../../application";
 
 const TaskContainer = styled(Paper)(
     ({ theme }) => `
@@ -31,6 +28,34 @@ const TaskStatus = styled("div")(
         border-radius: 3px;
     `
 );
+
+const getDeadlineStyles = (deadline: Date): Record<string, string> => {
+    const deadlineStatus = getDeadlineStatus(deadline);
+
+    let styles = {};
+
+    switch (deadlineStatus) {
+        case "passed":
+            styles = {
+                color: "#ff0000",
+                fontWeight: "bold",
+            };
+            break;
+        case "close":
+            styles = {
+                color: "orange",
+                fontWeight: "bold",
+            };
+            break;
+        case "far":
+            styles = {
+                color: "#000000",
+            };
+            break;
+    }
+
+    return styles;
+};
 
 const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) => {
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
@@ -57,8 +82,18 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                     {priority}
                 </Grid>
 
-                <Grid item xs={2}>
-                    {formatDate(deadline)}
+                <Grid
+                    item
+                    xs={2}
+                    sx={{
+                        ...getDeadlineStyles(deadline),
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2,
+                    }}
+                >
+                    <span>{formatDate(deadline)}</span>
+                    {getDeadlineStatus(deadline) === "passed" && <ErrorIcon />}
                 </Grid>
             </Grid>
         </TaskContainer>
