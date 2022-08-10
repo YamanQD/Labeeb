@@ -1,9 +1,7 @@
-import { useState } from "react";
-
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-
+import { useState } from "react";
 import { TaskListDTO } from "../../application";
 import TaskGroup from "./TaskGroup";
 import styles from "./TaskGroup/task-group.module.css";
@@ -21,8 +19,9 @@ const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, task
             >
                 <KeyboardArrowDownSharpIcon color="action" />
             </div>
+
             <Typography variant="h2" sx={{ ml: 0.2 }}>
-                {title} - {tasksCount}
+                {title} - {tasksCount > 0 ? tasksCount : "There are no tasks for this list."}
             </Typography>
         </div>
     );
@@ -36,7 +35,7 @@ const TaskListContainer = styled("div")(
     `
 );
 
-const TaskList = ({ id, title = "", taskGroups = [], tasksCount = 0 }: TaskListDTO) => {
+const TaskList = ({ title = "", taskGroups = [], tasksCount = 0 }: TaskListDTO) => {
     const [isListExpanded, setIsListExpanded] = useState(true);
     const toggleListExpansion = () => setIsListExpanded((previous) => !previous);
 
