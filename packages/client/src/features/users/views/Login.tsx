@@ -84,7 +84,7 @@ const Login = () => {
             {
                 onSuccess(userProfile) {
                     if (canUserAccessAdminPanel(userProfile)) navigate("/admin");
-                    else navigate("/");
+                    else navigate("/projects");
                 },
             }
         );
