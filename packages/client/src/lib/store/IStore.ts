@@ -1,4 +1,4 @@
-import { UserProfileDTO } from "src/features/users/services/dto";
+import { UserProfileDTO } from "src/features/users/types/user.dto";
 
 export interface IStore {
     isTaskModalOpen: boolean;

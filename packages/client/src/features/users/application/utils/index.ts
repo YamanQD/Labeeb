@@ -1,4 +1,4 @@
-import { IUserProfile } from "../../domain/user";
+import { IUserProfile } from "../../types/user";
 
 export const decodeAccessTokens = (token: string): IUserProfile => {
     const tokenPayload = token.split(".")[1] ?? "";

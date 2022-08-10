@@ -11,8 +11,8 @@ import Typography from "@mui/material/Typography";
 import LanguageToggle from "src/components/Buttons/LanguageToggle";
 import { useStore } from "src/lib/store";
 
-import { useLogin } from "../application/login";
-import { canUserAccessAdminPanel } from "../domain/user";
+import { useLogin } from "../api/login";
+import { canUserAccessAdminPanel } from "../types/user";
 
 import styles from "./login.module.css";
 

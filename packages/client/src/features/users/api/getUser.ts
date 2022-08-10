@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
-
-import { userService } from "../../services";
+import { userService } from "../application";
 
 interface UseGetUserProps {
     id: number | undefined;

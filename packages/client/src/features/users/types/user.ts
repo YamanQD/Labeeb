@@ -1,6 +1,6 @@
 import { Role } from "@labeeb/core";
 
-import { permissions } from "./permissions";
+import { permissions } from "../application/permissions";
 
 export interface ILoginResponse {
     access_token: string;

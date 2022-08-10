@@ -9,9 +9,9 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 
-import { useDeleteUser } from "../../application/admin/deleteUser";
-import { useGetUsers } from "../../application/admin/getUsers";
-import { UserDTO } from "../../services/dto";
+import { useDeleteUser } from "../../api/deleteUser";
+import { useGetUsers } from "../../api/getUsers";
+import { UserDTO } from "../../types/user.dto";
 
 const DeleteUserButton = ({ id }: { id: number }) => {
     const { t } = useTranslation();

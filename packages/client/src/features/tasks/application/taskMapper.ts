@@ -1,4 +1,4 @@
-import { UserMapper } from "src/features/users/services/mappers";
+import { UserMapper } from "src/features/users/application/userMapper";
 import { ITask, ITaskDetails, ITaskList } from "../types/task";
 import { TaskDetailsDTO, TaskDTO, TaskGroupDTO, TaskListDTO } from "../types/task.dto";
 

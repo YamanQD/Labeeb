@@ -32,11 +32,10 @@ export class HTTPClient implements IHTTPClient {
         });
 
         const json = await this.requestHelper.responseToJSON(response);
-      
 
         if (!response.ok) {
             const error: APIError = {
-                message: json.message,
+                messages: json.message,
                 status: response.status,
             };
 

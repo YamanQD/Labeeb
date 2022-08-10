@@ -1,4 +1,4 @@
-import { IUser } from "src/features/users/domain/user";
+import { IUser } from "src/features/users/types/user";
 
 export enum ETaskPriority {
     NONE = "none",

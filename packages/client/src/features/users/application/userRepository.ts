@@ -1,8 +1,8 @@
 import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
 
-import { IUserRepository } from "../domain/IuserRepository";
-import { ILoginResponse, IUser } from "../domain/user";
-import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../services/dto";
+import { IUserRepository } from "./IuserRepository";
+import { ILoginResponse, IUser } from "../types/user";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../types/user.dto";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}

@@ -11,8 +11,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormContainer from "src/components/FormContainer";
-import { userRoles } from "src/features/users/application";
-import { useRegister } from "src/features/users/application/admin/register";
+import { userRoles } from "src/features/users/api";
+import { useRegister } from "src/features/users/api/register";
 
 interface FormFields {
     username: string;

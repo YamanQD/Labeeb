@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useStore } from "src/lib/store";
-import { permissions } from "src/features/users/domain/permissions";
+import { permissions } from "src/features/users/application/permissions";
 
 interface ProtectedRouteProps {
     children: JSX.Element;

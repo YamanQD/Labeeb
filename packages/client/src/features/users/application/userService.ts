@@ -1,6 +1,6 @@
-import { IUserRepository } from "../domain/IuserRepository";
-import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserProfileDTO } from "./dto";
-import { UserMapper } from "./mappers";
+import { IUserRepository } from "../application/IuserRepository";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserProfileDTO } from "../types/user.dto";
+import { UserMapper } from "./userMapper";
 import { decodeAccessTokens } from "./utils";
 
 export class UserService {

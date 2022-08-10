@@ -12,9 +12,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormContainer from "src/components/FormContainer";
-import { userRoles } from "src/features/users/application";
-import { useEditUser } from "../../application/admin/editUser";
-import { useGetUser } from "../../application/admin/getUser";
+import { userRoles } from "src/features/users/api";
+import { useEditUser } from "../../api/editUser";
+import { useGetUser } from "../../api/getUser";
 
 interface FormFields {
     username: string;

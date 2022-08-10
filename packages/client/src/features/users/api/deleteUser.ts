@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 
-import { userService } from "../../services";
+import { userService } from "../application";
 
 export const useDeleteUser = () => {
     const queryClient = useQueryClient();

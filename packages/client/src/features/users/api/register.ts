@@ -1,8 +1,7 @@
 import { useMutation } from "react-query";
 import { queryClient } from "src/lib/react-query";
-
-import { userService } from "../../services";
-import { CreateUserDTO } from "../../services/dto";
+import { userService } from "../application";
+import { CreateUserDTO } from "../types/user.dto";
 
 export const useRegister = () => {
     const mutation = useMutation(
