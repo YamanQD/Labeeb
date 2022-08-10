@@ -8,6 +8,7 @@ export interface IUserRepository {
     register(user: CreateUserDTO): Promise<void>;
     getUser(id: number): Promise<IUser>;
     getUsers(options: PaginatedRequestOptions): Promise<PaginatedResponse<IUser[]>>;
+    getUsersForProject(projectId: number): Promise<IUser[]>;
     editUser(user: EditUserDTO): Promise<void>;
     deleteUser(id: number): Promise<void>;
 }

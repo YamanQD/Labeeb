@@ -19,9 +19,16 @@ export class UserService {
 
     public async getUsers(page: number) {
         const users = await this.userRepository.getUsers({ page });
-        users.items = users.items.map((user) => UserMapper.userToDTO(user));
 
-        return users;
+        return {
+            ...users,
+            items: users.items.map((user) => UserMapper.userToDTO(user)),
+        };
+    }
+
+    public async getUsersForProject(projectId: number) {
+        const users = await this.userRepository.getUsersForProject(projectId);
+        return users.map((user) => UserMapper.userToDTO(user));
     }
 
     public async getUser(id: number) {

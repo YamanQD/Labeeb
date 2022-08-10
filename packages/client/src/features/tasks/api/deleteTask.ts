@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { tasksService } from "../application";
+import { TASKS_QUERY_KEY } from "./keys";
 
 export const useDeleteTask = () => {
     const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export const useDeleteTask = () => {
         {
             // The second argument is the same that the mutate function receives
             onSuccess(responseData, taskId) {
-                queryClient.invalidateQueries(["taskLists"]);
+                queryClient.invalidateQueries([TASKS_QUERY_KEY]);
             },
         }
     );

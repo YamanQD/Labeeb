@@ -93,7 +93,9 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                     }}
                 >
                     <span>{formatDate(deadline)}</span>
-                    {getDeadlineStatus(deadline) === "passed" && <ErrorIcon />}
+                    {getDeadlineStatus(deadline) === "passed" && (
+                        <ErrorIcon titleAccess="Deadline has passed!" />
+                    )}
                 </Grid>
             </Grid>
         </TaskContainer>

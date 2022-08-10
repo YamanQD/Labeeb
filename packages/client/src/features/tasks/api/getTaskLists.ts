@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 
 import { tasksService } from "../application";
+import { TASKS_QUERY_KEY } from "./keys";
 
 interface UseGetTaskListsProps {
     projectId: string | undefined;
@@ -26,7 +27,7 @@ export const useGetTaskLists = ({ projectId, listId, queryOptions = {} }: UseGet
 
     return useQuery(
         [
-            "taskLists",
+            TASKS_QUERY_KEY,
             {
                 projectId,
                 listId,

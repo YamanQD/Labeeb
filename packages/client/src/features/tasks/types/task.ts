@@ -41,6 +41,7 @@ export interface ITaskDetails extends ITask {
 
     createdAt: string;
     owner: IUser;
+    assignees: IUser[];
 }
 
 export interface ITaskTag {

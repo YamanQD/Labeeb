@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 
 import { tasksService } from "../application";
+import { TASKS_QUERY_KEY } from "./keys";
 
 interface UseGetTaskProps {
     id: number;
@@ -12,5 +13,5 @@ export const useGetTask = ({ id, queryOptions = {} }: UseGetTaskProps) => {
         return tasksService.getTask(id);
     };
 
-    return useQuery(["tasks", id], fetchTask, queryOptions);
+    return useQuery([TASKS_QUERY_KEY, { id }], fetchTask, queryOptions);
 };

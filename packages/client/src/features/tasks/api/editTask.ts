@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 
 import { EditTaskDTO, tasksService } from "../application";
+import { TASKS_QUERY_KEY } from "./keys";
 
 export const useEditTask = () => {
     const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export const useEditTask = () => {
         {
             // The second argument is the same that the mutate function receives
             onSuccess(responseData, editedTask) {
-                queryClient.invalidateQueries(["taskLists"]);
+                queryClient.invalidateQueries([TASKS_QUERY_KEY]);
             },
         }
     );

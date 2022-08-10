@@ -18,8 +18,18 @@ export class TaskMapper {
     }
 
     static taskDetailsToDTO(taskDetails: ITaskDetails): TaskDetailsDTO {
-        const { id, title, description, priority, deadline, tags, status, createdAt, owner } =
-            taskDetails;
+        const {
+            id,
+            title,
+            description,
+            priority,
+            deadline,
+            tags,
+            status,
+            createdAt,
+            owner,
+            assignees,
+        } = taskDetails;
         return {
             id,
             title,
@@ -28,6 +38,7 @@ export class TaskMapper {
             status,
             deadline: new Date(deadline),
             priority,
+            assignees,
 
             projectId: taskDetails.list.project.id,
             listId: taskDetails.list.id,

@@ -51,6 +51,15 @@ export class UserRepository implements IUserRepository {
         return response;
     }
 
+    public async getUsersForProject(projectId: number): Promise<IUser[]> {
+        const response = await this.httpClient.request<Promise<IUser[]>>({
+            path: `/projects/${projectId}/users`,
+            method: "GET"
+        });
+
+        return response;
+    }
+
     public async editUser(user: EditUserDTO): Promise<void> {
         await this.httpClient.request<Promise<void>>({
             path: `/users/${user.id}`,

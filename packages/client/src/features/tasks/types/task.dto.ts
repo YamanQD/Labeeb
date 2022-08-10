@@ -6,6 +6,7 @@ export interface TaskDetailsDTO extends TaskDTO {
     projectId: number;
     createdAt: Date;
     owner: UserDTO;
+    assignees: UserDTO[];
 }
 
 export interface TaskStatusDTO {
