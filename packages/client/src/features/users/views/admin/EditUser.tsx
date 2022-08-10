@@ -118,7 +118,7 @@ const EditUser = () => {
                             type="password"
                             {...register("oldPassword", {
                                 validate: (value) =>
-                                    value === getValues().newPassword ||
+                                    value !== getValues().newPassword ||
                                     t("users.password_unchanged"),
                             })}
                             error={!!errors.oldPassword}
@@ -132,7 +132,7 @@ const EditUser = () => {
                             type="password"
                             {...register("newPassword", {
                                 validate: (value) =>
-                                    value === getValues().oldPassword ||
+                                    value !== getValues().oldPassword ||
                                     t("users.password_unchanged"),
                             })}
                             error={!!errors.newPassword}
