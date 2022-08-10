@@ -1,6 +1,6 @@
-import { IProjectRepository } from "../domain/IprojectRepository";
-import { ProjectDTO } from "./dto";
-import { ProjectsMapper } from "./mappers";
+import { IProjectRepository } from "./IprojectRepository";
+import { ProjectDTO } from "../types/project.dto";
+import { ProjectsMapper } from "./projectMapper";
 
 export class ProjectService {
     constructor(private projectRepository: IProjectRepository) {}

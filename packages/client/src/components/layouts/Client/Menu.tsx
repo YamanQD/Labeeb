@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "../../Sidebar/MenuItem";
 import MenuItemChild from "../../Sidebar/MenuItemChild";
 
-import { useGetProjects } from "src/features/projects/application/getProjects";
+import { useGetProjects } from "src/features/projects/api/getProjects";
 
 const ClientSidebarMenu = () => {
     const { t } = useTranslation();

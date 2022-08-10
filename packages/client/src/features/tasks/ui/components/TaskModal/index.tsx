@@ -12,12 +12,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useGetProjects } from "src/features/projects/application/getProjects";
-import { ProjectDTO } from "src/features/projects/services/dto";
+import { useGetProjects } from "src/features/projects/api/getProjects";
+import { ProjectDTO } from "src/features/projects/types/project.dto";
 import { useAddTask, useGetTask } from "src/features/tasks/api";
 import { useDeleteTask } from "src/features/tasks/api/deleteTask";
 import { useEditTask } from "src/features/tasks/api/editTask";
-import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/types/task";
+import { formatDate } from "src/features/tasks/application";
+import { ETaskPriority, taskPriorities } from "src/features/tasks/types/task";
 import { useStore } from "src/lib/store";
 import DeleteTaskButton from "./DeleteTaskButton";
 

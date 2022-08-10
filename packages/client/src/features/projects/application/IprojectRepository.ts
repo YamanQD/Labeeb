@@ -1,4 +1,4 @@
-import { IProject } from "./project";
+import { IProject } from "../types/project";
 
 export interface IProjectRepository {
     /**

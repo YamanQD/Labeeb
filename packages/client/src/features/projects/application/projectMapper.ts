@@ -1,5 +1,5 @@
-import { IProject, IProjectList } from "../../domain/project";
-import { ProjectDTO, ProjectListDTO } from "../dto";
+import { IProject, IProjectList } from "../types/project";
+import { ProjectDTO, ProjectListDTO } from "../types/project.dto";
 
 export class ProjectsMapper {
     static projectToDTO(project: IProject): ProjectDTO {

@@ -1,6 +1,6 @@
 import { IHTTPClient } from "src/lib/http/IhttpClient";
 
-import { IProject } from "../domain/project";
+import { IProject } from "../types/project";
 
 export class ProjectRepository {
     constructor(private httpClient: IHTTPClient) {}

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { projectsService } from "../services";
+import { projectsService } from "../application";
 
 interface UseGetProjects {
     queryOptions?: Object;
