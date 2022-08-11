@@ -43,6 +43,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { mutateAsync: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
     const taskId = useStore((state) => state.currentTaskId);
+    const toggleMotivationModal = useStore((state) => state.toggleMotivationModal);
 
     /**
      * Before fetching task data, we have to wait for the projects list to be loaded
@@ -87,7 +88,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             projectId: "",
             listId: "",
             status: "",
-            tags: [""],
+            tags: [],
             assignees: [],
             priority: ETaskPriority.HIGH,
         },
@@ -157,15 +158,21 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             });
 
             closeModal();
-            toast(t("tasks.edit_success"), {
+            toast.success(t("tasks.edit_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
         } else {
             await addTaskMutate(taskData);
             closeModal();
-            toast(t("tasks.add_success"), {
+            toast.success(t("tasks.add_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
+        }
+
+        if (data.status === selectedProjectInfo?.finalStatus) {
+            toggleMotivationModal(true);
         }
     };
 
@@ -173,8 +180,9 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         if (taskId) {
             await deleteTaskMutate(taskId);
             closeModal();
-            toast(t("tasks.delete_success"), {
+            toast.success(t("tasks.delete_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
         }
     };

@@ -2607,6 +2607,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/canvas-confetti@npm:^1":
+  version: 1.4.3
+  resolution: "@types/canvas-confetti@npm:1.4.3"
+  checksum: 2f74b7fd7355c6cb296b03e6f9f3ac4b3a25e883b85b50ecb61bb7cd11faafd3bdb0cd869c2b50b9f3421c11db251d240f54b1b4ffd59777992e067690c29551
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.35
   resolution: "@types/connect@npm:3.4.35"
@@ -3845,6 +3852,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"canvas-confetti@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "canvas-confetti@npm:1.5.1"
+  checksum: e5932e34261615d629aac24aebad0472dd01c6cc3a3d6460ef37ab81eb533a2fdcec1cd842fcad6275f907fe378fc71cc90c91e1f997df63b0865ec2d5783ad8
+  languageName: node
+  linkType: hard
+
 "chalk@npm:3.0.0":
   version: 3.0.0
   resolution: "chalk@npm:3.0.0"
@@ -4010,11 +4024,13 @@ __metadata:
     "@mui/icons-material": ^5.6.2
     "@mui/material": ^5.6.2
     "@mui/x-data-grid": ^5.14.0
+    "@types/canvas-confetti": ^1
     "@types/node": ^16.7.13
     "@types/prop-types": ^15
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.0
     "@vitejs/plugin-react": ^2.0.0
+    canvas-confetti: ^1.5.1
     eslint: ^8.14.0
     eslint-config-react-app: ^7.0.1
     i18next: ^21.6.16

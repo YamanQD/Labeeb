@@ -41,7 +41,7 @@ const Tasks = () => {
                 </Typography>
                 <img
                     alt=""
-                    src="/static/images/projects/select_a_project.svg"
+                    src="/images/projects/select_a_project.svg"
                     style={{
                         width: "50%",
                         margin: "0 auto",
