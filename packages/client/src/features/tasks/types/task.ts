@@ -1,3 +1,4 @@
+import { IProjectList } from "src/features/lists/types/list";
 import { IUser } from "src/features/users/types/user";
 
 export enum ETaskPriority {
@@ -30,14 +31,7 @@ export const taskPriorities = [
 ];
 
 export interface ITaskDetails extends ITask {
-    list: {
-        id: number;
-        title: string;
-        project: {
-            id: number;
-            title: string;
-        };
-    };
+    list: IProjectList;
 
     createdAt: string;
     owner: IUser;

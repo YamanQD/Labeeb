@@ -16,6 +16,18 @@ const AdminSidebarMenu = () => {
             title: t("sidebar.users"),
             route: "/admin/users",
         },
+
+        {
+            id: 2,
+            title: "Projects",
+            route: "/admin/projects"
+        },
+
+        {
+            id: 3,
+            title: "Lists",
+            route: "/admin/lists"
+        }
     ];
     
     return (
