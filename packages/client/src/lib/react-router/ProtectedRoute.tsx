@@ -1,3 +1,4 @@
+import { Role } from "@labeeb/core";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { permissions } from "src/features/users/application/permissions";
@@ -22,7 +23,9 @@ const ProtectedRoute = ({ children, peopleWhoCanAccess = "ALL_USERS" }: Protecte
         position: toast.POSITION.BOTTOM_LEFT,
         type: "error",
     });
-    return <Navigate to="/projects" />;
+
+    if (user.role === Role.EMPLOYEE) return <Navigate to="/" />;
+    return <Navigate to="/admin" />;
 };
 
 export default ProtectedRoute;
