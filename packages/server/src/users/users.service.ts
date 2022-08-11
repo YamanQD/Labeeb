@@ -13,7 +13,11 @@ export class UsersService {
 	constructor(
 		@InjectRepository(User)
 		private usersRepository: Repository<User>,
-	) {}
+	) { }
+
+	async findAll() {
+		return await this.usersRepository.find();
+	}
 
 	async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
 		return paginate<User>(this.usersRepository, options);
@@ -33,9 +37,9 @@ export class UsersService {
 	async findById(id: number, withPassword = false) {
 		return withPassword
 			? await this.usersRepository.findOne({
-					where: { id },
-					select: ['password', 'username', 'id', 'role'],
-			  })
+				where: { id },
+				select: ['password', 'username', 'id', 'role'],
+			})
 			: await this.usersRepository.findOne({ where: { id } });
 	}
 
@@ -46,9 +50,9 @@ export class UsersService {
 	async findByEmail(email: string, withPassword = false) {
 		return withPassword
 			? await this.usersRepository.findOne({
-					where: { email },
-					select: ['password', 'username', 'id', 'role'],
-			  })
+				where: { email },
+				select: ['password', 'username', 'id', 'role'],
+			})
 			: await this.usersRepository.findOne({ where: { email } });
 	}
 
