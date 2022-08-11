@@ -1,8 +1,6 @@
-import { useMutation } from "react-query";
-
+import { useMutation } from "@tanstack/react-query";
 import { APIError } from "src/lib/http/IhttpClient";
 import { useStore } from "src/lib/store";
-
 import { userService } from "../application";
 import { UserCredentialsDTO, UserProfileDTO } from "../types/user.dto";
 

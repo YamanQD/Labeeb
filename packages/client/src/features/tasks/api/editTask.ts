@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { EditTaskDTO, tasksService } from "../application";
 import { TASKS_QUERY_KEY } from "./keys";
 

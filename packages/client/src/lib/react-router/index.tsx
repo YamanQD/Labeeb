@@ -1,11 +1,11 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AdminLayout from "src/components/layouts/Admin";
 import ClientLayout from "src/components/layouts/Client";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { HTTPClient } from "src/lib/http/httpClient";
 import ProtectedRoute from "./ProtectedRoute";
-import { toast } from "react-toastify";
 
 const httpClient = HTTPClient.getInstance();
 
@@ -38,8 +38,8 @@ const HandleAPIErrors = () => {
             }
 
             toast.error(error.messages[0], {
-                position: toast.POSITION.BOTTOM_LEFT
-            })
+                position: toast.POSITION.BOTTOM_LEFT,
+            });
         });
 
         return () => unsubscribe();

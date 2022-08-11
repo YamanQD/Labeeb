@@ -1,6 +1,6 @@
-import { useQuery } from "react-query";
-
+import { useQuery } from "@tanstack/react-query";
 import { projectsService } from "../application";
+
 
 interface UseGetProjects {
     queryOptions?: Object;

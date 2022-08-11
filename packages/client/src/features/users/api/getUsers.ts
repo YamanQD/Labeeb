@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { PaginatedResponse } from "src/lib/http/IhttpClient";
 import { userService } from "../application";
 import { UserDTO } from "../types/user.dto";

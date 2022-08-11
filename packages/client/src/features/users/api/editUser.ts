@@ -1,5 +1,4 @@
-import { useMutation } from "react-query";
-
+import { useMutation } from "@tanstack/react-query";
 import { userService } from "../application";
 import { EditUserDTO } from "../types/user.dto";
 
@@ -9,4 +8,4 @@ export const useEditUser = () => {
     });
 
     return mutation;
-}
+};

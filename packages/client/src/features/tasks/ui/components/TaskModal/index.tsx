@@ -54,7 +54,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
      */
     const {
         data: taskData,
-        isLoading: isGetTaskLoading,
+        isFetching: isGetTaskFetching,
         isSuccess: isTaskDataLoaded,
     } = useGetTask({
         id: taskId ?? 1,
@@ -71,7 +71,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         selectedProjectInfo?.users.filter((user) => user.role === Role.EMPLOYEE) ?? [];
 
     const isLoading =
-        isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
+        isGetTaskFetching || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
 
     const {
         register,

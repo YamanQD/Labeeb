@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import { QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ const App = () => {
                 <ThemeProvider>
                     <CssBaseline />
                     <ApplicationRoutes />
-                    <ToastContainer  />
+                    <ToastContainer />
                     <MotivationModal />
                 </ThemeProvider>
             </QueryClientProvider>

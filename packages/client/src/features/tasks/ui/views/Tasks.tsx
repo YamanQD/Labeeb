@@ -21,6 +21,7 @@ const Tasks = () => {
         data: taskLists,
         isLoading,
         isError,
+        isSuccess,
     } = useGetTaskLists({
         projectId,
         listId,
@@ -29,11 +30,11 @@ const Tasks = () => {
         },
     });
 
+    console.log(isSuccess);
+
     let content;
 
-    if (isLoading) content = <SuspenseLoader />;
-    else if (isError) content = <p>{t("tasks.loading_error")}</p>;
-    else if (!isQueryEnabled)
+    if (!isQueryEnabled)
         content = (
             <Stack>
                 <Typography variant="h2" component="h2" mb={10}>
@@ -50,6 +51,8 @@ const Tasks = () => {
                 />
             </Stack>
         );
+    else if (isLoading) content = <SuspenseLoader />;
+    else if (isError) content = <p>{t("tasks.loading_error")}</p>;
     else
         content = (
             <>
