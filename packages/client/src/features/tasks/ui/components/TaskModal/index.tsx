@@ -299,11 +299,25 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             variant="standard"
                                             {...field}
                                         >
-                                            {statuses?.map((status, index) => (
-                                                <MenuItem key={index} value={status.title}>
-                                                    {status.title}
-                                                </MenuItem>
-                                            ))}
+                                            {statuses?.map((status, index) => {
+                                                const isStatusFinal =
+                                                    status.title ===
+                                                    selectedProjectInfo?.finalStatus;
+
+                                                return (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={status.title}
+                                                        style={{
+                                                            fontWeight: isStatusFinal
+                                                                ? "bold"
+                                                                : "normal",
+                                                        }}
+                                                    >
+                                                        {status.title} {isStatusFinal && "(Final)"}
+                                                    </MenuItem>
+                                                );
+                                            })}
                                         </TextField>
                                     )}
                                 />
