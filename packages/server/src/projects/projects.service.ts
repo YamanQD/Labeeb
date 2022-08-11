@@ -24,6 +24,18 @@ export class ProjectsService {
 		private mailService: MailService,
 	) { }
 
+	async isProjectUser(projectId: number, userId: number): Promise<boolean> {
+		const project = await this.projectRepository.findOne({
+			where: { id: projectId },
+			relations: ['users'],
+		});
+		if (!project) {
+			throw new NotFoundException(['Project not found']);
+		}
+
+		return project.users.some((u) => u.id === userId);
+	}
+
 	async findAll(): Promise<any> {
 		const projects = await this.projectRepository.find({
 			relations: ['lists', 'lists.tasks', 'statuses', 'tags', 'users'],
