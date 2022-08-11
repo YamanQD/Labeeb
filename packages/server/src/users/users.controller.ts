@@ -1,5 +1,7 @@
+import { Role } from '@labeeb/core';
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { Roles } from 'src/auth/roles.decorator';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
@@ -8,7 +10,8 @@ import { UsersService } from './users.service';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) { }
 
-	@Get('')
+	@Roles(Role.SO, Role.OM)
+	@Get()
 	async index(
 		@Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
 		@Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
@@ -21,16 +24,19 @@ export class UsersController {
 		});
 	}
 
+	@Roles(Role.SO, Role.OM)
 	@Get('/:id')
 	async findOne(@Param('id') id: number): Promise<User> {
 		return await this.usersService.findById(id);
 	}
 
+	@Roles(Role.SO, Role.OM)
 	@Patch('/:id')
 	async update(@Param('id') id: number, @Body() body: UpdateUserDto): Promise<User> {
 		return await this.usersService.update(id, body);
 	}
 
+	@Roles(Role.SO, Role.OM)
 	@Delete('/:id')
 	@HttpCode(HttpStatus.ACCEPTED)
 	async delete(@Param('id') id: number): Promise<void> {
