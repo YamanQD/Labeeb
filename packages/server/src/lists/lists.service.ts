@@ -26,6 +26,10 @@ export class ListsService {
 		return await this.listRepository.save({ ...list, project });
 	}
 
+	async findAll(): Promise<List[]> {
+		return await this.listRepository.find({ relations: ['project'] });
+	}
+
 	async findOne(id: number): Promise<List> {
 		const list = await this.listRepository.findOne({
 			where: { id },

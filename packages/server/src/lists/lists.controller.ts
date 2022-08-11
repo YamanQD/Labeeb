@@ -8,6 +8,11 @@ import { ListsService } from './lists.service';
 export class ListsController {
 	constructor(private readonly listsService: ListsService) { }
 
+	@Get()
+	async findAll(): Promise<List[]> {
+		return await this.listsService.findAll();
+	}
+
 	@Get(':id')
 	async findOne(@Param('id') id: number): Promise<List> {
 		return await this.listsService.findOne(id);
