@@ -1,8 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-import { useStore } from "src/lib/store";
 import { permissions } from "src/features/users/application/permissions";
+import { useStore } from "src/lib/store";
 
 interface ProtectedRouteProps {
     children: JSX.Element;
@@ -14,16 +13,15 @@ const ProtectedRoute = ({ children, peopleWhoCanAccess = "ALL_USERS" }: Protecte
     const roles = permissions[peopleWhoCanAccess];
 
     if (!user) {
-        toast("Sorry, you have to log in first", {
+        toast.error("Sorry, you have to log in first", {
             position: toast.POSITION.BOTTOM_LEFT,
-            type: "error",
         });
         return <Navigate to="/login" />;
     }
 
     if (roles.some((role) => user.role === role)) return children;
 
-    toast("Sorry, you don't have enough permissions", {
+    toast.warn("Sorry, you don't have enough permissions", {
         position: toast.POSITION.BOTTOM_LEFT,
         type: "error",
     });

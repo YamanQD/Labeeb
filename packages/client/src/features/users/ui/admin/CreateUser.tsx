@@ -44,8 +44,9 @@ const CreateUser = () => {
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         mutate(data, {
             onSuccess() {
-                toast(t("users.add_success"), {
+                toast.success(t("users.add_success"), {
                     position: toast.POSITION.BOTTOM_LEFT,
+                    icon: "🚀"
                 });
 
                 navigate("/admin/users");

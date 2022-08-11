@@ -20,8 +20,9 @@ const DeleteUserButton = ({ id }: { id: number }) => {
     const deleteUser = () => {
         mutate(id, {
             onSuccess() {
-                toast(t("users.delete_success"), {
+                toast.success(t("users.delete_success"), {
                     position: toast.POSITION.BOTTOM_LEFT,
+                    icon: "🚀"
                 });
             },
         });

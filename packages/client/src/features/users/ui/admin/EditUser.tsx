@@ -57,8 +57,9 @@ const EditUser = () => {
             },
             {
                 onSuccess() {
-                    toast(t("users.edit_success"), {
+                    toast.success(t("users.edit_success"), {
                         position: toast.POSITION.BOTTOM_LEFT,
+                        icon: "🚀"
                     });
                     navigate("/admin/users");
                 },
