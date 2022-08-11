@@ -1,3 +1,4 @@
+import { Role } from '@labeeb/core';
 import {
 	Body,
 	Controller,
@@ -12,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { Roles } from 'src/auth/roles.decorator';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
@@ -22,6 +24,7 @@ import { TasksService } from './tasks.service';
 export class TasksController {
 	constructor(private readonly tasksService: TasksService) { }
 
+	@Roles(Role.SO, Role.OM)
 	@Get()
 	async findAll(): Promise<Task[]> {
 		return await this.tasksService.findAll();
