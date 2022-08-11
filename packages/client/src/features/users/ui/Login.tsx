@@ -84,14 +84,14 @@ const Login = () => {
             {
                 onSuccess(userProfile) {
                     if (canUserAccessAdminPanel(userProfile)) navigate("/admin");
-                    else navigate("/projects");
+                    else navigate("/");
                 },
             }
         );
     };
 
     // Redirect logged in users to /
-    if (userProfile) return <Navigate to="/projects" />;
+    if (userProfile) return <Navigate to="/" />;
 
     return (
         <LoginPageContainer>

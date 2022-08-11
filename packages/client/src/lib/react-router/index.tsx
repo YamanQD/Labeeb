@@ -61,7 +61,7 @@ export const ApplicationRoutes = () => {
                         </ProtectedRoute>
                     }
                 >
-                    <Route path="projects" element={<Tasks />} />
+                    <Route index element={<Tasks />} />
                     <Route path="projects/:projectId" element={<Tasks />} />
                     <Route path="projects/:projectId/lists/:listId" element={<Tasks />} />
                 </Route>
