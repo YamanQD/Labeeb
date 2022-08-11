@@ -13,9 +13,6 @@ const ProtectedRoute = ({ children, peopleWhoCanAccess = "ALL_USERS" }: Protecte
     const roles = permissions[peopleWhoCanAccess];
 
     if (!user) {
-        toast.error("Sorry, you have to log in first", {
-            position: toast.POSITION.BOTTOM_LEFT,
-        });
         return <Navigate to="/login" />;
     }
 
