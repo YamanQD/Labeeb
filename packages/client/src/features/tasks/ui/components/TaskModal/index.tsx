@@ -1,8 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-
+import { Role } from "@labeeb/core";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -13,15 +9,18 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-
-import { useGetProjects } from "src/features/projects/application/getProjects";
-import { ProjectDTO } from "src/features/projects/services/dto";
-import { useAddTask, useGetTask } from "src/features/tasks/application";
-import { useDeleteTask } from "src/features/tasks/application/deleteTask";
-import { useEditTask } from "src/features/tasks/application/editTask";
-import { ETaskPriority, formatDate, taskPriorities } from "src/features/tasks/domain/task";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import { useGetProjects } from "src/features/projects/api/getProjects";
+import { ProjectDTO } from "src/features/projects/types/project.dto";
+import { useAddTask, useGetTask } from "src/features/tasks/api";
+import { useDeleteTask } from "src/features/tasks/api/deleteTask";
+import { useEditTask } from "src/features/tasks/api/editTask";
+import { formatDate } from "src/features/tasks/application";
+import { ETaskPriority, taskPriorities } from "src/features/tasks/types/task";
 import { useStore } from "src/lib/store";
-
 import DeleteTaskButton from "./DeleteTaskButton";
 
 interface FormFields {
@@ -31,6 +30,7 @@ interface FormFields {
     projectId: number | string;
     status: string;
     tags: string[];
+    assignees: number[];
     priority: ETaskPriority;
     deadline: string;
 }
@@ -43,6 +43,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const { mutateAsync: deleteTaskMutate, isLoading: isDeleteTaskLoading } = useDeleteTask();
 
     const taskId = useStore((state) => state.currentTaskId);
+    const toggleMotivationModal = useStore((state) => state.toggleMotivationModal);
 
     /**
      * Before fetching task data, we have to wait for the projects list to be loaded
@@ -51,7 +52,11 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
      * When the projects list is empty, even if I set it this way the title of the project
      * won't appear in the form because there are no option elements.
      */
-    const { data: taskData, isLoading: isGetTaskLoading } = useGetTask({
+    const {
+        data: taskData,
+        isFetching: isGetTaskFetching,
+        isSuccess: isTaskDataLoaded,
+    } = useGetTask({
         id: taskId ?? 1,
         queryOptions: {
             enabled: !!taskId && !!projects,
@@ -62,10 +67,11 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
     const lists = selectedProjectInfo?.lists ?? [];
     const statuses = selectedProjectInfo?.statuses ?? [];
     const tags = selectedProjectInfo?.tags ?? [];
+    const assignees =
+        selectedProjectInfo?.users.filter((user) => user.role === Role.EMPLOYEE) ?? [];
 
     const isLoading =
-        isGetTaskLoading || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
-    const isUserViewingATask = taskData != null;
+        isGetTaskFetching || isAddTaskLoading || isDeleteTaskLoading || isEditTaskLoading;
 
     const {
         register,
@@ -82,7 +88,8 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             projectId: "",
             listId: "",
             status: "",
-            tags: [""],
+            tags: [],
+            assignees: [],
             priority: ETaskPriority.HIGH,
         },
     });
@@ -93,30 +100,41 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
             const lists = selectedProject?.lists ?? [];
             const statuses = selectedProject?.statuses ?? [];
-            const tags = selectedProject?.tags ?? [];
 
             setValue("listId", lists[0]?.id ?? "");
             setValue("status", statuses[0]?.title ?? "");
-            setValue("tags", [tags[0]?.title ?? ""]);
             setSelectedProjectInfo(selectedProject);
         },
         [projects, setValue]
     );
 
     useEffect(() => {
-        if (isUserViewingATask) {
-            const { title, status, priority, description, projectId, listId, deadline, tags } =
-                taskData;
+        if (isTaskDataLoaded) {
+            const {
+                title,
+                status,
+                priority,
+                description,
+                projectId,
+                listId,
+                deadline,
+                tags,
+                assignees,
+            } = taskData;
             setValue("projectId", projectId);
             // It's important to update these fields before assigning their default values.
             updateListAndStatusFieldsOfProject(projectId);
 
             setValue("title", title);
-            setValue("status", status);
+            setValue("status", status.title);
             setValue("priority", priority);
             setValue(
                 "tags",
                 tags.map((tag) => tag.title)
+            );
+            setValue(
+                "assignees",
+                assignees.map((assignee) => assignee.id)
             );
             setValue("deadline", formatDate(deadline));
             setValue("description", description ?? "");
@@ -124,7 +142,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         } else {
             reset();
         }
-    }, [taskData, isUserViewingATask, setValue, updateListAndStatusFieldsOfProject, reset]);
+    }, [taskData, isTaskDataLoaded, setValue, updateListAndStatusFieldsOfProject, reset]);
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         const taskData = {
@@ -140,15 +158,21 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             });
 
             closeModal();
-            toast(t("tasks.edit_success"), {
+            toast.success(t("tasks.edit_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
         } else {
             await addTaskMutate(taskData);
             closeModal();
-            toast(t("tasks.add_success"), {
+            toast.success(t("tasks.add_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
+        }
+
+        if (data.status === selectedProjectInfo?.finalStatus) {
+            toggleMotivationModal(true);
         }
     };
 
@@ -156,23 +180,24 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         if (taskId) {
             await deleteTaskMutate(taskId);
             closeModal();
-            toast(t("tasks.delete_success"), {
+            toast.success(t("tasks.delete_success"), {
                 position: toast.POSITION.BOTTOM_LEFT,
+                icon: "🚀",
             });
         }
     };
 
     return (
-        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="md">
+        <Dialog open={open} onClose={closeModal} fullWidth={true} maxWidth="xl">
             <DialogTitle>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span>
                         {taskId ? `${t("tasks.single_task")} #${taskId}` : t("tasks.add_task")}
                     </span>
-                    {isUserViewingATask && <DeleteTaskButton onConfirmation={deleteTask} />}
+                    {isTaskDataLoaded && <DeleteTaskButton onConfirmation={deleteTask} />}
                 </div>
 
-                {isUserViewingATask && (
+                {isTaskDataLoaded && (
                     <div>
                         <div>Task created by {taskData.owner.username}</div>
                         <div>At {formatDate(taskData.createdAt)} </div>
@@ -181,8 +206,8 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             </DialogTitle>
             <DialogContent>
                 <form noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={8}>
+                    <Grid container spacing={2} mb={5}>
+                        <Grid item xs={5}>
                             <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
                                 <TextField
                                     InputLabelProps={{
@@ -236,7 +261,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                 />
                             </Stack>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={5}>
                             <Stack style={{ justifyContent: "space-between", height: "100%" }}>
                                 <Controller
                                     control={control}
@@ -274,34 +299,25 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             variant="standard"
                                             {...field}
                                         >
-                                            {statuses?.map((status, index) => (
-                                                <MenuItem key={index} value={status.title}>
-                                                    {status.title}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    )}
-                                />
+                                            {statuses?.map((status, index) => {
+                                                const isStatusFinal =
+                                                    status.title ===
+                                                    selectedProjectInfo?.finalStatus;
 
-                                <Controller
-                                    control={control}
-                                    name="tags"
-                                    render={({ field }) => (
-                                        <TextField
-                                            margin="normal"
-                                            label="Tags"
-                                            select
-                                            variant="standard"
-                                            SelectProps={{
-                                                multiple: true,
-                                            }}
-                                            {...field}
-                                        >
-                                            {tags.map((tag) => (
-                                                <MenuItem key={tag.title} value={tag.title}>
-                                                    {tag.title}
-                                                </MenuItem>
-                                            ))}
+                                                return (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={status.title}
+                                                        style={{
+                                                            fontWeight: isStatusFinal
+                                                                ? "bold"
+                                                                : "normal",
+                                                        }}
+                                                    >
+                                                        {status.title} {isStatusFinal && "(Final)"}
+                                                    </MenuItem>
+                                                );
+                                            })}
                                         </TextField>
                                     )}
                                 />
@@ -343,6 +359,65 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                             helperText={errors?.deadline?.message}
                                             {...field}
                                         />
+                                    )}
+                                />
+                            </Stack>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={5}>
+                            <Stack direction="column" sx={{ width: "100%" }}>
+                                <Controller
+                                    control={control}
+                                    name="tags"
+                                    render={({ field }) => (
+                                        <TextField
+                                            margin="normal"
+                                            label="Tags"
+                                            select
+                                            variant="standard"
+                                            SelectProps={{
+                                                multiple: true,
+                                            }}
+                                            {...field}
+                                        >
+                                            {tags.map((tag) => (
+                                                <MenuItem key={tag.title} value={tag.title}>
+                                                    {tag.title}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    )}
+                                />
+                            </Stack>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Stack direction="column" sx={{ width: "100%" }}>
+                                <Controller
+                                    control={control}
+                                    name="assignees"
+                                    render={({ field }) => (
+                                        <TextField
+                                            margin="normal"
+                                            label="Assignees"
+                                            select
+                                            variant="standard"
+                                            SelectProps={{
+                                                multiple: true,
+                                            }}
+                                            {...field}
+                                        >
+                                            {assignees.map((assignee) => (
+                                                <MenuItem
+                                                    key={assignee.username}
+                                                    value={assignee.id}
+                                                >
+                                                    {assignee.username}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
                                     )}
                                 />
                             </Stack>

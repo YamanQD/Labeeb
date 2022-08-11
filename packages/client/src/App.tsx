@@ -1,17 +1,14 @@
-import { QueryClientProvider } from "react-query";
+import { CssBaseline } from "@mui/material";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
-import { CssBaseline } from "@mui/material";
-
+import "react-toastify/dist/ReactToastify.css";
 import { queryClient } from "src/lib/react-query";
-
+import MotivationModal from "./components/MotivationModal";
+import "./index.css";
 import "./lib/react-i18n";
 import { ApplicationRoutes } from "./lib/react-router";
 import ThemeProvider from "./theme/ThemeProvider";
-
-import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
 
 const App = () => {
     return (
@@ -21,6 +18,7 @@ const App = () => {
                     <CssBaseline />
                     <ApplicationRoutes />
                     <ToastContainer />
+                    <MotivationModal />
                 </ThemeProvider>
             </QueryClientProvider>
         </BrowserRouter>

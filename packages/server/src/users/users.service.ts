@@ -1,22 +1,19 @@
+import { faker } from '@faker-js/faker';
+import { Role } from '@labeeb/core';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role } from '@labeeb/core';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import {
-	paginate,
-	Pagination,
-	IPaginationOptions,
-} from 'nestjs-typeorm-paginate';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { RegisterDto } from 'src/auth/dto/register-dto';
+import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user-dto';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
 	constructor(
 		@InjectRepository(User)
 		private usersRepository: Repository<User>,
-	) { }
+	) {}
 
 	async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
 		return paginate<User>(this.usersRepository, options);
@@ -34,9 +31,12 @@ export class UsersService {
 	}
 
 	async findById(id: number, withPassword = false) {
-		return withPassword ?
-			await this.usersRepository.findOne({ where: { id }, select: ['password', 'username', 'id', 'role'] }) :
-			await this.usersRepository.findOne({ where: { id } });
+		return withPassword
+			? await this.usersRepository.findOne({
+					where: { id },
+					select: ['password', 'username', 'id', 'role'],
+			  })
+			: await this.usersRepository.findOne({ where: { id } });
 	}
 
 	async findByUsername(username: string) {
@@ -44,9 +44,12 @@ export class UsersService {
 	}
 
 	async findByEmail(email: string, withPassword = false) {
-		return withPassword ?
-			await this.usersRepository.findOne({ where: { email }, select: ['password', 'username', 'id', 'role'] }) :
-			await this.usersRepository.findOne({ where: { email } });
+		return withPassword
+			? await this.usersRepository.findOne({
+					where: { email },
+					select: ['password', 'username', 'id', 'role'],
+			  })
+			: await this.usersRepository.findOne({ where: { email } });
 	}
 
 	async update(id: number, body: UpdateUserDto) {
@@ -125,14 +128,25 @@ export class UsersService {
 			},
 		];
 
-		await users.forEach(async (user) => {
-			const newUser = new User();
-			newUser.username = user.username;
-			newUser.password = user.password;
-			newUser.email = user.email;
-			newUser.role = user.role;
+		for (let i = 0; i < 20; i++) {
+			users.push({
+				username: faker.random.word(),
+				password: faker.random.word(),
+				email: `${faker.random.word()}@gmail.com`,
+				role: Role.EMPLOYEE,
+			});
+		}
 
-			await this.create(newUser);
-		});
+		await Promise.all(
+			users.map(async (user) => {
+				const newUser = new User();
+				newUser.username = user.username;
+				newUser.password = user.password;
+				newUser.email = user.email;
+				newUser.role = user.role;
+
+				await this.create(newUser);
+			}),
+		);
 	}
 }

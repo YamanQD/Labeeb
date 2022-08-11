@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import LogoutButton from "src/components/Buttons/LogoutButton";
 import SwitchLayoutButton from "src/components/Buttons/SwitchLayout";
 import { useStore } from "src/lib/store";
-import { canUserAccessAdminPanel } from "src/features/users/domain/user";
+import { canUserAccessAdminPanel } from "src/features/users/types/user";
 
 import Header from "../../Header";
 import Sidebar from "../../Sidebar";

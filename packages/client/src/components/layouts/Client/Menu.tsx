@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "../../Sidebar/MenuItem";
 import MenuItemChild from "../../Sidebar/MenuItemChild";
 
-import { useGetProjects } from "src/features/projects/application/getProjects";
+import { useGetProjects } from "src/features/projects/api/getProjects";
 
 const ClientSidebarMenu = () => {
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ const ClientSidebarMenu = () => {
                                         key={list.id}
                                         id={list.id}
                                         title={list.title}
-                                        badge={list.taskCount}
+                                        badge={list.taskCount || ""}
                                         isActive={Number(listId) === list.id}
                                         onClick={() =>
                                             navigate(`/projects/${project.id}/lists/${list.id}`)

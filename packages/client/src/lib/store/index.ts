@@ -1,5 +1,4 @@
 import create from "zustand";
-
 import { IStore } from "./IStore";
 
 const getInitialUser = () => {
@@ -12,11 +11,18 @@ export const useStore = create<IStore>()((set, get) => ({
     currentListId: null,
     currentTaskId: null,
     isTaskModalOpen: false,
+    isMotivationModalOpen: false,
     userProfile: getInitialUser(),
 
     toggleTaskModal(value) {
         set(() => ({
             isTaskModalOpen: value ? value : !get().isTaskModalOpen,
+        }));
+    },
+
+    toggleMotivationModal(value) {
+        set(() => ({
+            isMotivationModalOpen: value ? value : !get().isMotivationModalOpen,
         }));
     },
 
