@@ -36,7 +36,7 @@ export class TasksRepository implements ITasksRepository {
     }
 
     public async deleteTask(id: number) {
-        const response = await this.httpClient.request<Promise<void>>({
+        const response = await this.httpClient.request<void>({
             path: `/tasks/${id}`,
             method: "DELETE",
         });

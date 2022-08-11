@@ -7,7 +7,7 @@ export class ListRepository implements IListRepository {
     constructor(private httpClient: IHTTPClient) {}
 
     public async getList(id: number): Promise<IProjectList> {
-        const response = await this.httpClient.request<Promise<IProjectList>>({
+        const response = await this.httpClient.request<IProjectList>({
             method: "GET",
             path: `/lists/${id}`,
         });
@@ -16,7 +16,7 @@ export class ListRepository implements IListRepository {
     }
 
     public async editList(list: EditProjectListDTO): Promise<void> {
-        await this.httpClient.request<Promise<void>>({
+        await this.httpClient.request<void>({
             path: `/lists/${list.id}`,
             method: "PATCH",
             body: list,
@@ -24,14 +24,14 @@ export class ListRepository implements IListRepository {
     }
 
     public async deleteList(id: number): Promise<void> {
-        await this.httpClient.request<Promise<void>>({
+        await this.httpClient.request<void>({
             path: `/lists/${id}`,
             method: "DELETE",
         });
     }
 
     public async createList(list: CreateProjectListDTO): Promise<void> {
-        await this.httpClient.request<Promise<void>>({
+        await this.httpClient.request<void>({
             path: "/lists",
             method: "POST",
             body: list,

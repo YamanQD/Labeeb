@@ -30,7 +30,6 @@ const Tasks = () => {
         },
     });
 
-    console.log(isSuccess);
 
     let content;
 
