@@ -7,7 +7,7 @@ interface MenuItemChildProps {
     badge?: string | number;
     title: string;
     onClick: () => void;
-    isActive: boolean;
+    isActive?: boolean;
 }
 
 const MenuItemChildButton = styled(Button)(
@@ -24,7 +24,7 @@ const MenuItemChildButton = styled(Button)(
     `
 );
 
-const MenuItemChild = ({ id, onClick, title, badge = 5, isActive = false }: MenuItemChildProps) => {
+const MenuItemChild = ({ id, onClick, title, badge, isActive = false }: MenuItemChildProps) => {
     return (
         <MenuItemChildButton onClick={onClick} className={isActive ? "active" : ""}>
             {title}

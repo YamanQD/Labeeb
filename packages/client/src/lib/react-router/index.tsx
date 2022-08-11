@@ -28,6 +28,10 @@ const EditUser = Loader(lazy(() => import("src/features/users/ui/admin/EditUser"
 const Projects = Loader(lazy(() => import("src/features/projects/ui/admin/Projects")));
 const CreateProject = Loader(lazy(() => import("src/features/projects/ui/admin/CreateProject")));
 
+const Lists = Loader(lazy(() => import("src/features/lists/ui/admin/Lists")));
+const CreateList = Loader(lazy(() => import("src/features/lists/ui/admin/CreateList")));
+const EditList = Loader(lazy(() => import("src/features/lists/ui/admin/EditList")));
+
 const HandleAPIErrors = () => {
     const navigate = useNavigate();
 
@@ -114,6 +118,33 @@ export const ApplicationRoutes = () => {
                         element={
                             <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
                                 <CreateProject />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="lists"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <Lists />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="lists/create"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <CreateList />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="lists/edit/:id"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <EditList />
                             </ProtectedRoute>
                         }
                     />
