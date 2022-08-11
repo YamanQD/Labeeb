@@ -21,6 +21,7 @@ const AddTaskContainer = ({ disabled = false }) => {
     return (
         <>
             <Fab
+                title="Create task"
                 color="primary"
                 size="medium"
                 onClick={openModal}

@@ -81,6 +81,7 @@ const Lists = () => {
                 />
             </Box>
             <Fab
+                title="Create list"
                 color="primary"
                 size="medium"
                 sx={{ position: "fixed", bottom: "5%", right: "3%" }}
