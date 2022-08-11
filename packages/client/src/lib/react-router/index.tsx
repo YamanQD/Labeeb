@@ -82,7 +82,7 @@ export const ApplicationRoutes = () => {
                     <Route
                         path="users"
                         element={
-                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ABOVE_PM"}>
                                 <Users />
                             </ProtectedRoute>
                         }
@@ -90,7 +90,7 @@ export const ApplicationRoutes = () => {
                     <Route
                         path="users/create"
                         element={
-                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ABOVE_PM"}>
                                 <CreateUser />
                             </ProtectedRoute>
                         }
@@ -99,7 +99,7 @@ export const ApplicationRoutes = () => {
                     <Route
                         path="users/edit/:userId"
                         element={
-                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ABOVE_PM"}>
                                 <EditUser />
                             </ProtectedRoute>
                         }
