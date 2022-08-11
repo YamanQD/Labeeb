@@ -14,6 +14,10 @@ export class TaskMapper {
         return {
             ...task,
             deadline: new Date(task.deadline),
+            status: {
+                title: task.status.title,
+                color: `#${task.status.color}`
+            }
         };
     }
 
@@ -69,7 +73,7 @@ export class TaskMapper {
 
             // Do we have a list that corresponds to the task's status?
             const suitableTaskGroup = taskGroups.find(
-                (group) => group.status == taskDTO.status.title
+                (group) => group.status.title == taskDTO.status.title
             );
 
             // If so, push the task to the list
@@ -77,7 +81,7 @@ export class TaskMapper {
             // Else create a new list and push this task to it
             else {
                 taskGroups.push({
-                    status: taskDTO.status.title,
+                    status: taskDTO.status,
                     id: dummyId,
                     tasks: [taskDTO],
                 });

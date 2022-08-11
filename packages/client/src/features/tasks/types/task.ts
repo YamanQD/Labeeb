@@ -50,6 +50,7 @@ export interface ITaskTag {
 
 export interface ITaskStatus {
     title: string;
+    color: string;
 }
 
 export interface ITask {

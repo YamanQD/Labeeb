@@ -11,6 +11,7 @@ export interface TaskDetailsDTO extends TaskDTO {
 
 export interface TaskStatusDTO {
     title: string;
+    color: string;
 }
 
 export interface TaskTagDTO {
@@ -30,7 +31,7 @@ export interface TaskDTO {
 
 export interface TaskGroupDTO {
     id: number;
-    status: string;
+    status: TaskStatusDTO;
     tasks: TaskDTO[];
 }
 

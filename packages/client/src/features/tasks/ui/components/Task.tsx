@@ -70,7 +70,7 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
         <TaskContainer onClick={openTaskModal}>
             <Grid container>
                 <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
-                    <TaskStatus />
+                    <TaskStatus style={{ backgroundColor: status.color }} />
                     <span>{title}</span>
                 </Grid>
 

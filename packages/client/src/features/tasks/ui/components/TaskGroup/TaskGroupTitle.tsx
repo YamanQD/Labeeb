@@ -1,10 +1,8 @@
-import { useTranslation } from "react-i18next";
-
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-
+import { useTranslation } from "react-i18next";
 import styles from "./task-group.module.css";
 
 const TitleButton = styled(Button)(
@@ -17,6 +15,7 @@ const TitleButton = styled(Button)(
 
 const TaskGroupTitle = ({
     title = "",
+    color = "",
     tasksCount = 0,
     isListExpanded = true,
     toggleListExpansion = () => {},
@@ -34,11 +33,11 @@ const TaskGroupTitle = ({
                 <KeyboardArrowDownSharpIcon color="secondary" />
             </div>
 
-            <TitleButton variant="contained" color="secondary" disableElevation>
+            <TitleButton variant="contained" disableElevation style={{ backgroundColor: color }}>
                 <Typography variant="h4">{title}</Typography>
                 <span style={{ margin: "0 5px" }}>-</span>
                 <Typography variant="h4" component="span">
-                    {t("tasks_group.title", {count: tasksCount})}
+                    {t("tasks_group.title", { count: tasksCount })}
                 </Typography>
             </TitleButton>
         </div>

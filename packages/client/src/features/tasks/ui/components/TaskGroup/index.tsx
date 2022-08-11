@@ -27,7 +27,7 @@ const TaskGroupColumns = () => {
     );
 };
 
-const TaskGroup = ({ status = "", tasks = [] }: TaskGroupDTO) => {
+const TaskGroup = ({ status, tasks = [] }: TaskGroupDTO) => {
     const [isGroupExpanded, setIsGroupExpanded] = useState(true);
     const toggleGroupExpansion = () => setIsGroupExpanded((previous) => !previous);
 
@@ -36,7 +36,8 @@ const TaskGroup = ({ status = "", tasks = [] }: TaskGroupDTO) => {
             <Grid container sx={{ alignItems: "center" }}>
                 <Grid item xs={6}>
                     <TaskGroupTitle
-                        title={status}
+                        title={status.title}
+                        color={status.color}
                         tasksCount={tasks.length}
                         toggleListExpansion={toggleGroupExpansion}
                         isListExpanded={isGroupExpanded}
