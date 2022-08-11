@@ -1,5 +1,7 @@
+import { Role } from '@labeeb/core';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
 import { UserWithoutPassword } from 'src/users/user.types';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
@@ -13,6 +15,7 @@ import { Tag } from './tags.entity';
 export class ProjectsController {
 	constructor(private readonly projectsService: ProjectsService) { }
 
+	@Roles(Role.SO, Role.OM)
 	@Get()
 	async findAll(): Promise<any> {
 		return await this.projectsService.findAll();
@@ -38,40 +41,47 @@ export class ProjectsController {
 		return await this.projectsService.findProjectUsers(id);
 	}
 
+	@Roles(Role.SO, Role.OM)
 	@Post()
 	async create(@Body() body: CreateProjectDto): Promise<Project> {
 		return await this.projectsService.create(body);
 	}
 
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Patch(':id')
 	async update(@Param('id') id: number, @Body() body: UpdateProjectDto): Promise<Project> {
 		return await this.projectsService.update(id, body);
 	}
 
+	@Roles(Role.SO, Role.OM)
 	@Delete(':id')
 	@HttpCode(HttpStatus.NO_CONTENT)
 	async delete(@Param('id') id: number): Promise<void> {
 		return await this.projectsService.delete(id);
 	}
 
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Post(':id/statuses')
 	@HttpCode(HttpStatus.CREATED)
 	async addStatus(@Param('id') id: number, @Body() body: { title: string }): Promise<void> {
 		return await this.projectsService.addStatus(id, body.title);
 	}
 
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Delete(':id/statuses/:title')
 	@HttpCode(HttpStatus.NO_CONTENT)
 	async removeStatus(@Param('id') id: number, @Param('title') title: string) {
 		return await this.projectsService.removeStatus(id, title);
 	}
 
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Post(':id/tags')
 	@HttpCode(HttpStatus.CREATED)
 	async addTag(@Param('id') id: number, @Body() body: { title: string }): Promise<void> {
 		return await this.projectsService.addTag(id, body.title);
 	}
 
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Delete(':id/tags/:title')
 	@HttpCode(HttpStatus.NO_CONTENT)
 	async removeTag(@Param('id') id: number, @Param('title') title: string) {
