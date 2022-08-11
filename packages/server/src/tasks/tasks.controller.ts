@@ -20,9 +20,8 @@ import { TasksService } from './tasks.service';
 @ApiTags('tasks')
 @Controller('tasks')
 export class TasksController {
-	constructor(private readonly tasksService: TasksService) {}
+	constructor(private readonly tasksService: TasksService) { }
 
-	// Temporary route for testing
 	@Get()
 	async findAll(): Promise<Task[]> {
 		return await this.tasksService.findAll();
