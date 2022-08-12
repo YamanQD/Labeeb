@@ -1,9 +1,12 @@
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+
 import ErrorIcon from "@mui/icons-material/Error";
 import { darken } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { useCallback } from "react";
+
 import { useStore } from "src/lib/store";
 import { formatDate, getDeadlineStatus, getDeadlineStyles, getPriorityStyles, TaskDTO } from "../../application";
 
@@ -30,6 +33,7 @@ const TaskStatus = styled("div")(
 );
 
 const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) => {
+    const { t } = useTranslation();
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
     const toggleTaskModal = useStore((state) => state.toggleTaskModal);
 
@@ -66,7 +70,7 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                 >
                     <span>{formatDate(deadline)}</span>
                     {getDeadlineStatus(deadline) === "passed" && (
-                        <ErrorIcon titleAccess="Deadline has passed!" />
+                        <ErrorIcon titleAccess={t("admin.tasks.deadline_passed")} />
                     )}
                 </Grid>
             </Grid>

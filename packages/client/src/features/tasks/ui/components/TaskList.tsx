@@ -1,12 +1,17 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+
 import { TaskListDTO } from "../../application";
 import TaskGroup from "./TaskGroup";
 import styles from "./TaskGroup/task-group.module.css";
 
 const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, tasksCount = 0 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={styles.listTitleContainer}
@@ -21,7 +26,7 @@ const TaskListHeader = ({ onClick = () => {}, title = "", expanded = false, task
             </div>
 
             <Typography variant="h2" sx={{ ml: 0.2 }}>
-                {title} - {tasksCount > 0 ? tasksCount : "There are no tasks for this list."}
+                {title} - {tasksCount > 0 ? tasksCount : t("tasks.no_tasks")}
             </Typography>
         </div>
     );

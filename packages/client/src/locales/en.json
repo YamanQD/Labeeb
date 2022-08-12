@@ -35,7 +35,9 @@
             "project_required": "Project is required!",
         },
         "project": {
+            "id": "ID",
             "create": "Create a new project",
+            "create2": "Create Project",
             "create_success": "Project created successfully!",
             "title": "Title",
             "title_required": "Project title is required!",
@@ -59,6 +61,7 @@
         "description": "Description",
         "description_placeholder": "When the user clicks on the ...",
         "deadline": "Deadline",
+        "deadline_passed": "Deadline has passed!",
         "status": "Status",
         "priority": "Priority",
         "add_task": "Add a new task",
@@ -72,6 +75,7 @@
         "project": "Project",
         "list": "List",
         "list_required": "Project list is required",
+        "no_tasks": "There are no tasks for this list.",
         "assignees": "Assignees",
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
