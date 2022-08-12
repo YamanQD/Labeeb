@@ -35,7 +35,7 @@ const TaskGroupTitle = ({
 
             <TitleButton variant="contained" disableElevation style={{ backgroundColor: color }}>
                 <Typography variant="h4">{title}</Typography>
-                <span style={{ margin: "0 5px" }}>-</span>
+                <span style={{ margin: "0 5px" }}>•</span>
                 <Typography variant="h4" component="span">
                     {t("tasks_group.title", { count: tasksCount })}
                 </Typography>

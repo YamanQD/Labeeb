@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 import { useStore } from "src/lib/store";
 
 import HeaderButtons from "./Buttons";
@@ -21,12 +22,13 @@ const HeaderWrapper = styled(Box)(
 );
 
 const Header = () => {
+    const { t } = useTranslation();
     const user = useStore((state) => state.userProfile);
 
     return (
         <HeaderWrapper>
             <Box>
-                <Typography>Welcome {user?.username}!</Typography>
+                <Typography>{t("header.greeting", { username: user?.username })}</Typography>
             </Box>
             <Box display="flex" alignItems="center" ml="auto">
                 <HeaderButtons />
