@@ -139,6 +139,7 @@ const CreateProject = () => {
                             </Button>
                         </Box>
 
+                        <Typography color="error" textTransform="uppercase" mb={2}>{errors.finalStatusIndex?.message}</Typography>
                         {fields.map((status, index) => (
                             <Box
                                 sx={{
