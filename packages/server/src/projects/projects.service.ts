@@ -36,10 +36,14 @@ export class ProjectsService {
 		return project.users.some((u) => u.id === userId);
 	}
 
-	async findAll(): Promise<any> {
-		const projects = await this.projectRepository.find({
+	async findAll(userId?: number): Promise<any> {
+		let projects = await this.projectRepository.find({
 			relations: ['lists', 'lists.tasks', 'statuses', 'tags', 'users'],
 		});
+
+		if (userId) {
+			projects = projects.filter((p) => p.users.some((u) => u.id === userId));
+		}
 
 		return projects.map((project) => ({
 			...project,

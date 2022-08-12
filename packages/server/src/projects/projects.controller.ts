@@ -27,10 +27,11 @@ export class ProjectsController {
 
 	constructor(private readonly projectsService: ProjectsService) { }
 
-	@Roles(Role.SO, Role.OM)
 	@Get()
-	async findAll(): Promise<any> {
-		return await this.projectsService.findAll();
+	async findAll(@Request() req: any): Promise<any> {
+		return this.adminRoles.includes(req.user?.role) ?
+			await this.projectsService.findAll() :
+			await this.projectsService.findAll(req.user?.id);
 	}
 
 	@Get(':id/tasks')
