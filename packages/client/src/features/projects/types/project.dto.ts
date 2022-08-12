@@ -10,3 +10,20 @@ export interface ProjectDTO {
     users: UserDTO[];
     finalStatus: string;
 }
+
+export interface CreateProjectDTO {
+    title: string;
+    description?: string;
+    tags: string[];
+    statuses: {
+        title: string;
+        color: string;
+    }[];
+
+    userIds: number[];
+    finalStatus: string;
+};
+
+export interface EditProjectDTO extends CreateProjectDTO {
+    id: number;
+}
