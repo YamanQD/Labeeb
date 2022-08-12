@@ -92,8 +92,10 @@ export class ListsService {
 			},
 		];
 
-		await lists.forEach(async (list) => {
-			await this.create(list);
-		});
+		await Promise.all(
+			lists.map(async (list) => {
+				await this.create(list);
+			})
+		);
 	}
 }
