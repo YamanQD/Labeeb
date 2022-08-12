@@ -2,10 +2,8 @@ import AutoComplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
-import Radio from "@mui/material/Radio";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -26,7 +24,7 @@ interface FormFields {
         color: string;
     }[];
     userIds: number[];
-    finalStatus: string;
+    finalStatusIndex: number | string;
 }
 
 const CreateProject = () => {
@@ -52,7 +50,7 @@ const CreateProject = () => {
             tags: [],
             userIds: [],
             statuses: [{ title: "", color: "#ff0000" }],
-            finalStatus: "",
+            finalStatusIndex: "",
         },
     });
 
@@ -62,19 +60,28 @@ const CreateProject = () => {
     });
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        mutate(data, {
-            onSuccess() {
-                toast.success("Project added successfully!", {
-                    position: "bottom-left",
-                });
+        const finalStatusTitle = fields.find((status) => status.id === data.finalStatusIndex)
+            ?.title as string;
 
-                navigate("/admin/projects");
+        mutate(
+            {
+                ...data,
+                finalStatus: finalStatusTitle,
             },
-        });
+            {
+                onSuccess() {
+                    toast.success("Project added successfully!", {
+                        position: "bottom-left",
+                    });
+
+                    navigate("/admin/projects");
+                },
+            }
+        );
     };
 
     // Important for radio buttons to re-render with updated values
-    watch("finalStatus");
+    watch("finalStatusIndex");
 
     return (
         <FormContainer
@@ -163,19 +170,14 @@ const CreateProject = () => {
                                     {...register(`statuses.${index}.color` as const)}
                                 />
 
-                                <FormControlLabel
-                                    label="Final"
-                                    control={
-                                        <Radio
-                                            value={index}
-                                            {...register("finalStatus")}
-                                            onChange={() => {
-                                                console.log(index);
-                                                setValue("finalStatus", index.toString());
-                                            }}
-                                            checked={getValues("finalStatus") == index.toString()}
-                                        />
-                                    }
+                                <label htmlFor={status.id}>Is final?</label>
+                                <input
+                                    {...register("finalStatusIndex", {
+                                        required: "Final status is required!",
+                                    })}
+                                    value={status.id}
+                                    id={status.id}
+                                    type="radio"
                                 />
 
                                 <Button size="small" color="error" onClick={() => remove(index)}>
