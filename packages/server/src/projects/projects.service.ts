@@ -110,13 +110,12 @@ export class ProjectsService {
 		});
 
 		const tags: Tag[] = [];
-		project.tags?.forEach(async (t) => {
-			const tag = await this.tagRepository.findOneBy({ title: t });
-			tags.push(tag ?? (await this.tagRepository.save({ title: t })));
-		});
-
-		// Sleep for a bit to simulate a slow database
-		await new Promise((r) => setTimeout(r, 200));
+		await Promise.all(
+			project.tags?.map(async (t) => {
+				const tag = await this.tagRepository.findOneBy({ title: t });
+				tags.push(tag ?? (await this.tagRepository.save({ title: t })));
+			})
+		);
 
 		const newProject = this.projectRepository.create({ ...project, statuses, tags });
 
