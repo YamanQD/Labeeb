@@ -1,14 +1,18 @@
-import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-
 import ErrorIcon from "@mui/icons-material/Error";
 import { darken } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useStore } from "src/lib/store";
-import { formatDate, getDeadlineStatus, getDeadlineStyles, getPriorityStyles, TaskDTO } from "../../application";
+import {
+    formatDate,
+    getDeadlineStatus,
+    getDeadlineStyles,
+    getPriorityStyles,
+    TaskDTO,
+} from "../../application";
 
 const TaskContainer = styled(Paper)(
     ({ theme }) => `
@@ -32,7 +36,7 @@ const TaskStatus = styled("div")(
     `
 );
 
-const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) => {
+const Task = ({ id, title = "default", status, priority, deadline, tags }: TaskDTO) => {
     const { t } = useTranslation();
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
     const toggleTaskModal = useStore((state) => state.toggleTaskModal);
@@ -41,6 +45,19 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
         toggleTaskModal(true);
         setCurrentTaskId(id);
     }, [toggleTaskModal, id, setCurrentTaskId]);
+
+    const formatTaskTags = () => {
+        const tagsToDisplay = 3;
+        const tagTitles = tags.map((tag) => tag.title);
+
+        let tagString = "";
+        for (let i = 0; i < tagTitles.length && i < tagsToDisplay; i++) {
+            tagString += tagTitles[i];
+            if (tagTitles[i + 1]) tagString += ", ";
+        }
+
+        return tagString;
+    };
 
     return (
         <TaskContainer onClick={openTaskModal}>
@@ -51,10 +68,10 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                 </Grid>
 
                 <Grid item xs={2}>
-                    Hasan Mothaffar
+                    {formatTaskTags()}
                 </Grid>
 
-                <Grid item xs={2} sx={{...getPriorityStyles(priority)}}>
+                <Grid item xs={2} sx={{ ...getPriorityStyles(priority) }}>
                     {priority}
                 </Grid>
 

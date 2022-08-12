@@ -14,7 +14,7 @@ const TaskGroupColumns = () => {
         <Grid item xs={6} className={styles.columnContainer}>
             <Grid container>
                 <Grid item xs={4} className={styles.column}>
-                    {t("tasks.assignees")}
+                    {t("tasks.tags")}
                 </Grid>
                 <Grid item xs={4} className={styles.column}>
                     {t("tasks.priority")}
