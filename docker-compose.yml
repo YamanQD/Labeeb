@@ -10,8 +10,8 @@ services:
       MYSQL_PASSWORD: labeeb
     ports:
       - 3306:3306
-    volumes:
-      - dbdata:/var/lib/mysql
+    # volumes:
+      # - dbdata:/var/lib/mysql
   
   adminer:
     image: adminer:4.8.1
