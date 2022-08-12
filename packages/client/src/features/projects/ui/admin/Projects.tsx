@@ -61,8 +61,8 @@ const Projects = () => {
 
     const columns: GridColDef[] = useMemo(() => [
         {
-            field: t("admin.project.id"),
-            headerName: t(""),
+            field: "id",
+            headerName: t("admin.project.id"),
             width: 150,
             type: "number",
             flex: 0.5,
