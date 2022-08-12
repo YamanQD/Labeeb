@@ -134,9 +134,9 @@ export class UsersService {
 
 		for (let i = 0; i < 20; i++) {
 			users.push({
-				username: faker.random.word(),
-				password: faker.random.word(),
-				email: `${faker.random.word()}@gmail.com`,
+				username: faker.random.word() + i,
+				password: faker.random.word() + i,
+				email: `${faker.random.word()}-${i}@gmail.com`,
 				role: Role.EMPLOYEE,
 			});
 		}
