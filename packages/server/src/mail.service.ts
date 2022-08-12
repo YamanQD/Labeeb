@@ -101,7 +101,7 @@ We would like to inform you that ${remainingDays} days are remaining until the d
 Best Wishes,
 Labeeb System
 
-P.S: u won't make it in time.`;
+P.S: You can do it!`;
 
 			return await this.sendPlainMessage(target.email, title, content);
 		}
