@@ -4,6 +4,7 @@ import { UserDTO } from "src/features/users/types/user.dto";
 export interface ProjectDTO {
     id: number;
     title: string;
+    description?: string;
     lists: { id: number; title: string; taskCount: number }[];
     statuses: TaskStatusDTO[];
     tags: TaskTagDTO[];
