@@ -15,6 +15,15 @@ export class ListsService {
 		private readonly projectRepository: Repository<Project>,
 	) { }
 
+	async isProjectUser(listId: number, userId: number): Promise<boolean> {
+		const list = await this.listRepository.findOne({ where: { id: listId }, relations: ['project', 'project.users'] });
+		if (!list) {
+			throw new NotFoundException(['List not found']);
+		}
+
+		return list.project?.users?.some(({ id }) => id === userId);
+	}
+
 	async create(list: CreateListDto): Promise<List> {
 		const project = await this.projectRepository.findOne({
 			where: { id: list.projectId },
