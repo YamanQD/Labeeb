@@ -39,6 +39,8 @@
             "create": "Create a new project",
             "create2": "Create Project",
             "create_success": "Project created successfully!",
+            "edit": "Edit Project",
+            "edit_success": "Project edited successfully!",
             "title": "Title",
             "title_required": "Project title is required!",
             "description": "Description",

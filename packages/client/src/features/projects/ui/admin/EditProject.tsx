@@ -1,3 +1,9 @@
+import { useEffect } from "react";
+import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import AutoComplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,11 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import FormContainer from "src/components/FormContainer";
 import { useGetUsers } from "src/features/users/api/getUsers";
 import { useEditProject } from "../../api/editProject";
@@ -73,7 +75,7 @@ const EditProject = () => {
             },
             {
                 onSuccess() {
-                    toast.success("Project edited successfully!", {
+                    toast.success(t("admin.project.edit_success"), {
                         position: "bottom-left",
                     });
 
@@ -109,25 +111,25 @@ const EditProject = () => {
             }}
         >
             <Typography variant="h2" mb={3}>
-                Edit project
+                {t("admin.project.edit")}
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={6}>
                     <Stack>
                         <TextField
                             variant="outlined"
-                            label="Title"
+                            label={t("admin.project.title")}
                             margin="normal"
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            {...register("title", { required: "Project title is required!" })}
+                            {...register("title", { required: t("admin.project.title_required") })}
                             error={!!errors.title}
                             helperText={errors.title?.message ?? ""}
                         />
                         <TextField
                             variant="outlined"
-                            label="Description"
+                            label={t("admin.project.title")}
                             multiline
                             rows={4}
                             margin="normal"
@@ -150,7 +152,7 @@ const EditProject = () => {
                             borderColor="silver"
                         >
                             <Typography variant="h3" component="h3">
-                                Statuses
+                                {t("admin.project.statuses")}
                             </Typography>
 
                             <Button
@@ -202,7 +204,7 @@ const EditProject = () => {
                                 <input
                                     type="radio"
                                     {...register("finalStatusIndex", {
-                                        required: "Final status is required!",
+                                        required: t("admin.project.final_required"),
                                     })}
                                     value={index}
                                     id={status.id}
@@ -223,7 +225,7 @@ const EditProject = () => {
                         render={({ field }) => (
                             <TextField
                                 margin="normal"
-                                label="Project Users"
+                                label={t("admin.project.users")}
                                 select
                                 variant="outlined"
                                 fullWidth
@@ -252,7 +254,7 @@ const EditProject = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Tags"
+                                        label={t("admin.project.tags")}
                                         placeholder="Frontend"
                                         variant="outlined"
                                         margin="normal"
