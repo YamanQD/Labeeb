@@ -14,10 +14,6 @@ export class TaskMapper {
         return {
             ...task,
             deadline: new Date(task.deadline),
-            status: {
-                title: task.status.title,
-                color: `#${task.status.color}`
-            }
         };
     }
 
