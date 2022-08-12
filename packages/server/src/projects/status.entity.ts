@@ -13,7 +13,7 @@ export class Status {
 	@Column()
 	color: string;
 
-	@ManyToOne(() => Project, (project) => project.statuses)
+	@ManyToOne(() => Project, (project) => project.statuses, { onDelete: 'CASCADE' })
 	project: Project;
 
 	@OneToMany(() => Task, (task) => task.status)

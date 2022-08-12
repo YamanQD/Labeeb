@@ -1,7 +1,8 @@
 import { Role } from '@labeeb/core';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, HttpStatus, Param, Patch, Post, Request } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles.decorator';
+import { User } from 'src/users/user.entity';
 import { UserWithoutPassword } from 'src/users/user.types';
 import { CreateProjectDto } from './dto/create-project-dto';
 import { UpdateProjectDto } from './dto/update-project-dto';
@@ -13,31 +14,47 @@ import { Tag } from './tags.entity';
 @ApiTags('projects')
 @Controller('projects')
 export class ProjectsController {
+	private adminRoles = [Role.SO, Role.OM];
+
+	private async checkProjectUser(projectId: number, user: User): Promise<void> {
+		if (
+			!this.adminRoles.includes(user?.role) &&
+			!await this.projectsService.isProjectUser(projectId, user?.id)
+		) {
+			throw new ForbiddenException();
+		}
+	}
+
 	constructor(private readonly projectsService: ProjectsService) { }
 
-	@Roles(Role.SO, Role.OM)
 	@Get()
-	async findAll(): Promise<any> {
-		return await this.projectsService.findAll();
+	async findAll(@Request() req: any): Promise<any> {
+		return this.adminRoles.includes(req.user?.role) ?
+			await this.projectsService.findAll() :
+			await this.projectsService.findAll(req.user?.id);
 	}
 
 	@Get(':id/tasks')
-	async findProjectTasks(@Param('id') id: number): Promise<Project> {
+	async findProjectTasks(@Param('id') id: number, @Request() req: any): Promise<Project> {
+		await this.checkProjectUser(id, req.user);
 		return await this.projectsService.findProjectTasks(id);
 	}
 
 	@Get(':id/statuses')
-	async findProjectStatuses(@Param('id') id: number): Promise<Status[]> {
+	async findProjectStatuses(@Param('id') id: number, @Request() req: any): Promise<Status[]> {
+		await this.checkProjectUser(id, req.user);
 		return await this.projectsService.findProjectStatuses(id);
 	}
 
 	@Get(':id/tags')
-	async findProjectTags(@Param('id') id: number): Promise<Tag[]> {
+	async findProjectTags(@Param('id') id: number, @Request() req: any): Promise<Tag[]> {
+		await this.checkProjectUser(id, req.user);
 		return await this.projectsService.findProjectTags(id);
 	}
 
 	@Get(':id/users')
-	async findProjectUsers(@Param('id') id: number): Promise<UserWithoutPassword[]> {
+	async findProjectUsers(@Param('id') id: number, @Request() req: any): Promise<UserWithoutPassword[]> {
+		await this.checkProjectUser(id, req.user);
 		return await this.projectsService.findProjectUsers(id);
 	}
 

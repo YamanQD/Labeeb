@@ -1,5 +1,5 @@
 import { Role } from '@labeeb/core';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, HttpStatus, Param, Patch, Post, Request } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { CreateListDto } from './dto/create-list-dto';
 import { UpdateListDto } from './dto/update-list-dto';
@@ -8,6 +8,8 @@ import { ListsService } from './lists.service';
 
 @Controller('lists')
 export class ListsController {
+	private adminRoles = [Role.SO, Role.OM];
+
 	constructor(private readonly listsService: ListsService) { }
 
 	@Roles(Role.SO, Role.OM, Role.PM)
@@ -16,9 +18,15 @@ export class ListsController {
 		return await this.listsService.findAll();
 	}
 
-	@Roles(Role.SO, Role.OM, Role.PM)
 	@Get(':id')
-	async findOne(@Param('id') id: number): Promise<List> {
+	async findOne(@Param('id') id: number, @Request() req: any): Promise<List> {
+		if (
+			!this.adminRoles.includes(req.user?.role) &&
+			!await this.listsService.isProjectUser(id, req.user?.id)
+		) {
+			throw new ForbiddenException();
+		}
+
 		return await this.listsService.findOne(id);
 	}
 
