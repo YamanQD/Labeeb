@@ -84,7 +84,7 @@ const Projects = () => {
     const { data: projects, isLoading } = useGetProjects();
 
     useEffect(() => {
-        if (projects) setRows(projects);
+        setRows(projects ?? []);
     }, [projects]);
 
     return (
