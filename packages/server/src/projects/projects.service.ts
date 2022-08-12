@@ -274,9 +274,6 @@ export class ProjectsService {
 			]);
 		}
 
-
-		await new Promise((r) => setTimeout(r, 200));
-
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
 
@@ -316,28 +313,10 @@ export class ProjectsService {
 			},
 		];
 
-		await projects.forEach(async (project) => {
-			const statuses: Status[] = [];
-			await project.statuses?.forEach(async (s) => {
-				const status = await this.statusRepository.save(s);
-				statuses.push(status);
-			});
-
-			const tags: Tag[] = [];
-			await project.tags?.forEach(async (t) => {
-				const tag = await this.tagRepository.findOneBy({ title: t });
-				tags.push(tag);
-			});
-
-			await new Promise((r) => setTimeout(r, 200));
-
-			const newProject = this.projectRepository.create({ ...project, statuses, tags });
-			if (project.userIds && project.userIds.length > 0) {
-				const users = await this.userRepository.findBy({ id: In(project.userIds) });
-				newProject.users = users;
-			}
-
-			return await this.projectRepository.save(newProject);
-		});
+		await Promise.all(
+			projects.map(async (project) => {
+				await this.create(project);
+			}),
+		);
 	}
 }
