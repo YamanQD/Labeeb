@@ -20,7 +20,7 @@ const DeleteProjectButton = ({ id }: { id: number }) => {
     const deleteProject = () => {
         mutate(id, {
             onSuccess() {
-                toast.success("Project deleted successfully!", {
+                toast.success(t("admin.project.delete_success"), {
                     position: "bottom-left",
                 });
             },

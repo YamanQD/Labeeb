@@ -41,6 +41,7 @@
             "create_success": "تم إنشاء المشروع بنجاح!",
             "edit": "تعديل المشروع",
             "edit_success": "تم تعديل المشروع بنجاح!",
+            "delete_success": "تم حذف المشروع بنجاح!",
             "title": "العنوان",
             "title_required": "يجب ملئ عنوان المشروع!",
             "description": "الشرح",

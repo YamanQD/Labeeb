@@ -41,6 +41,7 @@
             "create_success": "Project created successfully!",
             "edit": "Edit Project",
             "edit_success": "Project edited successfully!",
+            "delete_success": "Project deleted successfully!",
             "title": "Title",
             "title_required": "Project title is required!",
             "description": "Description",
