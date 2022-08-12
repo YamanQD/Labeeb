@@ -41,7 +41,10 @@ const HandleAPIErrors = () => {
                 navigate("/login");
             }
 
-            toast.error(error.messages[0], {
+            const errorMessage =
+                typeof error.messages === "string" ? error.messages : error.messages[0];
+
+            toast.error(errorMessage, {
                 position: toast.POSITION.BOTTOM_LEFT,
             });
         });

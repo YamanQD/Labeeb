@@ -3,7 +3,7 @@
 type HTTPMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 export interface APIError {
-    messages: string[];
+    messages: string[] | string;
     /**
      * HTTP Status
      */
