@@ -71,7 +71,7 @@ const Lists = () => {
             headerAlign: "left",
         },
     
-        { field: "title", headerName: "Title", width: 150, type: "string", flex: 1 },
+        { field: "title", headerName: t("admin.list.title"), width: 150, type: "string", flex: 1 },
         {
             field: "project",
             headerName: t("admin.list.project"),

@@ -78,7 +78,7 @@ const CreateList = () => {
                                 shrink: true,
                             }}
                             variant="outlined"
-                            label="Title"
+                            label={t("admin.list.title")}
                             margin="normal"
                             {...register("title")}
                             error={!!errors.title}
