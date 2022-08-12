@@ -21,6 +21,10 @@ const Status404 = Loader(lazy(() => import("src/pages/404")));
 const Login = Loader(lazy(() => import("src/features/users/ui/Login")));
 
 // Admin pages
+const AdminLayoutPlaceholder = Loader(
+    lazy(() => import("src/components/layouts/Admin/Placeholder"))
+);
+
 const Users = Loader(lazy(() => import("src/features/users/ui/admin/Users")));
 const CreateUser = Loader(lazy(() => import("src/features/users/ui/admin/CreateUser")));
 const EditUser = Loader(lazy(() => import("src/features/users/ui/admin/EditUser")));
@@ -82,6 +86,7 @@ export const ApplicationRoutes = () => {
                         </ProtectedRoute>
                     }
                 >
+                    <Route index element={<AdminLayoutPlaceholder />} />
                     <Route
                         path="users"
                         element={
