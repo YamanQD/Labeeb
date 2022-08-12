@@ -3,6 +3,9 @@
         "en": "English",
         "ar": "Arabic"
     },
+    "header": {
+        "greeting": "Welcome {{username}}!"
+    },
     "actions": {
         "logout": "Logout",
         "add": "Add",
@@ -15,9 +18,6 @@
         "switch_to_client": "Switch to client",
         "switch_language": "Switch language",
         "switch_theme": "Switch theme"
-    },
-    "header": {
-        "greeting": "Welcome {{username}}!"
     },
     "admin": {
         "select_category": "Plan your next success! Select a category from the sidebar",
@@ -32,7 +32,7 @@
             "title": "Title",
             "title_required": "List title is required!",
             "project": "Project",
-            "project_required": "Project is required!",
+            "project_required": "Project is required!"
         },
         "project": {
             "id": "ID",
@@ -54,6 +54,8 @@
     },
     "tasks": {
         "name": "Tasks",
+        "heading_1": "Task created by {{username}}",
+        "heading_2": "At {{date}}",
         "remaining": "You have 99 remaining tasks",
         "title": "Title",
         "title_placeholder": "Fix bug #23",
@@ -76,6 +78,7 @@
         "list": "List",
         "list_required": "Project list is required",
         "no_tasks": "There are no tasks for this list.",
+        "tags": "Tags",
         "assignees": "Assignees",
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
