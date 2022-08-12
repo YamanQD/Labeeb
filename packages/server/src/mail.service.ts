@@ -56,7 +56,9 @@ export class MailService {
 			`Hello, ${user.username}!
 A new Labeeb account has been created for you using this email.
 You can login to the system using this email, and the password provided for you by your administrator.
-Thank you for using Labeeb!
+
+Best Wishes,
+Labeeb System
 
 Note: If you did not request this account, you can safely ignore this email.`,
 		);
@@ -70,7 +72,8 @@ Note: If you did not request this account, you can safely ignore this email.`,
 You have been assigned the task "${task.title}".
 You can view the task details using the app.
 
-Thank you for using Labeeb!`,
+Best Wishes,
+Labeeb System`,
 		);
 	}
 
@@ -82,7 +85,8 @@ Thank you for using Labeeb!`,
 You have been added to the project "${project.title}".
 You can view the project details using the app.
 
-Thank you for using Labeeb!`,
+Best Wishes,
+Labeeb System`,
 		);
 	}
 
