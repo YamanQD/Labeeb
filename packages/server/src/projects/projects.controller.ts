@@ -34,6 +34,12 @@ export class ProjectsController {
 			await this.projectsService.findAll(req.user?.id);
 	}
 
+	@Get('/:id')
+	async findOne(@Param('id') id: number, @Request() req: any): Promise<Project> {
+		await this.checkProjectUser(id, req.user);
+		return await this.projectsService.findOne(id);
+	}
+
 	@Get(':id/tasks')
 	async findProjectTasks(@Param('id') id: number, @Request() req: any): Promise<Project> {
 		await this.checkProjectUser(id, req.user);
