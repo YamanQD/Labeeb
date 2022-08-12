@@ -2420,6 +2420,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/schedule@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@nestjs/schedule@npm:2.1.0"
+  dependencies:
+    cron: 2.0.0
+    uuid: 8.3.2
+  peerDependencies:
+    "@nestjs/common": ^7.0.0 || ^8.0.0 || ^9.0.0
+    "@nestjs/core": ^7.0.0 || ^8.0.0 || ^9.0.0
+    reflect-metadata: ^0.1.12
+  checksum: 43423eb0491c692c08dcdb6d18d34ec758fe29cda52f4674a945e06933ec5b4e23229193c1b071971842b50db57024d6f1c55fe8f4c6392754b6a597b31eb423
+  languageName: node
+  linkType: hard
+
 "@nestjs/schematics@npm:^8.0.0, @nestjs/schematics@npm:^8.0.3":
   version: 8.0.10
   resolution: "@nestjs/schematics@npm:8.0.10"
@@ -2641,6 +2655,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cron@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/cron@npm:2.0.0"
+  dependencies:
+    "@types/luxon": "*"
+    "@types/node": "*"
+  checksum: 392d2cfca51504140397533c30be8facd2196251074eb26ee09232a7e983144ff1d8364cd64922ed22d142686a4724934a70672fc8353b441fea729ac0ed0611
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.3
   resolution: "@types/eslint-scope@npm:3.7.3"
@@ -2720,6 +2744,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 541d41eb8115afd422e0333d7ba79399febc86818015b3ecb7c36b2b7f9b4476a33aa13a4f23f81a08b201c5cdacbe2903b6d03cd4930abf83a4e14be3696719
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:*":
+  version: 3.0.0
+  resolution: "@types/luxon@npm:3.0.0"
+  checksum: 7738d3f4b91097a8139eca966ab53c6b40bb417b2cc2014c3bbd0aee033d6ff54af14c62046c2eb042434923b6bf796874f24b2af90e07ef422e6d841463d4b2
   languageName: node
   linkType: hard
 
@@ -4299,6 +4330,15 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cron@npm:2.0.0":
+  version: 2.0.0
+  resolution: "cron@npm:2.0.0"
+  dependencies:
+    luxon: ^1.23.x
+  checksum: 179ec137ada4ceb44cafe51c55491e84954308d7012d2a44539f0dadbbb1ffbbe3072c2f7aaa88595d60bd56e0d536aae2e4aaa4430c869317d6c2abd966988b
   languageName: node
   linkType: hard
 
@@ -6837,6 +6877,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^1.23.x":
+  version: 1.28.0
+  resolution: "luxon@npm:1.28.0"
+  checksum: 5250cb9f138b6048eeb0b3a9044a4ac994d0058f680c72a0da4b6aeaec8612460385639cba2b1052ef6d5564879e9ed144d686f26d9d97b38ab920d82e18281c
+  languageName: node
+  linkType: hard
+
 "macos-release@npm:^2.5.0":
   version: 2.5.0
   resolution: "macos-release@npm:2.5.0"
@@ -8505,9 +8552,11 @@ __metadata:
     "@nestjs/mapped-types": ^1.0.1
     "@nestjs/passport": ^8.2.1
     "@nestjs/platform-express": ^8.0.0
+    "@nestjs/schedule": ^2.1.0
     "@nestjs/schematics": ^8.0.0
     "@nestjs/swagger": ^5.2.1
     "@nestjs/typeorm": ^8.0.3
+    "@types/cron": ^2.0.0
     "@types/express": ^4.17.13
     "@types/node": ^16.0.0
     "@types/nodemailer": ^6.4.4

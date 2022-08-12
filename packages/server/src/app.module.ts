@@ -1,26 +1,34 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { APP_GUARD } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { MailService } from './mail.service';
+
+import { UsersModule } from './users/users.module';
+import { User } from './users/user.entity';
+
+import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RolesGuard } from './auth/roles.guard';
+
 import { TasksModule } from './tasks/tasks.module';
 import { Task } from './tasks/task.entity';
-import { ProjectsModule } from './projects/projects.module';
-import { Project } from './projects/project.entity';
+
 import { List } from './lists/list.entity';
 import { ListsModule } from './lists/lists.module';
-import { MailService } from './mail.service';
+
+import { ProjectsModule } from './projects/projects.module';
+import { Project } from './projects/project.entity';
 import { Status } from './projects/status.entity';
 import { Tag } from './projects/tags.entity';
 
 @Module({
 	imports: [
+		ScheduleModule.forRoot(),
 		UsersModule,
 		AuthModule,
 		ConfigModule.forRoot(),
