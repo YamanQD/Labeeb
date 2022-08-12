@@ -48,7 +48,7 @@ export class UserRepository implements IUserRepository {
                 method: "GET",
                 params: {
                     paginate: true,
-                    page: 1,
+                    page: options.page ?? 1,
                 },
             });
 
