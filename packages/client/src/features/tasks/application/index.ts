@@ -32,3 +32,4 @@ export const getDeadlineStatus = (deadline: Date): DeadlineStatus => {
 };
 
 export * from "../types/task.dto";
+export * from "./styles";

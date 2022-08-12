@@ -1,5 +1,5 @@
+import { Priority } from "@labeeb/core";
 import { UserDTO } from "src/features/users/types/user.dto";
-import { ETaskPriority } from "./task";
 
 export interface TaskDetailsDTO extends TaskDTO {
     listId: number;
@@ -26,7 +26,7 @@ export interface TaskDTO {
 
     status: TaskStatusDTO;
     tags: TaskTagDTO[];
-    priority: ETaskPriority;
+    priority: Priority;
 }
 
 export interface TaskGroupDTO {
@@ -48,7 +48,7 @@ export interface CreateTaskDTO {
     description?: string;
     status: string;
     tags: string[];
-    priority: ETaskPriority;
+    priority: Priority;
 }
 
 export interface EditTaskDTO extends Partial<CreateTaskDTO> {

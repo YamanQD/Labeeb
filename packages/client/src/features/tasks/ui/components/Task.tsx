@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useCallback } from "react";
 import { useStore } from "src/lib/store";
-import { formatDate, getDeadlineStatus, TaskDTO } from "../../application";
+import { formatDate, getDeadlineStatus, getDeadlineStyles, getPriorityStyles, TaskDTO } from "../../application";
 
 const TaskContainer = styled(Paper)(
     ({ theme }) => `
@@ -29,34 +29,6 @@ const TaskStatus = styled("div")(
     `
 );
 
-const getDeadlineStyles = (deadline: Date): Record<string, string> => {
-    const deadlineStatus = getDeadlineStatus(deadline);
-
-    let styles = {};
-
-    switch (deadlineStatus) {
-        case "passed":
-            styles = {
-                color: "#ff0000",
-                fontWeight: "bold",
-            };
-            break;
-        case "close":
-            styles = {
-                color: "orange",
-                fontWeight: "bold",
-            };
-            break;
-        case "far":
-            styles = {
-                color: "text.primary",
-            };
-            break;
-    }
-
-    return styles;
-};
-
 const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) => {
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
     const toggleTaskModal = useStore((state) => state.toggleTaskModal);
@@ -78,7 +50,7 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                     Hasan Mothaffar
                 </Grid>
 
-                <Grid item xs={2}>
+                <Grid item xs={2} sx={{...getPriorityStyles(priority)}}>
                     {priority}
                 </Grid>
 
