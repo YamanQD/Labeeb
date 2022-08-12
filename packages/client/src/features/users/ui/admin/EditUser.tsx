@@ -69,10 +69,12 @@ const EditUser = () => {
         );
     };
 
-    const passwordValidator = () => {
+    const passwordValidator = (): boolean | string => {
         const [oldPassword, newPassword] = getValues(["oldPassword", "newPassword"]);
         if (oldPassword === "" && newPassword === "") return true;
-        if (oldPassword === newPassword) return false;
+        if (oldPassword === newPassword) return t("users.password_unchanged");
+        if (oldPassword && newPassword === "") return "You have to provide the new password";
+        if (oldPassword === "" && newPassword) return "You have to provide the old password";
         return true;
     };
 
