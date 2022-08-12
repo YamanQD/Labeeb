@@ -19,6 +19,37 @@
     "header": {
         "greeting": "Welcome {{username}}!"
     },
+    "admin": {
+        "select_category": "Plan your next success! Select a category from the sidebar",
+        "list": {
+            "id": "ID",
+            "create": "Create List",
+            "add": "Create a new list",
+            "add_success": "List added successfully!",
+            "edit": "Edit List",
+            "edit_success": "List edited successfully!",
+            "delete_success": "List deleted successfully!",
+            "title": "Title",
+            "title_required": "List title is required!",
+            "project": "Project",
+            "project_required": "Project is required!",
+        },
+        "project": {
+            "create": "Create a new project",
+            "create_success": "Project created successfully!",
+            "title": "Title",
+            "title_required": "Project title is required!",
+            "description": "Description",
+            "statuses": "Statuses",
+            "label": "Label",
+            "label_placeholder": "Todo",
+            "color": "Color",
+            "final": "Is final?",
+            "final_required": "Final status is required!",
+            "users": "Project Users",
+            "tags": "Tags"
+        }
+    },
     "tasks": {
         "name": "Tasks",
         "remaining": "You have 99 remaining tasks",
@@ -48,6 +79,13 @@
     "tasks_group": {
         "title_one": "{{count}} task",
         "title_other": "{{count}} tasks"
+    },
+    "task_motivation": {
+        "title_1": "Great job!",
+        "title_2": "You're almost here!",
+        "title_3": "Nice one!",
+        "caption": "You are one step closer to finishing the project. Keep going!",
+        "confirm": "Go back to projects"
     },
     "users": {
         "id": "ID",

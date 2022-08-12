@@ -1,3 +1,9 @@
+import { useEffect } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
@@ -5,10 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import FormContainer from "src/components/FormContainer";
 import { useGetProjects } from "src/features/projects/api/getProjects";
 import { useAddList } from "../../api/addList";
@@ -19,6 +22,7 @@ interface FormFields {
 }
 
 const CreateList = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { mutate } = useAddList();
     const { data: projects, isFetching } = useGetProjects();
@@ -48,7 +52,7 @@ const CreateList = () => {
             },
             {
                 onSuccess() {
-                    toast.success("List added successfully!", {
+                    toast.success(t("admin.list.add_success"), {
                         position: toast.POSITION.BOTTOM_LEFT,
                     });
 
@@ -68,16 +72,16 @@ const CreateList = () => {
             }}
         >
             <Typography variant="h2" mb={3}>
-                Create a new list
+                {t("admin.list.add")}
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={6}>
                     <Stack>
                         <TextField
                             variant="outlined"
-                            label="Title"
+                            label={t("admin.list.title")}
                             margin="normal"
-                            {...register("title", { required: "List title is required!" })}
+                            {...register("title", { required: t("admin.list.title_required") })}
                             error={!!errors.title}
                             helperText={errors.title?.message ?? ""}
                         />
@@ -85,12 +89,12 @@ const CreateList = () => {
                             control={control}
                             name="projectId"
                             rules={{
-                                required: "Project is required!",
+                                required: t("admin.list.project_required"),
                             }}
                             render={({ field }) => (
                                 <TextField
                                     variant="outlined"
-                                    label="Project"
+                                    label={t("admin.list.project")}
                                     margin="normal"
                                     select
                                     {...field}
@@ -118,7 +122,7 @@ const CreateList = () => {
                     sx={{ ml: "auto" }}
                     disabled={isLoading}
                 >
-                    <span>Create</span>
+                    <span>{t("actions.create")}</span>
                     {isLoading && (
                         <CircularProgress size={24} disableShrink sx={{ color: "white", ml: 3 }} />
                     )}
