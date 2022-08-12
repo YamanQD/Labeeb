@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
 import { List } from 'src/lists/list.entity';
@@ -28,6 +28,15 @@ export class TasksService {
 		private mailService: MailService,
 	) { }
 
+	async isProjectUser(taskId: number, userId: number): Promise<boolean> {
+		const task = await this.taskRepository.findOne({ where: { id: taskId }, relations: ['list', 'list.project', 'list.project.users'] });
+		if (!task) {
+			throw new NotFoundException(['Task not found']);
+		}
+
+		return task.list?.project?.users?.some(({ id }) => id === userId);
+	}
+
 	async findAll(): Promise<Task[]> {
 		return await this.taskRepository.find();
 	}
@@ -40,13 +49,16 @@ export class TasksService {
 		return task;
 	}
 
-	async create(body: CreateTaskDto, userId: number): Promise<Task> {
+	async create(body: CreateTaskDto, userId: number, isSeeding = false): Promise<Task> {
 		const list = await this.listRepository.findOne({
 			where: { id: body.listId },
-			relations: ["project"]
+			relations: ["project", "project.users"]
 		});
 		if (!list) {
 			throw new NotFoundException(['List not found']);
+		}
+		if (!isSeeding && !list.project?.users?.some(({ id }) => id === userId)) {
+			throw new ForbiddenException();
 		}
 
 		const owner = await this.userRepository.findOne({
@@ -215,7 +227,7 @@ export class TasksService {
 				status: statuses[Math.floor(Math.random() * 10 % 3)],
 				tags: [tags[Math.floor(Math.random() * 10 % 9)], tags[Math.floor(Math.random() * 10 % 9)]],
 			};
-			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
+			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1, true);
 		}
 	}
 }

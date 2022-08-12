@@ -24,10 +24,26 @@ export class ProjectsService {
 		private mailService: MailService,
 	) { }
 
-	async findAll(): Promise<any> {
-		const projects = await this.projectRepository.find({
+	async isProjectUser(projectId: number, userId: number): Promise<boolean> {
+		const project = await this.projectRepository.findOne({
+			where: { id: projectId },
+			relations: ['users'],
+		});
+		if (!project) {
+			throw new NotFoundException(['Project not found']);
+		}
+
+		return project.users.some((u) => u.id === userId);
+	}
+
+	async findAll(userId?: number): Promise<any> {
+		let projects = await this.projectRepository.find({
 			relations: ['lists', 'lists.tasks', 'statuses', 'tags', 'users'],
 		});
+
+		if (userId) {
+			projects = projects.filter((p) => p.users.some((u) => u.id === userId));
+		}
 
 		return projects.map((project) => ({
 			...project,
@@ -88,19 +104,20 @@ export class ProjectsService {
 
 	async create(project: CreateProjectDto): Promise<Project> {
 		const statuses: Status[] = [];
-		project.statuses?.forEach(async (s) => {
-			const status = await this.statusRepository.save(s);
-			statuses.push(status);
-		});
+		await Promise.all(
+			project.statuses?.map(async (s) => {
+				const status = await this.statusRepository.save(s);
+				statuses.push(status);
+			})
+		);
 
 		const tags: Tag[] = [];
-		project.tags?.forEach(async (t) => {
-			const tag = await this.tagRepository.findOneBy({ title: t });
-			tags.push(tag ?? (await this.tagRepository.save({ title: t })));
-		});
-
-		// Sleep for a bit to simulate a slow database
-		await new Promise((r) => setTimeout(r, 200));
+		await Promise.all(
+			project.tags?.map(async (t) => {
+				const tag = await this.tagRepository.findOneBy({ title: t });
+				tags.push(tag ?? (await this.tagRepository.save({ title: t })));
+			})
+		);
 
 		const newProject = this.projectRepository.create({ ...project, statuses, tags });
 
@@ -258,9 +275,6 @@ export class ProjectsService {
 			]);
 		}
 
-
-		await new Promise((r) => setTimeout(r, 200));
-
 		const allProjects = await this.projectRepository.find();
 		if (allProjects.length > 0) return;
 
@@ -300,28 +314,10 @@ export class ProjectsService {
 			},
 		];
 
-		await projects.forEach(async (project) => {
-			const statuses: Status[] = [];
-			await project.statuses?.forEach(async (s) => {
-				const status = await this.statusRepository.save(s);
-				statuses.push(status);
-			});
-
-			const tags: Tag[] = [];
-			await project.tags?.forEach(async (t) => {
-				const tag = await this.tagRepository.findOneBy({ title: t });
-				tags.push(tag);
-			});
-
-			await new Promise((r) => setTimeout(r, 200));
-
-			const newProject = this.projectRepository.create({ ...project, statuses, tags });
-			if (project.userIds && project.userIds.length > 0) {
-				const users = await this.userRepository.findBy({ id: In(project.userIds) });
-				newProject.users = users;
-			}
-
-			return await this.projectRepository.save(newProject);
-		});
+		await Promise.all(
+			projects.map(async (project) => {
+				await this.create(project);
+			}),
+		);
 	}
 }
