@@ -3,6 +3,9 @@
         "en": "English",
         "ar": "Arabic"
     },
+    "header": {
+        "greeting": "Welcome {{username}}!"
+    },
     "actions": {
         "logout": "Logout",
         "add": "Add",
@@ -16,11 +19,43 @@
         "switch_language": "Switch language",
         "switch_theme": "Switch theme"
     },
-    "header": {
-        "greeting": "Welcome {{username}}!"
+    "admin": {
+        "select_category": "Plan your next success! Select a category from the sidebar",
+        "list": {
+            "id": "ID",
+            "create": "Create List",
+            "add": "Create a new list",
+            "add_success": "List added successfully!",
+            "edit": "Edit List",
+            "edit_success": "List edited successfully!",
+            "delete_success": "List deleted successfully!",
+            "title": "Title",
+            "title_required": "List title is required!",
+            "project": "Project",
+            "project_required": "Project is required!"
+        },
+        "project": {
+            "id": "ID",
+            "create": "Create a new project",
+            "create2": "Create Project",
+            "create_success": "Project created successfully!",
+            "title": "Title",
+            "title_required": "Project title is required!",
+            "description": "Description",
+            "statuses": "Statuses",
+            "label": "Label",
+            "label_placeholder": "Todo",
+            "color": "Color",
+            "final": "Is final?",
+            "final_required": "Final status is required!",
+            "users": "Project Users",
+            "tags": "Tags"
+        }
     },
     "tasks": {
         "name": "Tasks",
+        "heading_1": "Task created by {{username}}",
+        "heading_2": "At {{date}}",
         "remaining": "You have 99 remaining tasks",
         "title": "Title",
         "title_placeholder": "Fix bug #23",
@@ -28,6 +63,7 @@
         "description": "Description",
         "description_placeholder": "When the user clicks on the ...",
         "deadline": "Deadline",
+        "deadline_passed": "Deadline has passed!",
         "status": "Status",
         "priority": "Priority",
         "add_task": "Add a new task",
@@ -41,6 +77,8 @@
         "project": "Project",
         "list": "List",
         "list_required": "Project list is required",
+        "no_tasks": "There are no tasks for this list.",
+        "tags": "Tags",
         "assignees": "Assignees",
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
@@ -48,6 +86,13 @@
     "tasks_group": {
         "title_one": "{{count}} task",
         "title_other": "{{count}} tasks"
+    },
+    "task_motivation": {
+        "title_1": "Great job!",
+        "title_2": "You're almost here!",
+        "title_3": "Nice one!",
+        "caption": "You are one step closer to finishing the project. Keep going!",
+        "confirm": "Go back to projects"
     },
     "users": {
         "id": "ID",
@@ -70,6 +115,7 @@
     "sidebar": {
         "loading": "Loading projects...",
         "projects": "Projects",
+        "lists": "Lists",
         "management": "Management",
         "users": "Users",
         "labeeb": "Labeeb"

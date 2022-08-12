@@ -4,9 +4,10 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import CanvasConfetti from "canvas-confetti";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useStore } from "src/lib/store";
 
-const INSPIRATION_MESSAGE_TITLES = ["Great job!", "You're almost there!", "Nice one!"];
+const INSPIRATION_MESSAGE_TITLES = ["tasks_motivation.title_1", "tasks_motivation.title_2", "tasks_motivation.title_3"];
 const INSPIRATION_MESSAGES_IMAGES = ["1.svg", "2.svg", "3.svg"];
 
 const getRandomElementFromArray = <T,>(array: T[]): T => {
@@ -29,6 +30,8 @@ const style = {
 };
 
 const MotivationModal = () => {
+    const { t } = useTranslation();
+
     const isMotivationModalOpen = useStore((state) => state.isMotivationModalOpen);
     const toggleMotivationModal = useStore((state) => state.toggleMotivationModal);
 
@@ -48,7 +51,7 @@ const MotivationModal = () => {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h3" component="h2">
-                    {getRandomElementFromArray(INSPIRATION_MESSAGE_TITLES)}
+                    {t(getRandomElementFromArray(INSPIRATION_MESSAGE_TITLES))}
                 </Typography>
 
                 <img
@@ -61,7 +64,7 @@ const MotivationModal = () => {
                 />
 
                 <Typography id="modal-modal-description" sx={{ my: 2 }}>
-                    You are one step closer to finishing the project. Keep going!
+                    {t("task_motivation.caption")}
                 </Typography>
 
                 <Button
@@ -69,7 +72,7 @@ const MotivationModal = () => {
                     variant="outlined"
                     onClick={() => toggleMotivationModal(false)}
                 >
-                    Go back to projects
+                    {t("task_motivation.confirm")}
                 </Button>
             </Box>
         </Modal>

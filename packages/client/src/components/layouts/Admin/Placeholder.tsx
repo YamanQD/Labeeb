@@ -1,11 +1,14 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 
 const AdminLayoutPlaceholder = () => {
+    const { t } = useTranslation();
+
     return (
         <Stack>
             <Typography variant="h2" component="h2" mb={10}>
-                Plan your next success! Select a category from the sidebar
+                {t("admin.select_category")}
             </Typography>
             <img
                 alt=""

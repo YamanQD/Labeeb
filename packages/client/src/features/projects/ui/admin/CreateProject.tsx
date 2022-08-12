@@ -1,3 +1,8 @@
+import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import AutoComplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,10 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import FormContainer from "src/components/FormContainer";
 import { useGetUsers } from "src/features/users/api/getUsers";
 import { useAddProject } from "../../api/addProject";
@@ -67,7 +69,7 @@ const CreateProject = () => {
             },
             {
                 onSuccess() {
-                    toast.success("Project added successfully!", {
+                    toast.success(t("admin.project.create_success"), {
                         position: "bottom-left",
                     });
 
@@ -85,22 +87,22 @@ const CreateProject = () => {
             }}
         >
             <Typography variant="h2" mb={3}>
-                Create a new project
+                {t("admin.project.create")}
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={6}>
                     <Stack>
                         <TextField
                             variant="outlined"
-                            label="Title"
+                            label={t("admin.project.title")}
                             margin="normal"
-                            {...register("title", { required: "Project title is required!" })}
+                            {...register("title", { required: t("admin.project.title_required") })}
                             error={!!errors.title}
                             helperText={errors.title?.message ?? ""}
                         />
                         <TextField
                             variant="outlined"
-                            label="Description"
+                            label={t("admin.project.description")}
                             multiline
                             rows={4}
                             margin="normal"
@@ -120,7 +122,7 @@ const CreateProject = () => {
                             borderColor="silver"
                         >
                             <Typography variant="h3" component="h3">
-                                Statuses
+                                {t("admin.project.statuses")}
                             </Typography>
 
                             <Button
@@ -149,15 +151,15 @@ const CreateProject = () => {
                                 key={status.id}
                             >
                                 <TextField
-                                    label="Label"
-                                    placeholder="Todo"
+                                    label={t("admin.project.label")}
+                                    placeholder={t("admin.project.label_placeholder")}
                                     defaultValue={status.title}
                                     fullWidth
                                     {...register(`statuses.${index}.title` as const)}
                                 />
 
                                 <TextField
-                                    label="Color"
+                                    label={t("admin.project.color")}
                                     placeholder="#aaddff"
                                     defaultValue={status.color}
                                     fullWidth
@@ -165,10 +167,10 @@ const CreateProject = () => {
                                     {...register(`statuses.${index}.color` as const)}
                                 />
 
-                                <label htmlFor={status.id}>Is final?</label>
+                                <label htmlFor={status.id}>{t("admin.project.final")}</label>
                                 <input
                                     {...register("finalStatusIndex", {
-                                        required: "Final status is required!",
+                                        required: t("admin.project.final_required"),
                                     })}
                                     value={index}
                                     id={status.id}
@@ -190,7 +192,7 @@ const CreateProject = () => {
                         render={({ field }) => (
                             <TextField
                                 margin="normal"
-                                label="Project Users"
+                                label={t("admin.project.users")}
                                 select
                                 variant="outlined"
                                 fullWidth
@@ -219,7 +221,7 @@ const CreateProject = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label="Tags"
+                                        label={t("admin.project.tags")}
                                         placeholder="Frontend"
                                         variant="outlined"
                                         margin="normal"

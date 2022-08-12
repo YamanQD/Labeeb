@@ -199,8 +199,8 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
 
                 {isTaskDataLoaded && (
                     <div>
-                        <div>Task created by {taskData.owner.username}</div>
-                        <div>At {formatDate(taskData.createdAt)} </div>
+                        <div>{t("tasks.heading_1", { username: taskData.owner.username })}</div>
+                        <div>{t("tasks.heading_2", { date: formatDate(taskData.createdAt) })} </div>
                     </div>
                 )}
             </DialogTitle>
@@ -374,7 +374,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="Tags"
+                                            label={t("tasks.tags")}
                                             select
                                             variant="standard"
                                             SelectProps={{
@@ -401,7 +401,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                     render={({ field }) => (
                                         <TextField
                                             margin="normal"
-                                            label="Assignees"
+                                            label={t("tasks.assignees")}
                                             select
                                             variant="standard"
                                             SelectProps={{

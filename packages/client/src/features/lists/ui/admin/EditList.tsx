@@ -1,13 +1,16 @@
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import FormContainer from "src/components/FormContainer";
 import { useEditList } from "../../api/editList";
 import { useGetList } from "../../api/getList";
@@ -17,6 +20,7 @@ interface FormFields {
 }
 
 const CreateList = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const { id } = useParams();
@@ -46,7 +50,7 @@ const CreateList = () => {
             },
             {
                 onSuccess() {
-                    toast.success("List edited successfully!", {
+                    toast.success(t("admin.list.edit_success"), {
                         position: toast.POSITION.BOTTOM_LEFT,
                     });
 
@@ -64,7 +68,7 @@ const CreateList = () => {
             }}
         >
             <Typography variant="h2" mb={3}>
-                Edit list
+                {t("admin.list.edit")}
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={6}>
@@ -74,7 +78,7 @@ const CreateList = () => {
                                 shrink: true,
                             }}
                             variant="outlined"
-                            label="Title"
+                            label={t("admin.list.title")}
                             margin="normal"
                             {...register("title")}
                             error={!!errors.title}
@@ -93,7 +97,7 @@ const CreateList = () => {
                     sx={{ ml: "auto" }}
                     disabled={isLoading}
                 >
-                    <span>Edit</span>
+                    <span>{t("actions.edit")}</span>
                     {isLoading && (
                         <CircularProgress size={24} disableShrink sx={{ color: "white", ml: 3 }} />
                     )}
