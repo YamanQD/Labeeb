@@ -39,13 +39,15 @@ const EditUser = () => {
         handleSubmit,
         control,
         setValue,
-        formState: { errors },
         getValues,
+        formState: { errors },
     } = useForm<FormFields>({
         defaultValues: {
             username: "",
             email: "",
             role: Role.EMPLOYEE,
+            oldPassword: "",
+            newPassword: "",
         },
     });
 
@@ -59,12 +61,19 @@ const EditUser = () => {
                 onSuccess() {
                     toast.success(t("users.edit_success"), {
                         position: toast.POSITION.BOTTOM_LEFT,
-                        icon: "🚀"
+                        icon: "🚀",
                     });
                     navigate("/admin/users");
                 },
             }
         );
+    };
+
+    const passwordValidator = () => {
+        const [oldPassword, newPassword] = getValues(["oldPassword", "newPassword"]);
+        if (oldPassword === "" && newPassword === "") return true;
+        if (oldPassword === newPassword) return false;
+        return true;
     };
 
     useEffect(() => {
@@ -118,9 +127,7 @@ const EditUser = () => {
                             margin="normal"
                             type="password"
                             {...register("oldPassword", {
-                                validate: (value) =>
-                                    value !== getValues().newPassword ||
-                                    t("users.password_unchanged"),
+                                validate: passwordValidator,
                             })}
                             error={!!errors.oldPassword}
                             helperText={errors.oldPassword?.message ?? ""}
@@ -132,9 +139,7 @@ const EditUser = () => {
                             margin="normal"
                             type="password"
                             {...register("newPassword", {
-                                validate: (value) =>
-                                    value !== getValues().oldPassword ||
-                                    t("users.password_unchanged"),
+                                validate: passwordValidator,
                             })}
                             error={!!errors.newPassword}
                             helperText={errors.newPassword?.message ?? ""}
