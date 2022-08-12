@@ -1,31 +1,26 @@
+import { Priority } from "@labeeb/core";
 import { IProjectList } from "src/features/lists/types/list";
 import { IUser } from "src/features/users/types/user";
 
-export enum ETaskPriority {
-    NONE = "none",
-    LOW = "low",
-    MEDIUM = "medium",
-    HIGH = "high",
-}
 
 export const taskPriorities = [
     {
-        value: ETaskPriority.NONE,
+        value: Priority.NONE,
         label: "None",
     },
 
     {
-        value: ETaskPriority.LOW,
+        value: Priority.LOW,
         label: "Low",
     },
 
     {
-        value: ETaskPriority.MEDIUM,
+        value: Priority.MEDIUM,
         label: "Medium",
     },
 
     {
-        value: ETaskPriority.HIGH,
+        value: Priority.HIGH,
         label: "High",
     },
 ];
@@ -54,7 +49,7 @@ export interface ITask {
     deadline: string;
     status: ITaskStatus;
     tags: ITaskTag[];
-    priority: ETaskPriority;
+    priority: Priority;
 }
 
 export interface ITaskList {

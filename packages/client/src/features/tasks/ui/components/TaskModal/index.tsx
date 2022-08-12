@@ -1,4 +1,4 @@
-import { Role } from "@labeeb/core";
+import { Priority, Role } from "@labeeb/core";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -19,7 +19,7 @@ import { useAddTask, useGetTask } from "src/features/tasks/api";
 import { useDeleteTask } from "src/features/tasks/api/deleteTask";
 import { useEditTask } from "src/features/tasks/api/editTask";
 import { formatDate } from "src/features/tasks/application";
-import { ETaskPriority, taskPriorities } from "src/features/tasks/types/task";
+import { taskPriorities } from "src/features/tasks/types/task";
 import { useStore } from "src/lib/store";
 import DeleteTaskButton from "./DeleteTaskButton";
 
@@ -31,7 +31,7 @@ interface FormFields {
     status: string;
     tags: string[];
     assignees: number[];
-    priority: ETaskPriority;
+    priority: Priority;
     deadline: string;
 }
 
@@ -90,7 +90,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
             status: "",
             tags: [],
             assignees: [],
-            priority: ETaskPriority.HIGH,
+            priority: Priority.HIGH,
         },
     });
 
