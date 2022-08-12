@@ -77,8 +77,6 @@ const CreateProject = () => {
         );
     };
 
-    // Important for radio buttons to re-render with updated values
-
     return (
         <FormContainer
             formProps={{
