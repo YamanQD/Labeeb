@@ -1,5 +1,6 @@
+import { PaginatedResponse } from "src/lib/http/IhttpClient";
 import { IUserRepository } from "../application/IuserRepository";
-import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserProfileDTO } from "../types/user.dto";
+import { CreateUserDTO, EditUserDTO, UserCredentialsDTO, UserDTO, UserProfileDTO } from "../types/user.dto";
 import { UserMapper } from "./userMapper";
 import { decodeAccessTokens } from "./utils";
 
@@ -17,13 +18,20 @@ export class UserService {
         return await this.userRepository.register(user);
     }
 
-    public async getUsers(page: number) {
-        const users = await this.userRepository.getUsers({ page });
+    public async getUsers(): Promise<UserDTO[]>;
+    public async getUsers(page: number): Promise<PaginatedResponse<UserDTO[]>>;
+    public async getUsers(page?: number) {
+        if (page) {
+            const users = await this.userRepository.getUsers({ page });
 
-        return {
-            ...users,
-            items: users.items.map((user) => UserMapper.userToDTO(user)),
-        };
+            return {
+                ...users,
+                items: users.items.map((user) => UserMapper.userToDTO(user)),
+            };
+        } else {
+            const nonPaginatedUsers = await this.userRepository.getUsers();
+            return nonPaginatedUsers;
+        }
     }
 
     public async getUsersForProject(projectId: number) {

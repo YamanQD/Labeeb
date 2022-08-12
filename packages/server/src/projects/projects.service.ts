@@ -47,14 +47,25 @@ export class ProjectsService {
 
 		return projects.map((project) => ({
 			...project,
-			lists: project.lists.map((l) => ({ id: l.id, title: l.title, taskCount: l.tasks.length }))
+			lists: project.lists.map((l) => ({
+				id: l.id,
+				title: l.title,
+				taskCount: l.tasks.length,
+			})),
 		}));
 	}
 
 	async findProjectTasks(id: number): Promise<Project> {
 		const project = await this.projectRepository.findOne({
 			where: { id },
-			relations: ['statuses', 'tags', 'lists', 'lists.tasks', 'lists.tasks.status', 'lists.tasks.tags'],
+			relations: [
+				'statuses',
+				'tags',
+				'lists',
+				'lists.tasks',
+				'lists.tasks.status',
+				'lists.tasks.tags',
+			],
 		});
 		if (!project) {
 			throw new NotFoundException(['Project not found']);
@@ -158,19 +169,22 @@ export class ProjectsService {
 		if (project.statuses && project.statuses.length > 0) {
 			updatedProject.statuses = updatedProject.statuses ?? [];
 			for (const status of project.statuses) {
-				const statusEntity = await this.statusRepository.findOneBy({ title: status.title, project: { id } });
-				statusEntity ?
-					updatedProject.statuses.push(statusEntity) :
-					updatedProject.statuses.push(await this.statusRepository.save(status));
+				const statusEntity = await this.statusRepository.findOneBy({
+					title: status.title,
+					project: { id },
+				});
+				statusEntity
+					? updatedProject.statuses.push(statusEntity)
+					: updatedProject.statuses.push(await this.statusRepository.save(status));
 			}
 		}
 		if (project.tags && project.tags.length > 0) {
 			updatedProject.tags = updatedProject.tags ?? [];
 			for (const tag of project.tags) {
 				const tagEntity = await this.tagRepository.findOneBy({ title: tag });
-				tagEntity ?
-					updatedProject.tags.push(tagEntity) :
-					updatedProject.tags.push(await this.tagRepository.save({ title: tag }));
+				tagEntity
+					? updatedProject.tags.push(tagEntity)
+					: updatedProject.tags.push(await this.tagRepository.save({ title: tag }));
 			}
 		}
 
@@ -281,36 +295,67 @@ export class ProjectsService {
 		const projects: CreateProjectDto[] = [
 			{
 				title: 'Satellite Simulator',
-				userIds: [1, 2],
+				userIds: [1, 2, 3, 4, 5, 16, 17, 18],
 				statuses: [
-					{ title: 'Todo', color: 'c2daff' },
-					{ title: 'In Progress', color: 'ffe600' },
-					{ title: 'Done', color: '00ff2f' }
+					{ title: 'Todo', color: '#c2daff' },
+					{ title: 'In Progress', color: '#ffe600' },
+					{ title: 'Done', color: '#00ff2f' },
 				],
-				finalStatus: "Done",
-				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
+				finalStatus: 'Done',
+				tags: [
+					'Backend',
+					'Frontend',
+					'Mobile',
+					'Web',
+					'Database',
+					'Devops',
+					'Testing',
+					'Design',
+					'Other',
+				],
 			},
 			{
 				title: 'E-Commerce App',
 				description: 'E-Commerce App for selling products',
-				userIds: [3, 6, 1],
+				userIds: [3, 6, 1, 7, 8, 9, 10],
 				statuses: [
-					{ title: 'Todo', color: 'c2daff' },
-					{ title: 'In Progress', color: 'ffe600' },
-					{ title: 'Done', color: '00ff2f' }
+					{ title: 'Todo', color: '#c2daff' },
+					{ title: 'In Progress', color: '#ffe600' },
+					{ title: 'Done', color: '#00ff2f' },
 				],
-				finalStatus: "Done",
-				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
+				finalStatus: 'Done',
+				tags: [
+					'Backend',
+					'Frontend',
+					'Mobile',
+					'Web',
+					'Database',
+					'Devops',
+					'Testing',
+					'Design',
+					'Other',
+				],
 			},
 			{
 				title: 'Banking App',
+				userIds: [5, 7, 8, 10, 2, 12, 13, 14, 15],
 				statuses: [
-					{ title: 'Todo', color: 'c2daff' },
-					{ title: 'In Progress', color: 'ffe600' },
-					{ title: 'Done', color: '00ff2f' }
+					{ title: 'Todo', color: '#c2daff' },
+					{ title: 'In Progress', color: '#ffe600' },
+					{ title: 'Done', color: '#00ff2f' },
 				],
-				finalStatus: "Done",
-				tags: ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'],
+				finalStatus: 'Done',
+				tags: [
+					'Backend',
+					'Frontend',
+					'Mobile',
+					'Web',
+					'Database',
+					'Devops',
+					'Testing',
+					'Design',
+					'Other',
+				],
 			},
 		];
 

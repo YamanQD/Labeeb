@@ -1,8 +1,7 @@
-import { IHTTPClient, PaginatedResponse } from "src/lib/http/IhttpClient";
-
-import { IUserRepository } from "./IuserRepository";
+import { IHTTPClient, PaginatedRequestOptions, PaginatedResponse } from "src/lib/http/IhttpClient";
 import { ILoginResponse, IUser } from "../types/user";
 import { CreateUserDTO, EditUserDTO, UserCredentialsDTO } from "../types/user.dto";
+import { IUserRepository } from "./IuserRepository";
 
 export class UserRepository implements IUserRepository {
     constructor(private httpClient: IHTTPClient) {}
@@ -30,16 +29,31 @@ export class UserRepository implements IUserRepository {
         return response;
     }
 
-    public async getUsers({ page = 1 }): Promise<PaginatedResponse<IUser[]>> {
-        const response = await this.httpClient.request<Promise<PaginatedResponse<IUser[]>>>({
-            path: "/users",
-            method: "GET",
-            params: {
-                page,
-            },
-        });
+    public async getUsers(): Promise<IUser[]>;
+    public async getUsers(options: PaginatedRequestOptions): Promise<PaginatedResponse<IUser[]>>;
+    public async getUsers(options?: PaginatedRequestOptions) {
+        if (!options) {
+            const nonPaginatedUsers = await this.httpClient.request<IUser[]>({
+                path: "/users",
+                method: "GET",
+                params: {
+                    paginate: false,
+                },
+            });
 
-        return response;
+            return nonPaginatedUsers;
+        } else {
+            const paginatedUsers = await this.httpClient.request<PaginatedResponse<IUser[]>>({
+                path: "/users",
+                method: "GET",
+                params: {
+                    paginate: true,
+                    page: options.page ?? 1,
+                },
+            });
+
+            return paginatedUsers;
+        }
     }
 
     public async getUser(id: number): Promise<IUser> {
@@ -54,7 +68,7 @@ export class UserRepository implements IUserRepository {
     public async getUsersForProject(projectId: number): Promise<IUser[]> {
         const response = await this.httpClient.request<Promise<IUser[]>>({
             path: `/projects/${projectId}/users`,
-            method: "GET"
+            method: "GET",
         });
 
         return response;

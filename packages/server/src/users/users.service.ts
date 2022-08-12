@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { Role } from '@labeeb/core';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -130,6 +131,15 @@ export class UsersService {
 				role: Role.EMPLOYEE,
 			},
 		];
+
+		for (let i = 0; i < 20; i++) {
+			users.push({
+				username: faker.random.word() + i,
+				password: faker.random.word() + i,
+				email: `${faker.random.word()}-${i}@gmail.com`,
+				role: Role.EMPLOYEE,
+			});
+		}
 
 		await Promise.all(
 			users.map(async (user) => {

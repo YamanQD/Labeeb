@@ -49,7 +49,7 @@ const getDeadlineStyles = (deadline: Date): Record<string, string> => {
             break;
         case "far":
             styles = {
-                color: "#000000",
+                color: "text.primary",
             };
             break;
     }

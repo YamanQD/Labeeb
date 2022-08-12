@@ -24,19 +24,23 @@ interface UseGetUsersProps {
 
 type GetUsersResponse<Options> = Options extends { projectId: number }
     ? UserDTO[]
-    : PaginatedResponse<UserDTO[]>;
+    : Options extends { page: number }
+    ? PaginatedResponse<UserDTO[]>
+    : UserDTO[];
 
-export const useGetUsers = <T extends UseGetUsersProps>({
-    page = 1,
-    queryOptions = {},
-    projectId,
-}: T) => {
+export const useGetUsers = <T extends UseGetUsersProps>(
+    { page, queryOptions = {}, projectId }: T = {} as T
+) => {
     const fetchUsers = async () => {
         if (projectId) {
             return userService.getUsersForProject(projectId) as Promise<GetUsersResponse<T>>;
         }
 
-        return userService.getUsers(page) as Promise<GetUsersResponse<T>>;
+        if (page) {
+            return userService.getUsers(page) as Promise<GetUsersResponse<T>>;
+        } else {
+            return userService.getUsers() as Promise<GetUsersResponse<T>>;
+        }
     };
 
     return useQuery<GetUsersResponse<T>>(["users", { page }], fetchUsers, queryOptions);
