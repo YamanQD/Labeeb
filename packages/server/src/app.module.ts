@@ -25,6 +25,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/project.entity';
 import { Status } from './projects/status.entity';
 import { Tag } from './projects/tags.entity';
+import { EncryptService } from './encrypt/encrypt.service';
 
 @Module({
 	imports: [
@@ -64,6 +65,7 @@ import { Tag } from './projects/tags.entity';
 			provide: APP_GUARD,
 			useClass: RolesGuard,
 		},
+		EncryptService,
 	],
 })
 export class AppModule { }

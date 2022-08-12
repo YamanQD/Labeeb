@@ -7,14 +7,15 @@ import { RegisterDto } from 'src/auth/dto/register-dto';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
+import { EncryptService } from 'src/encrypt/encrypt.service';
 
 @Injectable()
 export class UsersService {
 	constructor(
 		@InjectRepository(User)
 		private usersRepository: Repository<User>,
-	) { }
+		private encryptService: EncryptService,
+	) {}
 
 	async findAll() {
 		return await this.usersRepository.find();
@@ -38,9 +39,9 @@ export class UsersService {
 	async findById(id: number, withPassword = false) {
 		return withPassword
 			? await this.usersRepository.findOne({
-				where: { id },
-				select: ['password', 'username', 'id', 'role'],
-			})
+					where: { id },
+					select: ['password', 'username', 'id', 'role'],
+			  })
 			: await this.usersRepository.findOne({ where: { id } });
 	}
 
@@ -51,9 +52,9 @@ export class UsersService {
 	async findByEmail(email: string, withPassword = false) {
 		return withPassword
 			? await this.usersRepository.findOne({
-				where: { email },
-				select: ['password', 'username', 'id', 'role'],
-			})
+					where: { email },
+					select: ['password', 'username', 'id', 'role'],
+			  })
 			: await this.usersRepository.findOne({ where: { email } });
 	}
 
@@ -82,7 +83,7 @@ export class UsersService {
 			if (!body.oldPassword) {
 				throw new BadRequestException(['Old password is required']);
 			}
-			if (!await bcrypt.compare(body.oldPassword, user.password)) {
+			if (!(await this.encryptService.compare(body.oldPassword, user.password))) {
 				throw new BadRequestException(['Old password is incorrect']);
 			}
 			user.password = body.newPassword;
@@ -146,7 +147,7 @@ export class UsersService {
 			users.map(async (user) => {
 				const newUser = new User();
 				newUser.username = user.username;
-				newUser.password = await bcrypt.hash(user.password, 10);
+				newUser.password = await this.encryptService.hash(user.password, 10);
 				newUser.email = user.email;
 				newUser.role = user.role;
 
