@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button, Tooltip } from "@mui/material";
@@ -13,14 +13,17 @@ const LanguageToggle = () => {
     const locale = direction === "ltr" ? "ar" : "en";
     const language = t(`lang.${locale}`);
 
+    const toggleLocale = useCallback(() => {
+        toggleDirection(direction === "ltr" ? "rtl" : "ltr");
+        i18n.changeLanguage(locale);
+        localStorage.setItem('lang', locale);
+    }, [i18n, direction, toggleDirection, locale]);
+
     return (
         <Tooltip arrow title={t("actions.switch_language")}>
             <Button
                 color="primary"
-                onClick={() => {
-                    toggleDirection(direction === "ltr" ? "rtl" : "ltr");
-                    i18n.changeLanguage(locale);
-                }}
+                onClick={toggleLocale}
             >
                 {language}
             </Button>
