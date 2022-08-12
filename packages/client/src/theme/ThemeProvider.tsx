@@ -10,6 +10,7 @@ import { WrapperProps } from "src/utils/wrapperProps";
 
 import { themeCreator } from "./base";
 import { AvailableThemes } from "./schemes";
+import { useTranslation } from "react-i18next";
 
 type ThemeDirection = "ltr" | "rtl";
 
@@ -33,8 +34,10 @@ const LTRCache = createCache({
 });
 
 const ThemeProviderWrapper = ({ children }: WrapperProps) => {
+    const {i18n} = useTranslation();
+
     const [theme, setTheme] = useState(getCurrentThemeName());
-    const [direction, setDirection] = useState<ThemeDirection>("ltr");
+    const [direction, setDirection] = useState<ThemeDirection>(i18n.language === 'ar' ? 'rtl' : "ltr");
 
     const emotionCache = useMemo(() => {
         return direction === "rtl" ? RTLCache : LTRCache;

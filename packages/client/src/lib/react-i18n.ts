@@ -5,7 +5,7 @@ import localeAR from "../locales/ar.json";
 import localeEN from "../locales/en.json";
 
 i18n.use(initReactI18next).init({
-    lng: "en",
+    lng: localStorage.getItem("lang") ?? "en",
     fallbackLng: "en",
     resources: {
         en: {
