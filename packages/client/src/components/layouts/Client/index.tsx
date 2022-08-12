@@ -1,13 +1,9 @@
+import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
-
-import { Box } from "@mui/material";
-
-import LogoutButton from "src/components/Buttons/LogoutButton";
 import SwitchLayoutButton from "src/components/Buttons/SwitchLayout";
-import { useStore } from "src/lib/store";
 import { canUserAccessAdminPanel } from "src/features/users/types/user";
-
+import { useStore } from "src/lib/store";
 import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import ClientSidebarMenu from "./Menu";
@@ -27,7 +23,6 @@ const ClientLayout = () => {
                                 {t("actions.switch_to_admin")}
                             </SwitchLayoutButton>
                         )}
-                        <LogoutButton />
                     </>
                 }
             ></Sidebar>

@@ -1,8 +1,7 @@
+import LogoutIcon from "@mui/icons-material/Logout";
+import { IconButton, Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-
-import Button from "@mui/material/Button";
-
 import { useStore } from "src/lib/store";
 
 const LogoutButton = () => {
@@ -16,9 +15,11 @@ const LogoutButton = () => {
     };
 
     return (
-        <Button sx={{ mb: 2, mx: 2 }} variant="contained" onClick={logout}>
-            {t("actions.logout")}
-        </Button>
+        <Tooltip arrow title={t("actions.logout")}>
+            <IconButton color="primary" onClick={logout}>
+                <LogoutIcon />
+            </IconButton>
+        </Tooltip>
     );
 };
 
