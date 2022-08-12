@@ -1,8 +1,6 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import AdminLayout from "src/components/layouts/Admin";
-import ClientLayout from "src/components/layouts/Client";
 import SuspenseLoader from "src/components/SuspenseLoader";
 import { HTTPClient } from "src/lib/http/httpClient";
 import ProtectedRoute from "./ProtectedRoute";
@@ -16,11 +14,14 @@ const Loader = (Component: React.FC) => (props: any) =>
         </Suspense>
     );
 
+const ClientLayout = Loader(lazy(() => import("src/components/layouts/Client")));
 const Tasks = Loader(lazy(() => import("src/features/tasks/ui/views/Tasks")));
 const Status404 = Loader(lazy(() => import("src/pages/404")));
 const Login = Loader(lazy(() => import("src/features/users/ui/Login")));
 
 // Admin pages
+const AdminLayout = Loader(lazy(() => import("src/components/layouts/Admin")));
+
 const AdminLayoutPlaceholder = Loader(
     lazy(() => import("src/components/layouts/Admin/Placeholder"))
 );
@@ -31,6 +32,7 @@ const EditUser = Loader(lazy(() => import("src/features/users/ui/admin/EditUser"
 
 const Projects = Loader(lazy(() => import("src/features/projects/ui/admin/Projects")));
 const CreateProject = Loader(lazy(() => import("src/features/projects/ui/admin/CreateProject")));
+const EditProject = Loader(lazy(() => import("src/features/projects/ui/admin/EditProject")));
 
 const Lists = Loader(lazy(() => import("src/features/lists/ui/admin/Lists")));
 const CreateList = Loader(lazy(() => import("src/features/lists/ui/admin/CreateList")));
@@ -126,6 +128,15 @@ export const ApplicationRoutes = () => {
                         element={
                             <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
                                 <CreateProject />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="projects/edit/:id"
+                        element={
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                                <EditProject />
                             </ProtectedRoute>
                         }
                     />
