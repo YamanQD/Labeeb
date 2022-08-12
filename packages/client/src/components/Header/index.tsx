@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useStore } from "src/lib/store";
 
 import HeaderButtons from "./Buttons";
 
@@ -20,8 +21,13 @@ const HeaderWrapper = styled(Box)(
 );
 
 const Header = () => {
+    const user = useStore((state) => state.userProfile);
+
     return (
         <HeaderWrapper>
+            <Box>
+                <Typography>Welcome {user?.username}!</Typography>
+            </Box>
             <Box display="flex" alignItems="center" ml="auto">
                 <HeaderButtons />
             </Box>
