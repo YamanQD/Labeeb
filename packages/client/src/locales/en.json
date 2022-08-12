@@ -115,6 +115,7 @@
     "sidebar": {
         "loading": "Loading projects...",
         "projects": "Projects",
+        "lists": "Lists",
         "management": "Management",
         "users": "Users",
         "labeeb": "Labeeb"

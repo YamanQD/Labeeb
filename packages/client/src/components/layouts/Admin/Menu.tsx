@@ -23,7 +23,7 @@ const AdminSidebarMenu = () => {
             children: [
                 {
                     id: 3,
-                    title: "Lists",
+                    title: t("sidebar.lists"),
                     route: "/admin/lists",
                 },
             ],
