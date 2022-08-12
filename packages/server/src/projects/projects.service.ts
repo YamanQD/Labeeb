@@ -104,10 +104,12 @@ export class ProjectsService {
 
 	async create(project: CreateProjectDto): Promise<Project> {
 		const statuses: Status[] = [];
-		project.statuses?.forEach(async (s) => {
-			const status = await this.statusRepository.save(s);
-			statuses.push(status);
-		});
+		await Promise.all(
+			project.statuses?.map(async (s) => {
+				const status = await this.statusRepository.save(s);
+				statuses.push(status);
+			})
+		);
 
 		const tags: Tag[] = [];
 		await Promise.all(
