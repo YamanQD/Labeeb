@@ -1,8 +1,15 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+	ForbiddenException,
+	Injectable,
+	Logger,
+	NotFoundException,
+	OnApplicationBootstrap,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Interval } from '@nestjs/schedule';
 
 import { faker } from '@faker-js/faker';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 
 import { Priority } from '@labeeb/core';
 
@@ -17,7 +24,9 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
 
 @Injectable()
-export class TasksService {
+export class TasksService implements OnApplicationBootstrap {
+	private readonly logger = new Logger(TasksService.name);
+
 	constructor(
 		@InjectRepository(Task)
 		private readonly taskRepository: Repository<Task>,
@@ -31,6 +40,10 @@ export class TasksService {
 		private readonly userRepository: Repository<User>,
 		private mailService: MailService,
 	) {}
+
+	async onApplicationBootstrap() {
+		this.sendReminders();
+	}
 
 	async isProjectUser(taskId: number, userId: number): Promise<boolean> {
 		const task = await this.taskRepository.findOne({
@@ -225,6 +238,62 @@ export class TasksService {
 		}
 		await this.taskRepository.remove(task);
 		return;
+	}
+
+	@Interval(20 * 60_000) // every 20 minutes
+	async sendReminders() {
+		this.logger.log('Sending reminder emails.');
+
+		const tasks = await this.taskRepository
+			.createQueryBuilder()
+			.where(
+				new Brackets((qb) => {
+					qb.where('DATEDIFF(deadline, NOW()) > 0').andWhere(
+						new Brackets((qb) => {
+							qb.where(
+								new Brackets((qb) => {
+									qb.where('DATEDIFF(deadline, NOW()) <= 7').andWhere(
+										"DATEDIFF(deadline, COALESCE(lastSentReminder, '2000-01-01T00:00:00')) > 7",
+									);
+								}),
+							).orWhere(
+								new Brackets((qb) => {
+									qb.where('DATEDIFF(deadline, NOW()) <= 1').andWhere(
+										"DATEDIFF(deadline, COALESCE(lastSentReminder, '2000-01-01T00:00:00')) > 1",
+									);
+								}),
+							);
+						}),
+					);
+				}),
+			)
+			.getMany();
+
+		for (const task of tasks) {
+			task.assignees = await this.taskRepository
+				.createQueryBuilder()
+				.relation(Task, 'assignees')
+				.of(task)
+				.loadMany();
+
+			task.owner = await this.taskRepository
+				.createQueryBuilder()
+				.relation(Task, 'owner')
+				.of(task)
+				.loadOne();
+
+			const success = await this.mailService.sendTaskReminder(task);
+			if (!success) continue;
+
+			await this.taskRepository
+				.createQueryBuilder()
+				.update()
+				.where('id = :id', { id: task.id })
+				.set({ lastSentReminder: new Date() })
+				.execute();
+		}
+
+		this.logger.log('Sent reminder emails.');
 	}
 
 	async seed() {
