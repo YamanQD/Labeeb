@@ -40,9 +40,7 @@ const CreateProject = () => {
         handleSubmit,
         control,
         setValue,
-        getValues,
         formState: { errors },
-        watch,
     } = useForm<FormFields>({
         defaultValues: {
             title: "",
@@ -60,13 +58,12 @@ const CreateProject = () => {
     });
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        const finalStatusTitle = fields.find((status) => status.id === data.finalStatusIndex)
-            ?.title as string;
+        const finalStatus = data.statuses[data.finalStatusIndex as number]?.title ?? "";
 
         mutate(
             {
                 ...data,
-                finalStatus: finalStatusTitle,
+                finalStatus,
             },
             {
                 onSuccess() {
@@ -81,7 +78,6 @@ const CreateProject = () => {
     };
 
     // Important for radio buttons to re-render with updated values
-    watch("finalStatusIndex");
 
     return (
         <FormContainer
@@ -175,7 +171,7 @@ const CreateProject = () => {
                                     {...register("finalStatusIndex", {
                                         required: "Final status is required!",
                                     })}
-                                    value={status.id}
+                                    value={index}
                                     id={status.id}
                                     type="radio"
                                 />
