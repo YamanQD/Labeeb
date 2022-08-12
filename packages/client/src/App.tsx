@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { queryClient } from "src/lib/react-query";
 import MotivationModal from "./components/MotivationModal";
 import "./index.css";
-import "./lib/react-i18n";
-import { ApplicationRoutes } from "./lib/react-router";
+import "./lib/i18n";
+import { ApplicationRoutes } from "./lib/router";
 import ThemeProvider from "./theme/ThemeProvider";
 
 const App = () => {
