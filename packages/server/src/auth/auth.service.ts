@@ -4,7 +4,6 @@ import { MailService } from 'src/mail.service';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register-dto';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +16,7 @@ export class AuthService {
 	async validateUser(email: string, password: string): Promise<User> {
 		const user = await this.usersService.findByEmail(email, true);
 
-		if (user && await bcrypt.compare(password, user.password)) {
+		if (user && user.password === password) {
 			delete user.password;
 			return user;
 		}
@@ -26,7 +25,6 @@ export class AuthService {
 	}
 
 	async register(body: RegisterDto) {
-		body.password = await bcrypt.hash(body.password, 10);
 		const user = await this.usersService.create(body);
 		await this.mailService.sendWelcomeEmail(user);
 		return user;

@@ -7,7 +7,6 @@ import { RegisterDto } from 'src/auth/dto/register-dto';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user-dto';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -82,7 +81,7 @@ export class UsersService {
 			if (!body.oldPassword) {
 				throw new BadRequestException(['Old password is required']);
 			}
-			if (!await bcrypt.compare(body.oldPassword, user.password)) {
+			if (body.oldPassword !== user.password) {
 				throw new BadRequestException(['Old password is incorrect']);
 			}
 			user.password = body.newPassword;
@@ -146,7 +145,7 @@ export class UsersService {
 			users.map(async (user) => {
 				const newUser = new User();
 				newUser.username = user.username;
-				newUser.password = await bcrypt.hash(user.password, 10);
+				newUser.password = user.password;
 				newUser.email = user.email;
 				newUser.role = user.role;
 
