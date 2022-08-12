@@ -6,6 +6,12 @@
     "header": {
         "greeting": "مرحباً {{username}}!"
     },
+    "priority": {
+        "none": "لا يوجد",
+        "low": "منخفضة",
+        "medium": "متوسطة",
+        "high": "مرتفعة"
+    },
     "actions": {
         "logout": "تسجيل الخروج",
         "add": "أضف",
@@ -47,7 +53,7 @@
             "description": "الشرح",
             "statuses": "الأحوال",
             "label": "الحالة",
-            "label_placeholder": "Todo",
+            "label_placeholder": "يجب القيام به",
             "color": "اللون",
             "final": "نهائي؟",
             "final_required": "يجب اختيار الحالة النهائية!",
@@ -57,6 +63,8 @@
     },
     "tasks": {
         "name": "المهمات",
+        "heading_1": "تم إنشاء المهمة من قبل {{username}}",
+        "heading_2": "في {{date}}",
         "remaining": "مبروك، يوجد لديك مليون تاسك. أنت مبرمج فاشل",
         "title": "العنوان",
         "title_placeholder": "حل المشكلة #23",
@@ -80,6 +88,7 @@
         "no_tasks": "لا يوجد مهام لهذه اللائحة",
         "tags": "الأصناف",
         "assignees": "الموكلون",
+        "final": "(نهائي)",
         "no_project_selected": "رجاءً اختر مشروعاً من القائمة الجانبيّة",
         "loading_error": "حدث خطأ أثناء تحميل البيانات. رجاءً أعد تحديث المتصفح"
     },

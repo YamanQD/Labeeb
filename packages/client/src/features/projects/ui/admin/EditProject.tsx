@@ -183,15 +183,15 @@ const EditProject = () => {
                                 key={status.id}
                             >
                                 <TextField
-                                    label="Label"
-                                    placeholder="Todo"
+                                    label={t("admin.project.label")}
+                                    placeholder={t("admin.project.label_placeholder")}
                                     defaultValue={status.title}
                                     fullWidth
                                     {...register(`statuses.${index}.title` as const)}
                                 />
 
                                 <TextField
-                                    label="Color"
+                                    label={t("admin.project.color")}
                                     placeholder="#aaddff"
                                     defaultValue={status.color}
                                     fullWidth
@@ -199,7 +199,7 @@ const EditProject = () => {
                                     {...register(`statuses.${index}.color` as const)}
                                 />
 
-                                <label htmlFor={status.id}>Is final?</label>
+                                <label htmlFor={status.id}>{t("admin.project.final")}</label>
 
                                 <input
                                     type="radio"

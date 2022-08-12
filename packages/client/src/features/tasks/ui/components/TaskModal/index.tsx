@@ -314,7 +314,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                                                 : "normal",
                                                         }}
                                                     >
-                                                        {status.title} {isStatusFinal && "(Final)"}
+                                                        {status.title} {isStatusFinal && t("tasks.final")}
                                                     </MenuItem>
                                                 );
                                             })}
@@ -338,7 +338,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                                                     key={priority.value}
                                                     value={priority.value}
                                                 >
-                                                    {priority.label}
+                                                    {t(`priority.${priority.value}`)}
                                                 </MenuItem>
                                             ))}
                                         </TextField>

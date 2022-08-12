@@ -6,6 +6,12 @@
     "header": {
         "greeting": "Welcome {{username}}!"
     },
+    "priority": {
+        "none": "None",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+    },
     "actions": {
         "logout": "Logout",
         "add": "Add",
@@ -83,6 +89,7 @@
         "no_tasks": "There are no tasks for this list.",
         "tags": "Tags",
         "assignees": "Assignees",
+        "final": "(Final)",
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
     },

@@ -55,7 +55,7 @@ const Task = ({ id, title = "default", status, priority, deadline }: TaskDTO) =>
                 </Grid>
 
                 <Grid item xs={2} sx={{...getPriorityStyles(priority)}}>
-                    {priority}
+                    {t(`priority.${priority}`)}
                 </Grid>
 
                 <Grid
