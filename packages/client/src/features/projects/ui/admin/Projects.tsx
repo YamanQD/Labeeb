@@ -99,6 +99,7 @@ const Projects = () => {
                     columns={columns}
                     loading={isLoading}
                     disableSelectionOnClick
+                    rowsPerPageOptions={[]}
                 />
             </Box>
             <Fab

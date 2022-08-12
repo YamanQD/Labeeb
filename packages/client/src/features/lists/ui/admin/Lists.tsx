@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-
 import AddIcon from "@mui/icons-material/Add";
 import { CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useDeleteList } from "../../api/deleteList";
 import { useGetLists } from "../../api/getLists";
 
@@ -60,41 +58,50 @@ const Lists = () => {
     const navigate = useNavigate();
     const [rows, setRows] = useState<GridRowsProp>([]);
 
-    const columns: GridColDef[] = useMemo(() => [
-        {
-            field: "id",
-            headerName: t("admin.list.id"),
-            width: 150,
-            type: "number",
-            flex: 0.5,
-            align: "left",
-            headerAlign: "left",
-        },
-    
-        { field: "title", headerName: t("admin.list.title"), width: 150, type: "string", flex: 1 },
-        {
-            field: "project",
-            headerName: t("admin.list.project"),
-            width: 150,
-            type: "string",
-            flex: 1,
-            valueGetter: (params) => params.row.project.title,
-        },
-        {
-            field: "edit_delete",
-            headerName: "",
-            width: 150,
-            type: "string",
-            flex: 1,
-            renderCell: (props) => (
-                <div style={{ display: "flex", gap: "15px" }}>
-                    <EditListButton id={props.row.id} />
-                    <DeleteListButton id={props.row.id} />
-                </div>
-            ),
-        },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    ], [t, i18n.language]);
+    const columns: GridColDef[] = useMemo(
+        () => [
+            {
+                field: "id",
+                headerName: t("admin.list.id"),
+                width: 150,
+                type: "number",
+                flex: 0.5,
+                align: "left",
+                headerAlign: "left",
+            },
+
+            {
+                field: "title",
+                headerName: t("admin.list.title"),
+                width: 150,
+                type: "string",
+                flex: 1,
+            },
+            {
+                field: "project",
+                headerName: t("admin.list.project"),
+                width: 150,
+                type: "string",
+                flex: 1,
+                valueGetter: (params) => params.row.project.title,
+            },
+            {
+                field: "edit_delete",
+                headerName: "",
+                width: 150,
+                type: "string",
+                flex: 1,
+                renderCell: (props) => (
+                    <div style={{ display: "flex", gap: "15px" }}>
+                        <EditListButton id={props.row.id} />
+                        <DeleteListButton id={props.row.id} />
+                    </div>
+                ),
+            },
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        ],
+        [t, i18n.language]
+    );
 
     const { data: lists, isLoading } = useGetLists();
 
@@ -110,6 +117,7 @@ const Lists = () => {
                     columns={columns}
                     loading={isLoading}
                     disableSelectionOnClick
+                    rowsPerPageOptions={[]}
                 />
             </Box>
             <Fab
