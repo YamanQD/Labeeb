@@ -1,19 +1,32 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+	ForbiddenException,
+	Injectable,
+	Logger,
+	NotFoundException,
+	OnApplicationBootstrap,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Interval } from '@nestjs/schedule';
+
 import { faker } from '@faker-js/faker';
-import { List } from 'src/lists/list.entity';
-import { Repository } from 'typeorm';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from './task.entity';
+import { Brackets, Repository } from 'typeorm';
+
 import { Priority } from '@labeeb/core';
+
+import { List } from 'src/lists/list.entity';
 import { Status } from 'src/projects/status.entity';
 import { Tag } from 'src/projects/tags.entity';
 import { User } from 'src/users/user.entity';
 import { MailService } from 'src/mail.service';
 
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { Task } from './task.entity';
+
 @Injectable()
-export class TasksService {
+export class TasksService implements OnApplicationBootstrap {
+	private readonly logger = new Logger(TasksService.name);
+
 	constructor(
 		@InjectRepository(Task)
 		private readonly taskRepository: Repository<Task>,
@@ -26,39 +39,63 @@ export class TasksService {
 		@InjectRepository(User)
 		private readonly userRepository: Repository<User>,
 		private mailService: MailService,
-	) { }
+	) {}
+
+	async onApplicationBootstrap() {
+		this.sendReminders();
+	}
+
+	async isProjectUser(taskId: number, userId: number): Promise<boolean> {
+		const task = await this.taskRepository.findOne({
+			where: { id: taskId },
+			relations: ['list', 'list.project', 'list.project.users'],
+		});
+		if (!task) {
+			throw new NotFoundException(['Task not found']);
+		}
+
+		return task.list?.project?.users?.some(({ id }) => id === userId);
+	}
 
 	async findAll(): Promise<Task[]> {
 		return await this.taskRepository.find();
 	}
 
 	async findOne(id: number): Promise<Task> {
-		const task = await this.taskRepository.findOne({ where: { id }, relations: ['list', 'list.project'] });
+		const task = await this.taskRepository.findOne({
+			where: { id },
+			relations: ['list', 'list.project'],
+		});
 		if (!task) {
 			throw new NotFoundException(['Task not found']);
 		}
 		return task;
 	}
 
-	async create(body: CreateTaskDto, userId: number): Promise<Task> {
+	async create(body: CreateTaskDto, userId: number, isSeeding = false): Promise<Task> {
 		const list = await this.listRepository.findOne({
 			where: { id: body.listId },
-			relations: ["project"]
+			relations: ['project', 'project.users'],
 		});
 		if (!list) {
 			throw new NotFoundException(['List not found']);
+		}
+		if (!isSeeding && !list.project?.users?.some(({ id }) => id === userId)) {
+			throw new ForbiddenException();
 		}
 
 		const owner = await this.userRepository.findOne({
 			where: { id: userId },
 		});
 
-		const status = await this.statusRepository.findOne({ where: { title: body.status, project: list.project } });
+		const status = await this.statusRepository.findOne({
+			where: { title: body.status, project: list.project },
+		});
 		if (!status) {
 			throw new NotFoundException(['Status not found, please add status to project first']);
 		}
 
-		let tags: Tag[] = [];
+		const tags: Tag[] = [];
 		if (body.tags) {
 			for (const tag of body.tags) {
 				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
@@ -69,12 +106,13 @@ export class TasksService {
 			}
 		}
 
-		let assignees: User[] = [];
+		const assignees: User[] = [];
+
 		if (body.assignees) {
 			for (const assignee of body.assignees) {
 				const userEntity = await this.userRepository.findOne({
 					where: { id: assignee },
-					relations: ["projects"],
+					relations: ['projects'],
 				});
 
 				if (!userEntity) {
@@ -98,7 +136,7 @@ export class TasksService {
 			deadline: body.deadline,
 			priority: body.priority,
 			title: body.title,
-			description: body.description
+			description: body.description,
 		});
 
 		for (const assignee of assignees) {
@@ -109,7 +147,10 @@ export class TasksService {
 	}
 
 	async update(id: number, body: UpdateTaskDto): Promise<Task> {
-		const task = await this.taskRepository.findOne({ where: { id }, relations: ["list", "list.project"] });
+		const task = await this.taskRepository.findOne({
+			where: { id },
+			relations: ['list', 'list.project'],
+		});
 		if (!task) {
 			throw new NotFoundException(['Task not found']);
 		}
@@ -118,7 +159,7 @@ export class TasksService {
 		if (body.listId) {
 			list = await this.listRepository.findOne({
 				where: { id: body.listId },
-				relations: ["project"]
+				relations: ['project'],
 			});
 			if (!list) {
 				throw new NotFoundException(['List not found']);
@@ -130,15 +171,17 @@ export class TasksService {
 			status = await this.statusRepository.findOne({
 				where: {
 					title: body.status,
-					project: list?.project ?? task.list.project
-				}
+					project: list?.project ?? task.list.project,
+				},
 			});
 			if (!status) {
-				throw new NotFoundException(['Status not found, please add status to project first']);
+				throw new NotFoundException([
+					'Status not found, please add status to project first',
+				]);
 			}
 		}
 
-		let tags: Tag[] = [];
+		const tags: Tag[] = [];
 		if (body.tags) {
 			for (const tag of body.tags) {
 				const tagEntity = await this.tagRepository.findOne({ where: { title: tag } });
@@ -149,13 +192,13 @@ export class TasksService {
 			}
 		}
 
-		let assignees: User[] = [];
-		let newAssignees: User[] = [];
+		const assignees: User[] = [];
+		const newAssignees: User[] = [];
 		if (body.assignees) {
 			for (const assignee of body.assignees) {
 				const userEntity = await this.userRepository.findOne({
 					where: { id: assignee },
-					relations: ["projects"],
+					relations: ['projects'],
 				});
 
 				if (!userEntity) {
@@ -197,10 +240,76 @@ export class TasksService {
 		return;
 	}
 
+	@Interval(20 * 60_000) // every 20 minutes
+	async sendReminders() {
+		this.logger.log('Sending reminder emails.');
+
+		const tasks = await this.taskRepository
+			.createQueryBuilder()
+			.where(
+				new Brackets((qb) => {
+					qb.where('DATEDIFF(deadline, NOW()) > 0').andWhere(
+						new Brackets((qb) => {
+							qb.where(
+								new Brackets((qb) => {
+									qb.where('DATEDIFF(deadline, NOW()) <= 7').andWhere(
+										"DATEDIFF(deadline, COALESCE(lastSentReminder, '2000-01-01T00:00:00')) > 7",
+									);
+								}),
+							).orWhere(
+								new Brackets((qb) => {
+									qb.where('DATEDIFF(deadline, NOW()) <= 1').andWhere(
+										"DATEDIFF(deadline, COALESCE(lastSentReminder, '2000-01-01T00:00:00')) > 1",
+									);
+								}),
+							);
+						}),
+					);
+				}),
+			)
+			.getMany();
+
+		for (const task of tasks) {
+			task.assignees = await this.taskRepository
+				.createQueryBuilder()
+				.relation(Task, 'assignees')
+				.of(task)
+				.loadMany();
+
+			task.owner = await this.taskRepository
+				.createQueryBuilder()
+				.relation(Task, 'owner')
+				.of(task)
+				.loadOne();
+
+			const success = await this.mailService.sendTaskReminder(task);
+			if (!success) continue;
+
+			await this.taskRepository
+				.createQueryBuilder()
+				.update()
+				.where('id = :id', { id: task.id })
+				.set({ lastSentReminder: new Date() })
+				.execute();
+		}
+
+		this.logger.log('Sent reminder emails.');
+	}
+
 	async seed() {
 		const priorities = [Priority.HIGH, Priority.MEDIUM, Priority.LOW, Priority.NONE];
-		const statuses = ["Todo", "In Progress", "Done"];
-		const tags = ['Backend', 'Frontend', 'Mobile', 'Web', 'Database', 'Devops', 'Testing', 'Design', 'Other'];
+		const statuses = ['Todo', 'In Progress', 'Done'];
+		const tags = [
+			'Backend',
+			'Frontend',
+			'Mobile',
+			'Web',
+			'Database',
+			'Devops',
+			'Testing',
+			'Design',
+			'Other',
+		];
 
 		const allTasks = await this.taskRepository.find();
 		if (allTasks.length > 0) return;
@@ -212,10 +321,13 @@ export class TasksService {
 				priority: priorities[Math.floor(Math.random() * 100) % priorities.length],
 				deadline: faker.date.future(),
 				listId: (Math.floor(Math.random() * 10) % 3) + 1,
-				status: statuses[Math.floor(Math.random() * 10 % 3)],
-				tags: [tags[Math.floor(Math.random() * 10 % 9)], tags[Math.floor(Math.random() * 10 % 9)]],
+				status: statuses[Math.floor((Math.random() * 10) % 3)],
+				tags: [
+					tags[Math.floor((Math.random() * 10) % 9)],
+					tags[Math.floor((Math.random() * 10) % 9)],
+				],
 			};
-			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1);
+			await this.create(task, (Math.floor(Math.random() * 10) % 3) + 1, true);
 		}
 	}
 }

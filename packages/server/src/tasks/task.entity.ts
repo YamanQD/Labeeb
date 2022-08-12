@@ -22,7 +22,13 @@ export class Task {
 	@Column({ nullable: true })
 	deadline: Date;
 
-	@ManyToOne(() => Status, (status) => status.tasks, { eager: true })
+	/**
+	 * The date of the last send deadline reminder.
+	 */
+	@Column({ nullable: true })
+	lastSentReminder: Date;
+
+	@ManyToOne(() => Status, (status) => status.tasks, { eager: true, onDelete: 'SET NULL' })
 	status: Status;
 
 	@ManyToMany(() => Tag, { nullable: true, eager: true })

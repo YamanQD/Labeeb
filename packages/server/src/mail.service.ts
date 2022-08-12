@@ -6,6 +6,8 @@ import { User } from './users/user.entity';
 import { Task } from './tasks/task.entity';
 import { Project } from './projects/project.entity';
 
+const DAY_MS_LENGTH = 24 * 60 * 60 * 1000;
+
 @Injectable()
 export class MailService {
 	private readonly logger = new Logger(MailService.name);
@@ -24,18 +26,22 @@ export class MailService {
 		to: string,
 		title: string,
 		content: string,
+		important = false,
 	): Promise<SMTPTransport.SentMessageInfo | null> {
-		this.logger.verbose(`Sending <${to}> "${title}":\n${content}`);
+		// this.logger.debug(`Sending <${to}> "${title}":\n${content}`);
 
 		try {
 			const info = await this.transporter.sendMail({
-				from: `"Labeeb" <noreply@labeeb.org>`,
+				from: `"Labeeb System" <noreply@labeeb.org>`,
 				to,
 				subject: title,
 				text: content,
+				priority: important ? 'high' : 'normal',
 			});
 
 			this.logger.verbose(`Sent (${info.messageId}) successfully ✔️`);
+
+			return info;
 		} catch (error: unknown) {
 			this.logger.error(error instanceof Error ? `Failure: ${error.message}` : `Failed`);
 
@@ -78,5 +84,26 @@ You can view the project details using the app.
 
 Thank you for using Labeeb!`,
 		);
+	}
+
+	async sendTaskReminder(task: Task) {
+		const now = new Date().valueOf();
+		const remainingDays = Math.ceil((task.deadline.valueOf() - now) / DAY_MS_LENGTH);
+
+		const targets = [task.owner, ...task.assignees];
+
+		for (const target of targets) {
+			const title = `Reminder: ${remainingDays} days remaining for the task "${task.title}"`;
+			const content = `Hello ${target.username},
+
+We would like to inform you that ${remainingDays} days are remaining until the deadline of the task "${task.title}"!
+
+Best Wishes,
+Labeeb System
+
+P.S: u won't make it in time.`;
+
+			return await this.sendPlainMessage(target.email, title, content);
+		}
 	}
 }
