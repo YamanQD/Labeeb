@@ -1,8 +1,3 @@
-import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-
 import AutoComplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,10 +7,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-
+import { useEffect } from "react";
+import { Controller, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import FormContainer from "src/components/FormContainer";
 import { useGetUsers } from "src/features/users/api/getUsers";
-import { useAddProject } from "../../api/addProject";
+import { useEditProject } from "../../api/editProject";
+import { useGetProject } from "../../api/getProject";
 
 interface FormFields {
     title: string;
@@ -29,13 +29,16 @@ interface FormFields {
     finalStatusIndex: number | string;
 }
 
-const CreateProject = () => {
+const EditProject = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const { data: users, isFetching } = useGetUsers();
-    const { mutate, isLoading: isAddProjectLoading } = useAddProject();
+    const { id } = useParams();
 
-    const isLoading = isFetching || isAddProjectLoading;
+    const navigate = useNavigate();
+    const { data: users, isFetching: isFetchingUsers } = useGetUsers();
+    const { data: project, isFetching: isFetchingProject } = useGetProject({ id: Number(id) });
+    const { mutate, isLoading: isEditProjectLoading } = useEditProject();
+
+    const isLoading = isFetchingUsers || isFetchingProject || isEditProjectLoading;
 
     const {
         register,
@@ -66,10 +69,11 @@ const CreateProject = () => {
             {
                 ...data,
                 finalStatus,
+                id: Number(id),
             },
             {
                 onSuccess() {
-                    toast.success(t("admin.project.create_success"), {
+                    toast.success("Project edited successfully!", {
                         position: "bottom-left",
                     });
 
@@ -79,6 +83,24 @@ const CreateProject = () => {
         );
     };
 
+    useEffect(() => {
+        if (project) {
+            console.log(project);
+            setValue("title", project.title);
+            setValue("description", project.description);
+            setValue("statuses", project.statuses);
+            setValue(
+                "tags",
+                project.tags.map((tag) => tag.title)
+            );
+
+            setValue(
+                "userIds",
+                project.users.map((user) => user.id)
+            );
+        }
+    }, [project, setValue]);
+
     return (
         <FormContainer
             formProps={{
@@ -87,26 +109,32 @@ const CreateProject = () => {
             }}
         >
             <Typography variant="h2" mb={3}>
-                {t("admin.project.create")}
+                Edit project
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={6}>
                     <Stack>
                         <TextField
                             variant="outlined"
-                            label={t("admin.project.title")}
+                            label="Title"
                             margin="normal"
-                            {...register("title", { required: t("admin.project.title_required") })}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            {...register("title", { required: "Project title is required!" })}
                             error={!!errors.title}
                             helperText={errors.title?.message ?? ""}
                         />
                         <TextField
                             variant="outlined"
-                            label={t("admin.project.description")}
+                            label="Description"
                             multiline
                             rows={4}
                             margin="normal"
                             type="email"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             {...register("description")}
                             error={!!errors.description}
                             helperText={errors.description?.message ?? ""}
@@ -122,7 +150,7 @@ const CreateProject = () => {
                             borderColor="silver"
                         >
                             <Typography variant="h3" component="h3">
-                                {t("admin.project.statuses")}
+                                Statuses
                             </Typography>
 
                             <Button
@@ -139,7 +167,9 @@ const CreateProject = () => {
                             </Button>
                         </Box>
 
-                        <Typography color="error" textTransform="uppercase" mb={2}>{errors.finalStatusIndex?.message}</Typography>
+                        <Typography color="error" textTransform="uppercase" mb={2}>
+                            {errors.finalStatusIndex?.message}
+                        </Typography>
                         {fields.map((status, index) => (
                             <Box
                                 sx={{
@@ -151,15 +181,15 @@ const CreateProject = () => {
                                 key={status.id}
                             >
                                 <TextField
-                                    label={t("admin.project.label")}
-                                    placeholder={t("admin.project.label_placeholder")}
+                                    label="Label"
+                                    placeholder="Todo"
                                     defaultValue={status.title}
                                     fullWidth
                                     {...register(`statuses.${index}.title` as const)}
                                 />
 
                                 <TextField
-                                    label={t("admin.project.color")}
+                                    label="Color"
                                     placeholder="#aaddff"
                                     defaultValue={status.color}
                                     fullWidth
@@ -167,14 +197,15 @@ const CreateProject = () => {
                                     {...register(`statuses.${index}.color` as const)}
                                 />
 
-                                <label htmlFor={status.id}>{t("admin.project.final")}</label>
+                                <label htmlFor={status.id}>Is final?</label>
+
                                 <input
+                                    type="radio"
                                     {...register("finalStatusIndex", {
-                                        required: t("admin.project.final_required"),
+                                        required: "Final status is required!",
                                     })}
                                     value={index}
                                     id={status.id}
-                                    type="radio"
                                 />
 
                                 <Button size="small" color="error" onClick={() => remove(index)}>
@@ -192,7 +223,7 @@ const CreateProject = () => {
                         render={({ field }) => (
                             <TextField
                                 margin="normal"
-                                label={t("admin.project.users")}
+                                label="Project Users"
                                 select
                                 variant="outlined"
                                 fullWidth
@@ -221,7 +252,7 @@ const CreateProject = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label={t("admin.project.tags")}
+                                        label="Tags"
                                         placeholder="Frontend"
                                         variant="outlined"
                                         margin="normal"
@@ -247,7 +278,7 @@ const CreateProject = () => {
                     sx={{ ml: "auto" }}
                     disabled={isLoading}
                 >
-                    <span>{t("actions.create")}</span>
+                    <span>{t("actions.edit")}</span>
                     {isLoading && (
                         <CircularProgress size={24} disableShrink sx={{ color: "white", ml: 3 }} />
                     )}
@@ -256,4 +287,4 @@ const CreateProject = () => {
         </FormContainer>
     );
 };
-export default CreateProject;
+export default EditProject;

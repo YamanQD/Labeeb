@@ -1,4 +1,4 @@
-import { CreateProjectDTO, ProjectDTO } from "../types/project.dto";
+import { CreateProjectDTO, EditProjectDTO, ProjectDTO } from "../types/project.dto";
 import { IProjectRepository } from "./IprojectRepository";
 import { ProjectsMapper } from "./projectMapper";
 
@@ -19,7 +19,9 @@ export class ProjectService {
         return ProjectsMapper.projectToDTO(project);
     }
 
-    public async editProject(project) {}
+    public async editProject(project: EditProjectDTO) {
+        return this.projectRepository.editProject(project);
+    }
 
     public async createProject(project: CreateProjectDTO) {
         return this.projectRepository.createProject(project);

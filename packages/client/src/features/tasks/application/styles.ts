@@ -40,7 +40,7 @@ export const getPriorityStyles = (priority: Priority): Record<string, string> =>
             break;
         case Priority.LOW:
             styles = {
-                color: "#52ff2b",
+                color: "#00fc08",
             };
             break;
         case Priority.MEDIUM:

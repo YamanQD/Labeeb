@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { projectsService } from "../application";
-
+import { PROJECTS_QUERY_KEY } from "./keys";
 
 interface UseGetProjects {
     queryOptions?: Object;
@@ -8,8 +8,8 @@ interface UseGetProjects {
 
 export const useGetProjects = ({ queryOptions = {} }: UseGetProjects = {}) => {
     const fetchProjects = async () => {
-        return await projectsService.getProjects();
+        return projectsService.getProjects();
     };
 
-    return useQuery(["projects"], fetchProjects, queryOptions);
+    return useQuery([PROJECTS_QUERY_KEY], fetchProjects, queryOptions);
 };
