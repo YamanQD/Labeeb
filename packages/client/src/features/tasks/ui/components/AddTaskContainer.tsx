@@ -6,8 +6,10 @@ import Fab from "@mui/material/Fab";
 import { useStore } from "src/lib/store";
 
 import TaskModal from "./TaskModal";
+import { useTranslation } from "react-i18next";
 
 const AddTaskContainer = ({ disabled = false }) => {
+    const { t } = useTranslation();
     const isModalOpen = useStore((state) => state.isTaskModalOpen);
     const toggleModal = useStore((state) => state.toggleTaskModal);
     const setCurrentTaskId = useStore((state) => state.setCurrentTaskId);
@@ -21,7 +23,7 @@ const AddTaskContainer = ({ disabled = false }) => {
     return (
         <>
             <Fab
-                title="Create task"
+                title={t("tasks.create_task")}
                 color="primary"
                 size="medium"
                 onClick={openModal}
