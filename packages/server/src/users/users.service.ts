@@ -147,7 +147,7 @@ export class UsersService {
 			users.map(async (user) => {
 				const newUser = new User();
 				newUser.username = user.username;
-				newUser.password = await this.encryptService.hash(user.password, 10);
+				newUser.password = await this.encryptService.hash(user.password);
 				newUser.email = user.email;
 				newUser.role = user.role;
 

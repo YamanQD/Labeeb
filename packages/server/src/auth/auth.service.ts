@@ -29,7 +29,7 @@ export class AuthService {
 	}
 
 	async register(body: RegisterDto) {
-		body.password = await this.encryptService.hash(body.password, 10);
+		body.password = await this.encryptService.hash(body.password);
 		const user = await this.usersService.create(body);
 		await this.mailService.sendWelcomeEmail(user);
 		return user;
