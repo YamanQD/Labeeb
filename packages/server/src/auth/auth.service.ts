@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
 import { MailService } from 'src/mail.service';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
+
 import { RegisterDto } from './dto/register-dto';
 import { EncryptService } from 'src/encrypt/encrypt.service';
 
