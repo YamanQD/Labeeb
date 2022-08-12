@@ -1,16 +1,19 @@
 import AddIcon from "@mui/icons-material/Add";
+import { CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteProject } from "../../api/deleteProject";
 import { useGetProjects } from "../../api/getProjects";
 
 const DeleteProjectButton = ({ id }: { id: number }) => {
-    const { mutate } = useDeleteProject();
+    const { t } = useTranslation();
+    const { mutate, isLoading } = useDeleteProject();
 
     const deleteProject = () => {
         mutate(id, {
@@ -24,7 +27,11 @@ const DeleteProjectButton = ({ id }: { id: number }) => {
 
     return (
         <Button color="secondary" variant="contained" size="small" onClick={deleteProject}>
-            Delete
+            {isLoading ? (
+                <CircularProgress disableShrink size={24} sx={{ color: "#fff" }} />
+            ) : (
+                t("actions.delete")
+            )}
         </Button>
     );
 };
