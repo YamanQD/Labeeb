@@ -3,6 +3,9 @@
         "en": "الإنكليزية",
         "ar": "العربية"
     },
+    "header": {
+        "greeting": "مرحباً {{username}}!"
+    },
     "actions": {
         "logout": "تسجيل الخروج",
         "add": "أضف",
@@ -45,7 +48,9 @@
     "tasks_group": {
         "title_one": "مهمة واحدة",
         "title_two": "مهمتان",
-        "title_other": "{{count}} مهمات"
+        "title_other": "{{count}} مهمة",
+        "title_few": "{{count}} مهمات",
+        "title_many": "{{count}} مهمة"
     },
     "users": {
         "id": "الرقم",

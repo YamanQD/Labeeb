@@ -16,6 +16,9 @@
         "switch_language": "Switch language",
         "switch_theme": "Switch theme"
     },
+    "header": {
+        "greeting": "Welcome {{username}}!"
+    },
     "tasks": {
         "name": "Tasks",
         "remaining": "You have 99 remaining tasks",
