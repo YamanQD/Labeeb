@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import { useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { ThemeContext } from "src/theme/ThemeProvider";
 
 const LogoWrapper = styled(Link)(
@@ -66,11 +65,12 @@ const LogoSVG = () => {
 };
 
 const Logo = () => {
+    const { t } = useTranslation();
     return (
         <LogoWrapper to="/">
             <LogoSVG />
             <Typography component="h1" variant="h4" sx={{ ml: 2 }}>
-                لبيب
+                {t("sidebar.labeeb")}
             </Typography>
         </LogoWrapper>
     );
