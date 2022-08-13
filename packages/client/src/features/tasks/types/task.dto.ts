@@ -22,7 +22,7 @@ export interface TaskDTO {
     id: number;
     title: string;
     description?: string;
-    deadline: Date;
+    deadline?: Date;
 
     status: TaskStatusDTO;
     tags: TaskTagDTO[];

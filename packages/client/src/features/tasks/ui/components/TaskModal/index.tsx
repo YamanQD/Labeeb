@@ -32,7 +32,7 @@ interface FormFields {
     tags: string[];
     assignees: number[];
     priority: Priority;
-    deadline: string;
+    deadline?: string;
 }
 
 const TaskModal = ({ open = false, closeModal = () => {} }) => {
@@ -82,7 +82,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
         formState: { errors },
     } = useForm<FormFields>({
         defaultValues: {
-            deadline: "",
+            deadline: undefined,
             description: "",
             title: "",
             projectId: "",
@@ -136,7 +136,7 @@ const TaskModal = ({ open = false, closeModal = () => {} }) => {
                 "assignees",
                 assignees.map((assignee) => assignee.id)
             );
-            setValue("deadline", formatDate(deadline));
+            if (deadline) setValue("deadline", formatDate(deadline));
             setValue("description", description ?? "");
             setValue("listId", listId);
         } else {
