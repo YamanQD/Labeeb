@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "src/lib/store";
 
-const INSPIRATION_MESSAGE_TITLES = ["tasks_motivation.title_1", "tasks_motivation.title_2", "tasks_motivation.title_3"];
+const INSPIRATION_MESSAGE_TITLES = ["task_motivation.title_1", "task_motivation.title_2", "task_motivation.title_3"];
 const INSPIRATION_MESSAGES_IMAGES = ["1.svg", "2.svg", "3.svg"];
 
 const getRandomElementFromArray = <T,>(array: T[]): T => {
