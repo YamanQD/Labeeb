@@ -126,7 +126,7 @@ export const ApplicationRoutes = () => {
                     <Route
                         path="projects/create"
                         element={
-                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ONLY"}>
+                            <ProtectedRoute peopleWhoCanAccess={"ADMINS_ABOVE_PM"}>
                                 <CreateProject />
                             </ProtectedRoute>
                         }

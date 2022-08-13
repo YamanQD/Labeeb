@@ -1,5 +1,4 @@
 import { Role } from "@labeeb/core";
-
 import { permissions } from "../application/permissions";
 
 export interface ILoginResponse {
@@ -25,4 +24,10 @@ export const canUserAccessAdminPanel = (user: Pick<IUserProfile, "role"> | null)
     if (!user) return false;
 
     return permissions.ADMINS_ONLY.includes(user.role);
+};
+
+export const canAdminCreateProject = (user: Pick<IUserProfile, "role"> | null) => {
+    if (!user) return false;
+
+    return permissions.ADMINS_ABOVE_PM.includes(user.role);
 };
