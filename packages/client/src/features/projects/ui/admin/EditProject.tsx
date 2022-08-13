@@ -129,7 +129,7 @@ const EditProject = () => {
                         />
                         <TextField
                             variant="outlined"
-                            label={t("admin.project.title")}
+                            label={t("admin.project.description")}
                             multiline
                             rows={4}
                             margin="normal"
