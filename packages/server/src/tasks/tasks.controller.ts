@@ -50,7 +50,7 @@ export class TasksController {
 
 	@Post()
 	async create(@Request() req: any, @Body() body: CreateTaskDto): Promise<Task> {
-		return await this.tasksService.create(body, req.user?.id);
+		return await this.tasksService.create(body, req.user?.id, this.adminRoles.includes(req.user?.role));
 	}
 
 	@Patch(':id')
