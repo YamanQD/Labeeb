@@ -1,5 +1,18 @@
 import { Role } from '@labeeb/core';
-import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, ParseBoolPipe, ParseIntPipe, Patch, Query } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	DefaultValuePipe,
+	Delete,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Param,
+	ParseBoolPipe,
+	ParseIntPipe,
+	Patch,
+	Query,
+} from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Roles } from 'src/auth/roles.decorator';
 import { UpdateUserDto } from './dto/update-user-dto';
@@ -9,9 +22,9 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-	constructor(private readonly usersService: UsersService) { }
+	constructor(private readonly usersService: UsersService) {}
 
-	@Roles(Role.SO, Role.OM)
+	@Roles(Role.SO, Role.OM, Role.PM)
 	@Get()
 	async index(
 		@Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
@@ -20,9 +33,9 @@ export class UsersController {
 	): Promise<Pagination<User> | UserWithoutPassword[]> {
 		limit = limit > 100 ? 100 : limit;
 
-		return paginate ?
-			this.usersService.paginate({ page, limit, route: '/users' }) :
-			this.usersService.findAll();
+		return paginate
+			? this.usersService.paginate({ page, limit, route: '/users' })
+			: this.usersService.findAll();
 	}
 
 	@Roles(Role.SO, Role.OM)
