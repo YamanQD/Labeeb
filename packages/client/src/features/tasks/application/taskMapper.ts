@@ -13,7 +13,7 @@ export class TaskMapper {
     static taskToDTO(task: ITask): TaskDTO {
         return {
             ...task,
-            deadline: new Date(task.deadline),
+            deadline: task.deadline ? new Date(task.deadline) : undefined,
         };
     }
 
@@ -36,7 +36,7 @@ export class TaskMapper {
             description,
             tags,
             status,
-            deadline: new Date(deadline),
+            deadline: deadline ? new Date(deadline) : undefined,
             priority,
             assignees,
 

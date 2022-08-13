@@ -46,7 +46,7 @@ export interface ITask {
     id: number;
     title: string;
     description?: string;
-    deadline: string;
+    deadline?: string;
     status: ITaskStatus;
     tags: ITaskTag[];
     priority: Priority;

@@ -6,6 +6,12 @@
     "header": {
         "greeting": "Welcome {{username}}!"
     },
+    "priority": {
+        "none": "None",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+    },
     "actions": {
         "logout": "Logout",
         "add": "Add",
@@ -71,6 +77,7 @@
         "priority": "Priority",
         "add_task": "Add a new task",
         "add_success": "Task added successfully!",
+        "create_task": "Create Task",
         "edit_task": "Edit task",
         "edit_success": "Task edited successfully!",
         "delete_task": "Delete task",
@@ -83,6 +90,7 @@
         "no_tasks": "There are no tasks for this list.",
         "tags": "Tags",
         "assignees": "Assignees",
+        "final": "(Final)",
         "no_project_selected": "Please select a project from the sidebar.",
         "loading_error": "An error occurred while fetching data. Please refresh your browser."
     },
@@ -106,6 +114,7 @@
         "role": "Role",
         "add": "Create a new user",
         "add_success": "User added successfully!",
+        "create": "Create User",
         "edit": "Edit user #{{id}}",
         "edit_success": "User edited successfully!",
         "delete_success": "User deleted successfully!",

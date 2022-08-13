@@ -39,7 +39,7 @@ export class TasksService implements OnApplicationBootstrap {
 		@InjectRepository(User)
 		private readonly userRepository: Repository<User>,
 		private mailService: MailService,
-	) {}
+	) { }
 
 	async onApplicationBootstrap() {
 		this.sendReminders();
@@ -72,7 +72,7 @@ export class TasksService implements OnApplicationBootstrap {
 		return task;
 	}
 
-	async create(body: CreateTaskDto, userId: number, isSeeding = false): Promise<Task> {
+	async create(body: CreateTaskDto, userId: number, allow = false): Promise<Task> {
 		const list = await this.listRepository.findOne({
 			where: { id: body.listId },
 			relations: ['project', 'project.users'],
@@ -80,7 +80,7 @@ export class TasksService implements OnApplicationBootstrap {
 		if (!list) {
 			throw new NotFoundException(['List not found']);
 		}
-		if (!isSeeding && !list.project?.users?.some(({ id }) => id === userId)) {
+		if (!allow && !list.project?.users?.some(({ id }) => id === userId)) {
 			throw new ForbiddenException();
 		}
 

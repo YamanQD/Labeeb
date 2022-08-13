@@ -1,7 +1,7 @@
 import { Priority } from "@labeeb/core";
 import { getDeadlineStatus } from "./index";
 
-export const getDeadlineStyles = (deadline: Date): Record<string, string> => {
+export const getDeadlineStyles = (deadline?: Date): Record<string, string> => {
     const deadlineStatus = getDeadlineStatus(deadline);
 
     let styles = {};

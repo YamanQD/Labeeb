@@ -19,7 +19,9 @@ const getTimeDifferenceInHours = (a: Date, b: Date) => {
 export const formatDate = (date: Date): string => date.toISOString().slice(0, 10);
 
 type DeadlineStatus = "passed" | "close" | "far";
-export const getDeadlineStatus = (deadline: Date): DeadlineStatus => {
+export const getDeadlineStatus = (deadline?: Date): DeadlineStatus => {
+    if (!deadline) return "far";
+
     const currentDate = new Date();
     const differenceInHours = getTimeDifferenceInHours(currentDate, deadline);
 

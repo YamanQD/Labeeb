@@ -70,9 +70,8 @@ const Task = ({ id, title = "default", status, priority, deadline, tags }: TaskD
                 <Grid item xs={2}>
                     {formatTaskTags()}
                 </Grid>
-
-                <Grid item xs={2} sx={{ ...getPriorityStyles(priority) }}>
-                    {priority}
+                <Grid item xs={2} sx={{...getPriorityStyles(priority)}}>
+                    {t(`priority.${priority}`)}
                 </Grid>
 
                 <Grid
@@ -85,7 +84,7 @@ const Task = ({ id, title = "default", status, priority, deadline, tags }: TaskD
                         gap: 2,
                     }}
                 >
-                    <span>{formatDate(deadline)}</span>
+                    <span>{deadline ? formatDate(deadline) : ""}</span>
                     {getDeadlineStatus(deadline) === "passed" && (
                         <ErrorIcon titleAccess={t("admin.tasks.deadline_passed")} />
                     )}

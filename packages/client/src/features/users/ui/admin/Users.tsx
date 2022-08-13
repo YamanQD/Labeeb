@@ -123,7 +123,7 @@ const Users = () => {
                 />
             </Box>
             <Fab
-                title="Create user"
+                title={t("users.create")}
                 color="primary"
                 size="medium"
                 sx={{ position: "fixed", bottom: "5%", right: "3%" }}
