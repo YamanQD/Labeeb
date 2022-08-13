@@ -12,10 +12,6 @@ import { useLogin } from "../api/login";
 import { canUserAccessAdminPanel } from "../types/user";
 import styles from "./login.module.css";
 
-
-
-
-
 const LoginPageContainer = styled("div")(
     ({ theme }) => `
     display: flex;
@@ -181,6 +177,7 @@ const Login = () => {
                         variant="contained"
                         sx={{
                             width: "100%",
+                            mt: 2,
                             py: 2,
                             background: "linear-gradient(135deg, #6B73FF 0%, #000DFF 100%)",
                         }}
