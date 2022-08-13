@@ -11,7 +11,7 @@ export const useDeleteTask = () => {
         {
             // The second argument is the same that the mutate function receives
             onSuccess(responseData, taskId) {
-                queryClient.invalidateQueries([TASKS_QUERY_KEY], { exact: true });
+                queryClient.invalidateQueries([TASKS_QUERY_KEY]);
             },
         }
     );
