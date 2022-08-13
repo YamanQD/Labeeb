@@ -1,17 +1,57 @@
 # Labeeb
 
-An Arabic-first Tasks Management System.
+An Arabic-first, open-source Tasks Management System created for Damascus University's third year project, Faculty of Information Technology.
+
+## Features
+
+- Arabic support
+- Projects and tasks management
+- Send emails to users on being assigned to a task
+- A client application for managing tasks and an admin panel for projects
+- Dark mode
+- Simple and easy to use interfaces
+
+### Admin Panel
+
+Projects consist of lists, each of which contains a number of tasks. In the admin panel, you can do CRUD operations on projects and lists, and you can also manage user accounts.
+
+There are four roles for users of Labeeb:
+
+1. Employee
+2. Project Manager
+3. Organization Manager
+4. System Owner (only one user with this role)
+
+### Client
+
+On the client, normal users (employees) can view and manage their tasks.
+
+The frontend is split into two parts:
+
+- A client application for employees to view and manage their tasks
+- An admin panel for managers to organize projects and tasks
+
+## Screenshots
+
+![Client in Arabic](screenshots/client_ar.png)
+![Client in dark mode](screenshots/client_dark.png)
+![Client in white mode](screenshots/client_white.png)
+![Admin panel create project](screenshots/create_project.png)
+![Task modal in client](screenshots/task_modal_ar.png)
+![Users management in Arabic](screenshots/users_ar.png)
+
+You can view the rest of the screenshots from the `screenshots` folder.
 
 ## Installation
 
-Since the project has not been released yet, you have to install it from source.
+Since the project has not been released yet, you have to install it from the source code.
 And for now instructions will be only provided for development purposes.
 
 ### Installation for Development
 
 1. Download the source-code into your machine.
    - Either by downloading it as a .zip and extracting it.
-   - Or by cloning the repository using git (SSH recommended).
+   - Or by cloning the repository using git.
 2. Install Node.js 16.x or later versions on your machine.
 3. Enable `corepack`:
 
@@ -38,6 +78,10 @@ yarn frontend
 # Start backend server for development and watch for changes.
 # Make sure to set up the database before doing this.
 yarn backend
+
+# You can also run this to check types on the frontend, since Vite emits
+# the browser bundle even if there are TS errors/warnings.
+yarn workspace client check-types
 ```
 
 ### Setting up the database
@@ -96,3 +140,23 @@ You can also use the following format to run any command at workspace root:
 ```bash
 yarn workspace <package> <command>
 ```
+
+## Structure
+
+This project was initialzied with `yarn berry` as a monorepo that consists of three packages:
+
+- Client: The React.js frontend
+- Server: The Nest.js backend
+- Core: The shared types/interfaces between frontend and backend
+
+### Tech stack
+
+- Frontend: Vite, React.js, React-Query, React-Router, Zustand
+- Backend: Nest.js, TypeORM
+
+## Developers
+
+- Frontend: [Hasan Mothaffar](https://github.com/HasanMothaffar)
+- Backend: [Yaman Qassas](https://github.com/YamanQD)
+
+Also thanks to [Rami Sabbagh](https://github.com/Rami-Sabbagh) for helping out with setting up Yarn, translation, and the emails service.
