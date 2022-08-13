@@ -2703,7 +2703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:^8":
+"@types/eslint@npm:*":
   version: 8.4.1
   resolution: "@types/eslint@npm:8.4.1"
   dependencies:
@@ -2857,13 +2857,6 @@ __metadata:
   dependencies:
     "@types/express": "*"
   checksum: 1b78fbbb589774a2d9794449e039d590c21fefd6b3f0a5cc911e2a79bac85f363121cfdc330d15840879abeb4fb2d68d521111e595bded0f5dc4356bf8dba3ec
-  languageName: node
-  linkType: hard
-
-"@types/prettier@npm:^2":
-  version: 2.6.0
-  resolution: "@types/prettier@npm:2.6.0"
-  checksum: 946f1f82ce6f31664e023a5d65931c31b7d677b454f528f67dce851d72e7fcfe713076f4251b16c3646eecf1545f5f5b909b4962966341ed9ddf5b80113b3674
   languageName: node
   linkType: hard
 
@@ -6623,12 +6616,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "labeeb@workspace:."
   dependencies:
-    "@types/eslint": ^8
-    "@types/prettier": ^2
-    eslint: ^8.14.0
     node-gyp: ^9.1.0
-    prettier: ^2.6.2
-    typescript: ^4.6.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -9496,7 +9485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.3.5, typescript@npm:^4.4.2, typescript@npm:^4.6.3":
+"typescript@npm:^4.3.5, typescript@npm:^4.4.2":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
   bin:
@@ -9526,7 +9515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.3.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.3.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.2#~builtin<compat/typescript>":
   version: 4.6.3
   resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
   bin:
