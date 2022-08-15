@@ -33,7 +33,6 @@ The frontend is split into two parts:
 
 ## Screenshots
 
-![Client in Arabic](screenshots/client_ar.png)
 ![Client in dark mode](screenshots/client_dark.png)
 ![Client in white mode](screenshots/client_white.png)
 ![Admin panel create project](screenshots/create_project.png)
