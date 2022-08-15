@@ -6,9 +6,9 @@ An Arabic-first, open-source Tasks Management System created for Damascus Univer
 
 - Arabic support
 - Projects and tasks management
-- Send emails to users on being assigned to a task
-- A client application for managing tasks and an admin panel for projects
-- Dark mode
+- Send email notifications to users on user creation, being added to a project, being assigned to a task, and when an assigned task's deadline is approaching
+- A client application for managing tasks and an admin panel for projects and users
+- Light/Dark modes
 - Simple and easy to use interfaces
 
 ### Admin Panel
@@ -159,4 +159,4 @@ This project was initialzied with `yarn berry` as a monorepo that consists of th
 - Frontend: [Hasan Mothaffar](https://github.com/HasanMothaffar)
 - Backend: [Yaman Qassas](https://github.com/YamanQD)
 
-Also thanks to [Rami Sabbagh](https://github.com/Rami-Sabbagh) for helping out with setting up Yarn, translation, and the emails service.
+Also special thanks to [Rami Sabbagh](https://github.com/Rami-Sabbagh) for helping out with setting up the environment, Yarn, translation, and the email service and scheduler.
