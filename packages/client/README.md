@@ -15,11 +15,11 @@ These are the resources that I learned from:
 -   https://github.com/huy-ta/flexible-counter-app
 -   https://github.com/bespoyasov/frontend-clean-architecture
 -   https://github.com/andoshin11/clean-architecture-example-vue (CHECK OUT ITS NETWORK FOLDER)
--   https://github.com/slipstream00/reactjs-functions
 -   https://github.com/nanosoftonline/clean-architecture-express-contacts
 -   https://github.com/devbootstrap/SOLID-Principles-Examples-using-Typescript
 -   https://github.com/Zenika/grenoble-hands-on-front-clean-architecture
 -   https://github.com/alan2207/bulletproof-react
+-   https://boom.co/blogs/complex-react-architecture/
 
 In short, there are two main concepts I applied in this project:
 
