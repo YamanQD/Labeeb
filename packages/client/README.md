@@ -21,20 +21,22 @@ These are the resources that I learned from:
 -   https://github.com/alan2207/bulletproof-react
 -   https://boom.co/blogs/complex-react-architecture/
 
-In short, there are two main concepts I applied in this project:
+**Edit**: After 5 months, I think applying the 'Clean Architecture' concept in this app was a total failure. I wrote tons of boilerplate code that I knew wasn't going to benefit from. In my opinion, you can't always apply the same architecture concepts of backend directly to frontend, but you can instead learn from them and create what suits your application.
 
-1. Splitting the app's files by features. Each feature has its own files grouped together under one folder.
-2. Create three de-coupled layers: UI, Application, and Domain.
+On the Internet, you'll find lots of people sharing posts about 'Frontend Clean Architecture', claiming that adding 2-3 levels of absolutely unnecessary indirection in code will make your app more decoupled and clean.
 
-The application layer contains the app's specific implementation of the domain's requirements, and has ports so that the UI layer can access the data. This layered architecture allows you to change one aspect of your program (for example, the http client or some state management library) without affecting other modules.
+I honestly fell into that trap and tried to apply the principles that I found here in this project.
 
-> Note: The above GitHub repositories should only serve as an example of applying clean architecture, and not a one-and-only template that you have to strictly follow. If you think your design decision isn't compliant with "XYZ" architecture, but serves the project well and is maintainable, then by all means go for it.
+You can read more from people who share this opinion with me here:
 
-## Testing
+- https://stackoverflow.com/questions/71525521/how-to-use-separation-of-concern-with-react-query-in-a-clean-architecture-conte
+- https://dev.to/rubemfsv/clean-architecture-applying-with-react-40h6 (comments)
+
+That is not to say that applying clean architecture is generally bad: Just make sure you have a valid reason for what you're doing.
+
+## API Mocking
 
 -   This project uses [MirageJS](https://miragejs.com/) to mock the backend API. You can inspect the `src/lib/mock-server` folder to learn more.
-
--   I am yet to learn about unit tests and integrate them into the application once I find enough time.
 
 ## Credits
 
